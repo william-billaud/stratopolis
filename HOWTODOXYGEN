@@ -1,0 +1,42 @@
+les blocs de commentaire doivent etres de la forme suivante : 
+/**
+*Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+*Suspendisse venenatis sodales bibendum.
+*/
+c'est a dire, ils commencent par /** , il y a une * par ligne et se termine par */
+
+Au debut du fichier : 
+/**
+* \file nom du fichier
+* \brief breve description du fichier
+* \author nom des auteurs
+*\details description detaillée du fichier
+*/
+
+Pour commenter une fonction
+Placer le bloc au dessus de la fonction, ou de son prototype
+/**
+*\brief breve description de la fonction
+*\param type var1 var1 description variable 1
+*\param type var2 var2 description variable 2
+*etc, chaque parametre doit etre dans un \param different
+*\return description du retour
+*\details description plus detaillé de la fonction
+*\bug si il y a un bug a signaler
+*/
+
+Pour commenter un structure :
+au dessus de la structure
+/**
+*\brief breve description de la structure
+*\details description plus detaille
+*/
+typedef struct{
+typevar 1 var1 /**<description var 1*/
+typevar 2 var2 /**<description var 2*/
+etc
+}nom_struct
+
+Pour commenter une variable
+
+typeVar var /**<description variable*/
