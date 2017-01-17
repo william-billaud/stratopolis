@@ -30,10 +30,10 @@
 //		ajout de modePleinEcran et de redimensionneFenetre
 //
 //	Version 2.3 (23/10/2006) : ajout des fonctions Timer et du redessin programme
-//	
+//
 //	Version 2.2 (30/06/2006) : prepareFenetreGraphique fait cycler la position
 //		de depart des fenetres
-//	
+//
 //	Version 2.1 : main est sorti de la bibliotheque, pour des besoins pedagogiques,
 //		cassant la compatibilite avec les anciens codes. Cependant, on peut reintegrer
 //		le main manquant dans chaque programme, a partir du code suivant :
@@ -76,7 +76,7 @@
 /* Partie publique basique
    Cette partie est relative a toutes les informations utiles pour
    mettre en place simplement un environnement graphique portable */
-   
+
 
 
 
