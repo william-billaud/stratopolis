@@ -1,11 +1,17 @@
 /*!
-   \file outils.c
-   \brief fichier contenant les outils utiles dans tous les autres modules
+   \file outils.h
+   \brief fichier contenant les prototypes des outils utiles dans tous les autres modules
    \author "Billaud William"
    \date "DD"/"Month"/"Year"
 
-	 fichier contenant les fonctions,les structures de données et les enum utiles dans les autres modules
+	 fichier contenant les prototypes des fonctions,les structures de données et les enum utiles dans les autres modules
 */
+
+
+#ifndef H_OUTILS
+#define H_OUTILS
+
+#define TAILLEMAX 162
 
 /*!
    \brief enum contenant les couleurs
@@ -59,8 +65,6 @@ typedef struct historiqueCase
 	unsigned char hauteur; /*!< hauteur de la case (0 si la case est vide) */
 	etage tabEtage[20]; /*!< tableau contenant tous les étages de la case */
 }historiqueCase;
-
-
 /*!
    \brief structure contenant les informations pour jouer un coup
 */
@@ -70,3 +74,28 @@ typedef struct coup{
 	unsigned int yCoup;/*!< ordonnee de la case central de la pièces (C2) */
 	orientation orientationPiece;/*!< orientation de la pièce */
 }coup;
+
+typedef PLATEAU historiqueCase[TAILLEMAX][TAILLEMAX];
+
+/*!
+   \brief retourne la couleur d'une case
+   \param[in] c  case dont la couleur est demandé
+   \return couleur de la case
+	 \return -1 en case d'erreur
+*/
+int getCouleurCase(historiqueCase c);
+
+
+
+
+/*!
+   \brief retourne la hauteur d'une case
+   \param[in] c case dont la hauteur est demandé
+   \return hauteur de la case, -1 en case d'erreur
+*/
+int getHauteurCase(historiqueCase c);
+
+
+
+
+#endif
