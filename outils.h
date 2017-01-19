@@ -85,9 +85,6 @@ typedef PLATEAU historiqueCase[TAILLEMAX][TAILLEMAX];
 */
 int getCouleurCase(historiqueCase c);
 
-
-
-
 /*!
    \brief retourne la hauteur d'une case
    \param[in] c case dont la hauteur est demandé
@@ -95,6 +92,15 @@ int getCouleurCase(historiqueCase c);
 */
 int getHauteurCase(historiqueCase c);
 
+/*!
+   \brief fonction permettant de recuperer le contenu d'une caseS
+   \param[in] x : abscisse de la case
+	 \param[in] y : ordonée de la case
+	 \param[in] plat : plateau de jeu
+   \return structure vide si les coordonée sont incorectes
+	 \return historiqueCase contenant les informations de la case
+*/
+historiqueCase getCase(int x,int y,PLATEAU plat);
 
 
 
