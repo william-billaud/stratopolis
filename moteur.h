@@ -11,7 +11,7 @@
 
 /*!
    \brief verifie qu'un coup est valide
-   \param[in] "Param description"
+   \param[in] coupJoueur coup du joueur
    \return true si le coup est valide
 	 \return false si le coup n'est pas possible
 */

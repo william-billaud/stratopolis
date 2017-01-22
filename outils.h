@@ -2,7 +2,7 @@
    \file outils.h
    \brief fichier contenant les prototypes des outils utiles dans tous les autres modules
    \author "Billaud William"
-   \date "DD"/"Month"/"Year"
+   \date \today
 
 	 fichier contenant les prototypes des fonctions,les structures de données et les enum utiles dans les autres modules
 */
@@ -10,6 +10,7 @@
 
 #ifndef H_OUTILS
 #define H_OUTILS
+#include <stdbool.h>
 
 #define TAILLEMAX 162
 

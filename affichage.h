@@ -68,14 +68,14 @@ void dessinePredictif(coup coupJoueur, bool estValide);
 	 \param[in] nomJ2 : nom du deuxième joueur
 	 \return rien
 */
-void afficheInterface(char[] nomJ1, char[] nomJ2);
+void afficheInterface(char nomJ1[15], char nomJ2[15]);
 
 /*!
    \brief Affiche le plateau de jeu, la couleur et la hauteur de chaque case
    \param[in] plat : plateau de jeu à afficher
 	 \return rien
 */
-void afficheGrille(PLATEAU plat);
+void afficheGrille(int Xdroite,int XGauche,int YBas,int YHaut );
 
 /*!
    \brief Affiche le score
