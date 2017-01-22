@@ -39,7 +39,6 @@ int afficheAide(int posX, int posY);
 */
 int afficheOption(int posX, int posY);
 
-
 /*!
    \brief Affiche un conseil pour un coup
    \param[in] conseil : coup à afficher
@@ -72,10 +71,9 @@ void afficheInterface(char nomJ1[15], char nomJ2[15]);
 
 /*!
    \brief Affiche le plateau de jeu, la couleur et la hauteur de chaque case
-   \param[in] plat : plateau de jeu à afficher
 	 \return rien
 */
-void afficheGrille(int Xdroite,int XGauche,int YBas,int YHaut );
+void afficheGrille();
 
 /*!
    \brief Affiche le score
