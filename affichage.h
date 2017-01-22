@@ -4,8 +4,10 @@
    \author Hipault Theo
    \date 22/01/2017
 */
-
 #include "outils.h"
+
+#ifndef H_AFFICHAGE
+#define H_AFFICHAGE
 
 /*!
    \brief Affiche le menu principal (Jouer, Aide, Options, Quitter), et la sélection
@@ -25,7 +27,6 @@ int afficheMenu(int posX, int posY);
 	 \param[in] posY : position en ordonnée du curseur de la souris
    \return 0 si le curseur ne survole aucun bouton
    \return 1 si le curseur survole le bouton Retour
-
 */
 int afficheAide(int posX, int posY);
 
@@ -90,3 +91,5 @@ void afficheScore(int scoreJ1, int scoreJ2);
    \return rien
 */
 pause();
+
+#endif
