@@ -75,7 +75,7 @@ typedef struct coup{
 	orientation orientationPiece;/*!< orientation de la pièce */
 }coup;
 
-typedef PLATEAU historiqueCase[TAILLEMAX][TAILLEMAX];
+typedef  historiqueCase PLATEAU[TAILLEMAX][TAILLEMAX];
 
 /*!
    \brief retourne la couleur d'une case

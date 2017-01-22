@@ -4,6 +4,9 @@
    \author Hipault Theo
    \date 22/01/2017
 */
+#ifndef H_AFFICHAGE
+#define H_AFFICHAGE
+
 
 /*!
    \brief Affiche le menu principal (Jouer, Aide, Options, Quitter)
@@ -208,3 +211,5 @@ pause()
 {
 
 }
+
+#endif

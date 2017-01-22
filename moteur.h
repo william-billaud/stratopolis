@@ -6,24 +6,28 @@
 */
 
 #include "outils.h"
+#include <stdlib.h>
+#include <stdbool.h>
 #ifndef H_MOTEUR
 #define H_MOTEUR
 
 /*!
    \brief verifie qu'un coup est valide
-   \param[in] "Param description"
+   \param[in] coupJoueur coup du joueurs
+   \param[in] plat  plateau de jeu
    \return true si le coup est valide
-	 \return false si le coup n'est pas possible
+   \return false si le coup n'est pas possible
 */
 bool estValideCoup(coup coupJoueur,PLATEAU plat);
 
 /*!
    \brief pose une tuile sur le plateau
    \param[in] coupJoueur : coup du joueur
-	 \param[in] plat : plateau de jeu sur lequelle il faut poser la pièce
+   \param[in] plat : plateau de jeu sur lequelle il faut poser la pièce
    \return 1 si le coup à pu êtres effectué
-	 \return 0 si le coup est invalide
+   \return 0 si le coup est invalide
 */
+
 int joueCoup(coup coupJoueur,PLATEAU plat);
 
 /*!
@@ -56,20 +60,32 @@ bool possedeTuileAdjacente(PLATEAU plat,int x,int y);
 coup coupIA(PLATEAU plat,int joueur,int niveauDifficulte,int *pieceDisponible,int nbPieceRestante);
 
 /*!
-   \brief algorithmeMinMax utilisé pour faire jouer l'ia
-   \param[in] "Param description"
-	 TODO complete min max
-   \return "Return of the function"
-*/
+ * \brief
+ * \param plat
+ * \param joueurActuel
+ * \param joueurIA
+ * \param ProfondeurActuelle
+ * \param ProfondeurMaximum
+ * \param pieceDisponible
+ * \param nbPieceRestante
+ * \return
+ */
 int minMax(PLATEAU plat,int joueurActuel,int joueurIA,int ProfondeurActuelle,int ProfondeurMaximum,int *pieceDisponible,int nbPieceRestante);
 
 /*!
    \brief dejoue un coup
    \param[in] plat : plateau de jeu
-	 \param[in] coupAnnulle : coup à annullée
+   \param[in] coupAnnulle : coup à annullée
    \return 1 si tout c'est bien passé
-	 \return -1 si le coup n'as pas pu etres annullé
+   \return -1 si le coup n'as pas pu etres annullé
 */
 int dejoueCoup(PLATEAU plat,coup coupAnnulle);
 
+/*!
+ * \brief initialise le plateau
+ * \param plat plateau a initialisé
+ * \return 0 si tout c'est bien passé
+ * \return -1 si un problème a eu lieu
+ */
+int initPlateau(PLATEAU plat);
 #endif
