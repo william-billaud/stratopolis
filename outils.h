@@ -75,6 +75,13 @@ typedef struct coup{
 	orientation orientationPiece;/*!< orientation de la pièce */
 }coup;
 
+/*!
+ * \brief tableau contenant l'ordre des pièces
+ */
+typedef int ORDREPIECE[20];
+/*!
+ * \brief tableau contenant le plateau de jeu
+ */
 typedef  historiqueCase PLATEAU[TAILLEMAX][TAILLEMAX];
 
 /*!

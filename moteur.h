@@ -71,63 +71,27 @@ int minMax(PLATEAU plat,int joueurActuel,int joueurIA,int ProfondeurActuelle,int
 int dejoueCoup(coup coupAnnulle);
 
 /*!
-   \brief Initialise une nouvelle partie avec les paramètres choisis
-   \param[in] aucun
-	 \return -1 en cas d'erreur
-   \return 0 si tout est initialisé correctement
-*/
-int initialise();
+ * \brief initialise le plateau
+ * \param plat plateau a initialisé
+ * \return 0 si tout c'est bien passé
+ * \return -1 si un problème a eu lieu
+ */
+int initPlateau(PLATEAU plat);
 
 /*!
-   \brief Initialise toutes les cases du plateau à « vide », et efface l’historique des coups de chaque case
-   \param[in] aucun
-	 \return -1 en cas d'erreur
-   \return 0 si tout est initialisé correctement
-*/
-int iniPlateau();
-
-/*!
-   \brief Initialise les listes de pièces disponibles pour les deux joueurs
-   \param[in] aucun
-	 \return -1 en cas d'erreur
-   \return 0 si tout est initialisé correctement
-*/
-int initialiseOrdrePieces();
-
-/*!
-   \brief Choisis un joueur aléatoire
-   \param[in] aucun
-	 \return un nombre aléatoire entre 1 et 2
-*/
+ * \brief choisis le joueur qui commenceras
+ * \return 1 si le joueur 1 commenceras
+ * \return 2 si le joueur 2 commenceras
+ */
 int choisisJoueur();
 
 /*!
-   \brief Appelle les fonctions coupIA() et afficheConseil()
-   \param[in] aucun
-	 \return -1 en cas d'erreur
-   \return 0 si tout est affiché correctement
-*/
-conseille();
-
-/*!
-   \brief Calcule la surface d’une zone à partir d’une case spécifiée
-   \param[in] posX : position en abscisse de la case de départ
-   \param[in] posY : position en ordonnée de la case de départ
-	 \param[in] plat : plateau de jeu à analyser
-	 \return -1 en cas d'erreur
-   \return le nombre de cases adjacentes
-*/
-int calculSurface(int posX, int posY, PLATEAU plat);
-
-/*!
-   \brief Calcule la hauteur maximum d’une zone à partir d’une case spécifiée
-   \param[in] posX : position en abscisse de la case de départ
-   \param[in] posY : position en ordonnée de la case de départ
-   \param[in] plat : plateau de jeu à analyser
-   \return -1 en cas d'erreur
-   \return la hauteur maximum de la zone
-*/
-int calculHauteur(int posX, int posY, PLATEAU plat);
-
+ * \brief initialise l'ordre des pièces dans un tableau
+ * \param tab tableau qui contiendras l'ordre des pièces à la fin de la fonction
+ * \param joueur numero du joueur
+ * \return 0 si la fonctions n'a pas eu de problème pour s'effectuer
+ * \return -1 si il y a eu une erreur
+ */
+int initOrdrePieces(ORDREPIECE tab,int joueur);
 
 #endif
