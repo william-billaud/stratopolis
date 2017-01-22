@@ -2,6 +2,7 @@
 * \file main.c
 * \brief fichier main
 * \author billaud william
+* \date \today
 */
 
 

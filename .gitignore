@@ -40,6 +40,8 @@ $RECYCLE.BIN/
 .VolumeIcon.icns
 .idea
 .git
+cmake-build-debug
+CMakeLists.txt
 
 # Directories potentially created on remote AFP share
 .AppleDB
