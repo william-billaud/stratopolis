@@ -38,8 +38,9 @@ $RECYCLE.BIN/
 .TemporaryItems
 .Trashes
 .VolumeIcon.icns
-.idea
 .git
+#file create by Clion
+.idea
 cmake-build-debug
 CMakeLists.txt
 
@@ -49,6 +50,14 @@ CMakeLists.txt
 Network Trash Folder
 Temporary Items
 .apdisk
+
+#file create by indent
+*~
+
+#file create by compilation
+*.o
+main
+test
 
 #file create by doxygen
 html

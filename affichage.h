@@ -2,9 +2,11 @@
    \file affichage.h
    \brief fichier contenant les prototypes des fonctions pour l'affichage du jeu
    \author Hipault Theo
+   \author Billaud
    \date 22/01/2017
 */
 #include "outils.h"
+#include "moteur.h"
 
 #ifndef H_AFFICHAGE
 #define H_AFFICHAGE
@@ -73,7 +75,7 @@ void afficheInterface(char nomJ1[15], char nomJ2[15]);
    \brief Affiche le plateau de jeu, la couleur et la hauteur de chaque case
 	 \return rien
 */
-void afficheGrille();
+void afficheGrille(void);
 
 /*!
    \brief Affiche le score
@@ -88,6 +90,6 @@ void afficheScore(int scoreJ1, int scoreJ2);
    \param[in] aucun
    \return rien
 */
-pause();
+void pause(void);
 
 #endif

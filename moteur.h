@@ -1,8 +1,9 @@
 /*!
    \file moteur.h
    \brief fichier contenant les prototypes des fonctions utiles pour le moteur du jeu
-   \author "Billaud William"
-   \date "DD"/"Month"/"Year"
+   \author Billaud William
+   \author Hipault Theo
+   \date 22/01/2017
 */
 
 #include "outils.h"
@@ -78,14 +79,14 @@ int dejoueCoup(coup coupAnnulle);
  * \return 0 si tout c'est bien passé
  * \return -1 si un problème a eu lieu
  */
-int initPlateau();
+int initPlateau(void);
 
 /*!
  * \brief choisis le joueur qui commenceras
  * \return 1 si le joueur 1 commenceras
  * \return 2 si le joueur 2 commenceras
  */
-int choisisJoueur();
+int choisisJoueur(void);
 
 /*!
  * \brief initialise l'ordre des pièces dans un tableau

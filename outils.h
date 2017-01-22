@@ -1,7 +1,8 @@
 /*!
    \file outils.h
    \brief fichier contenant les prototypes des outils utiles dans tous les autres modules
-   \author "Billaud William"
+   \author Billaud William
+   \author Hipault Theo
    \date \today
 
 	 fichier contenant les prototypes des fonctions,les structures de données et les enum utiles dans les autres modules
@@ -10,6 +11,9 @@
 #ifndef H_OUTILS
 #define H_OUTILS
 #include <stdbool.h>
+#include <stdio.h>
+#include "ESLib.h"
+#include "GfxLib.h"
 
 #define TAILLEMAX 162
 
@@ -44,7 +48,7 @@ typedef enum {
 	HD /*!< pièce orientée avec un coté vers la haut, et l'autre vers la droite */ ,
 	BD /*!< pièce orientée avec un coté vers le bas, et l'autre vers la droite */ ,
 	BG /*!< pièce orientée avec un coté vers la gauche, et l'autre vers le bas */ ,
-	HG /*!< pièce orientée avec un coté vers la gauche, et l'autre vers le haut */
+	HG			/*!< pièce orientée avec un coté vers la gauche, et l'autre vers le haut */
 } orientation;
 /*!
    \brief structure contenant des informations concernant un étage d'une case

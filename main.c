@@ -2,17 +2,19 @@
 * \file main.c
 * \brief fichier main
 * \author billaud william
-* \date \today
+* \author Hipault Theo
+* \date 22/01/2107
 */
 
-#include <stdlib.h>
-#include "GfxLib.h"
+#include "affichage.h"
 
 /**
 *\brief test doxygen
 */
 int main(void)
 {
-	int testVar;/**<\var test description*/
+	int testVar = 5;
+		      /**<\var test description*/
+	printf("numero : %d", testVar);
 	return 0;
 }

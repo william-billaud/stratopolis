@@ -5,12 +5,13 @@ WARNING_FLAGS = -Wall -Wextra -Werror -pedantic -Wformat\
 
 CFLAGS = -std=c99 -m64 -O3 $(WARNING_FLAGS)
 
-CLIBS = -lm -lGL -lGLU -lX11 -lglut  
+CLIBS = libisentlib.a -lm -lGL -lGLU -lglut
 
-all: main.o  moteur.o  affichage.o outil.o
-	gcc $(CFLAGS) main.o  moteur.o  affichage.o outil.o  libisentlib.a -o main  $(CLIBS)
+all: main.o  moteur.o  affichage.o outils.o
+	gcc -o main main.o  moteur.o  affichage.o outils.o $(CLIBS)
+	rm *~
 
-main.o:	main.c moteur.h
+main.o:	main.c moteur.h affichage.h
 	indent -linux main.c
 	gcc $(CFLAGS) -c main.c
 
@@ -22,17 +23,18 @@ affichage.o: affichage.c affichage.h
 	indent -linux affichage.c affichage.h
 	gcc $(CFLAGS) -c affichage.c
 
-outil.o: outil.c outil.h
-	indent -linux outil.c outil .h
-	gcc $(CFLAGS) -c outil.c 
-	
-test : test.o  moteur.o  affichage.o outil.o
-	gcc $(CFLAGS) test.o  moteur.o  affichage.o outil.o  libisentlib.a -o test  $(CLIBS)
-	
-test.o:	test.c moteur.h
-	indent -linux test.c moteur.h
-	gcc $(CFLAGS) -c test.c	
+outils.o: outils.c outils.h
+	indent -linux outils.c outils.h
+	gcc $(CFLAGS) -c outils.c
+
+test: test.o  moteur.o  affichage.o outils.o
+	gcc -o test test.o  moteur.o  affichage.o outils.o $(CLIBS)
+	rm *~
+
+test.o:	test.c moteur.h affichage.h
+	indent -linux test.c
+	gcc $(CFLAGS) -c test.c
 
 clean:
 	rm -f *.o
-	rm -f main test graphic
+	rm -f main test
