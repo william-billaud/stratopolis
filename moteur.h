@@ -20,11 +20,10 @@ bool estValideCoup(coup coupJoueur,PLATEAU plat);
 /*!
    \brief pose une tuile sur le plateau
    \param[in] coupJoueur : coup du joueur
-	 \param[in] plat : plateau de jeu sur lequelle il faut poser la pièce
    \return 1 si le coup a pu être effectué
 	 \return 0 si le coup est invalide
 */
-int joueCoup(coup coupJoueur,PLATEAU plat);
+int joueCoup(coup coupJoueur);
 
 /*!
    \brief calcul le score d'un joueur
@@ -65,75 +64,70 @@ int minMax(PLATEAU plat,int joueurActuel,int joueurIA,int ProfondeurActuelle,int
 
 /*!
    \brief dejoue un coup
-   \param[in] plat : plateau de jeu
 	 \param[in] coupAnnulle : coup à annullée
    \return 1 si tout c'est bien passé
 	 \return -1 si le coup n'as pas pu etres annullé
 */
-int dejoueCoup(PLATEAU plat,coup coupAnnulle);
+int dejoueCoup(coup coupAnnulle);
 
 /*!
    \brief Initialise une nouvelle partie avec les paramètres choisis
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
+   \param[in] aucun
+	 \return -1 en cas d'erreur
+   \return 0 si tout est initialisé correctement
 */
-initialise();
+int initialise();
 
 /*!
    \brief Initialise toutes les cases du plateau à « vide », et efface l’historique des coups de chaque case
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
+   \param[in] aucun
+	 \return -1 en cas d'erreur
+   \return 0 si tout est initialisé correctement
 */
-iniPlateau();
+int iniPlateau();
 
 /*!
    \brief Initialise les listes de pièces disponibles pour les deux joueurs
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
+   \param[in] aucun
+	 \return -1 en cas d'erreur
+   \return 0 si tout est initialisé correctement
 */
-initialiseOrdrePieces();
+int initialiseOrdrePieces();
 
 /*!
    \brief Choisis un joueur aléatoire
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
+   \param[in] aucun
+	 \return un nombre aléatoire entre 1 et 2
 */
-choisisJoueur();
+int choisisJoueur();
 
 /*!
    \brief Appelle les fonctions coupIA() et afficheConseil()
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
+   \param[in] aucun
+	 \return -1 en cas d'erreur
+   \return 0 si tout est affiché correctement
 */
 conseille();
 
 /*!
-   \brief Calcule la surface d’une zone à partir d’une pièce spécifiée
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
+   \brief Calcule la surface d’une zone à partir d’une case spécifiée
+   \param[in] posX : position en abscisse de la case de départ
+   \param[in] posY : position en ordonnée de la case de départ
+	 \param[in] plat : plateau de jeu à analyser
+	 \return -1 en cas d'erreur
+   \return le nombre de cases adjacentes
 */
-calculSurface();
+int calculSurface(int posX, int posY, PLATEAU plat);
 
 /*!
-   \brief Calcule la hauteur maximum d’une zone à partir d’une pièce spécifiée
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
+   \brief Calcule la hauteur maximum d’une zone à partir d’une case spécifiée
+   \param[in] posX : position en abscisse de la case de départ
+   \param[in] posY : position en ordonnée de la case de départ
+   \param[in] plat : plateau de jeu à analyser
+   \return -1 en cas d'erreur
+   \return la hauteur maximum de la zone
 */
-calculHauteur();
+int calculHauteur(int posX, int posY, PLATEAU plat);
 
 
 #endif
