@@ -6,17 +6,14 @@
 */
 
 #include "outils.h"
-#include <stdlib.h>
-#include <stdbool.h>
 #ifndef H_MOTEUR
 #define H_MOTEUR
 
 /*!
    \brief verifie qu'un coup est valide
-   \param[in] coupJoueur coup du joueurs
-   \param[in] plat  plateau de jeu
+   \param[in] "Param description"
    \return true si le coup est valide
-   \return false si le coup n'est pas possible
+	 \return false si le coup n'est pas possible
 */
 bool estValideCoup(coup coupJoueur,PLATEAU plat);
 
@@ -58,23 +55,18 @@ bool possedeTuileAdjacente(PLATEAU plat,int x,int y);
 coup coupIA(PLATEAU plat,int joueur,int niveauDifficulte,int *pieceDisponible,int nbPieceRestante);
 
 /*!
- * \brief
- * \param plat
- * \param joueurActuel
- * \param joueurIA
- * \param ProfondeurActuelle
- * \param ProfondeurMaximum
- * \param pieceDisponible
- * \param nbPieceRestante
- * \return
- */
+   \brief algorithmeMinMax utilisé pour faire jouer l'ia
+   \param[in] "Param description"
+	 TODO complete min max
+   \return "Return of the function"
+*/
 int minMax(PLATEAU plat,int joueurActuel,int joueurIA,int ProfondeurActuelle,int ProfondeurMaximum,int *pieceDisponible,int nbPieceRestante);
 
 /*!
    \brief dejoue un coup
-	 \param[in] coupAnnulle : coup à annuller
+	 \param[in] coupAnnulle : coup à annullée
    \return 1 si tout c'est bien passé
-   \return -1 si le coup n'as pas pu etres annullé
+	 \return -1 si le coup n'as pas pu etres annullé
 */
 int dejoueCoup(coup coupAnnulle);
 
@@ -137,76 +129,5 @@ int calculSurface(int posX, int posY, PLATEAU plat);
 */
 int calculHauteur(int posX, int posY, PLATEAU plat);
 
-
-/*!
- * \brief initialise le plateau
- * \param plat plateau a initialisé
- * \return 0 si tout c'est bien passé
- * \return -1 si un problème a eu lieu
- */
-int initPlateau(PLATEAU plat);
-
-/*!
-   \brief Initialise une nouvelle partie avec les paramètres choisis
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
-*/
-initialise();
-
-/*!
-   \brief Initialise toutes les cases du plateau à « vide », et efface l’historique des coups de chaque case
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
-*/
-iniPlateau();
-
-/*!
-   \brief Initialise les listes de pièces disponibles pour les deux joueurs
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
-*/
-initialiseOrdrePieces();
-
-/*!
-   \brief Choisis un joueur aléatoire
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
-*/
-choisisJoueur();
-
-/*!
-   \brief Appelle les fonctions coupIA() et afficheConseil()
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
-*/
-conseille();
-
-/*!
-   \brief Calcule la surface d’une zone à partir d’une pièce spécifiée
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
-*/
-calculSurface();
-
-/*!
-   \brief Calcule la hauteur maximum d’une zone à partir d’une pièce spécifiée
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
-*/
-calculHauteur();
 
 #endif
