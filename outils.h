@@ -54,7 +54,7 @@ typedef enum {
    \brief structure contenant des informations concernant un étage d'une case
 */
 typedef struct etage {
-	unsigned char numeroPiece;	/*!< numero de la pièce , 42 correspond à une absence de pièces */
+	unsigned char numeroPiece;	/*!< numero de la pièce , 42 correspond à une absence de pièces*/
 	couleur couleurEtage;	/*!< couleur de la pieces sur case */
 } etage;
 
