@@ -27,7 +27,6 @@ int afficheMenu(int posX, int posY);
 	 \param[in] posY : position en ordonnée du curseur de la souris
    \return 0 si le curseur ne survole aucun bouton
    \return 1 si le curseur survole le bouton Retour
-
 */
 int afficheAide(int posX, int posY);
 
