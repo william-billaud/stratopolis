@@ -54,7 +54,7 @@ typedef enum {
    \brief structure contenant des informations concernant un étage d'une case
 */
 typedef struct etage {
-	unsigned char numeroPiece;	/*!< numero de la pièce */
+	unsigned char numeroPiece;	/*!< numero de la pièce , 42 correspond à une absence de pièces*/
 	couleur couleurEtage;	/*!< couleur de la pieces sur case */
 } etage;
 
@@ -64,7 +64,7 @@ typedef struct etage {
 tabEtage[hauteur] correspond à la pièce visible
 */
 typedef struct historiqueCase {
-	unsigned char hauteur;	/*!< hauteur de la case (0 si la case est vide) */
+	char hauteur;		/*!< hauteur de la case (0 si la case est vide) */
 	etage tabEtage[20];	/*!< tableau contenant tous les étages de la case */
 } historiqueCase;
 /*!
@@ -105,10 +105,10 @@ int getHauteurCase(historiqueCase c);
 \brief fonction permettant de recuperer le contenu d'une caseS
 \param[in] x : abscisse de la case
 \param[in] y : ordonée de la case
-\param[in] plat : plateau de jeu
 \return structure vide si les coordonée sont incorectes
 \return historiqueCase contenant les informations de la case
 */
-historiqueCase getCase(int x, int y, PLATEAU plat);
+historiqueCase getCase(int x, int y);
 
+PLATEAU plat;
 #endif
