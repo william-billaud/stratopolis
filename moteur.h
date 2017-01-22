@@ -21,7 +21,7 @@ bool estValideCoup(coup coupJoueur,PLATEAU plat);
    \brief pose une tuile sur le plateau
    \param[in] coupJoueur : coup du joueur
 	 \param[in] plat : plateau de jeu sur lequelle il faut poser la pièce
-   \return 1 si le coup à pu êtres effectué
+   \return 1 si le coup a pu être effectué
 	 \return 0 si le coup est invalide
 */
 int joueCoup(coup coupJoueur,PLATEAU plat);
@@ -71,5 +71,69 @@ int minMax(PLATEAU plat,int joueurActuel,int joueurIA,int ProfondeurActuelle,int
 	 \return -1 si le coup n'as pas pu etres annullé
 */
 int dejoueCoup(PLATEAU plat,coup coupAnnulle);
+
+/*!
+   \brief Initialise une nouvelle partie avec les paramètres choisis
+   \param[in] nom : desc
+	 \param[in]
+   \return
+	 \return
+*/
+initialise();
+
+/*!
+   \brief Initialise toutes les cases du plateau à « vide », et efface l’historique des coups de chaque case
+   \param[in] nom : desc
+	 \param[in]
+   \return
+	 \return
+*/
+iniPlateau();
+
+/*!
+   \brief Initialise les listes de pièces disponibles pour les deux joueurs
+   \param[in] nom : desc
+	 \param[in]
+   \return
+	 \return
+*/
+initialiseOrdrePieces();
+
+/*!
+   \brief Choisis un joueur aléatoire
+   \param[in] nom : desc
+	 \param[in]
+   \return
+	 \return
+*/
+choisisJoueur();
+
+/*!
+   \brief Appelle les fonctions coupIA() et afficheConseil()
+   \param[in] nom : desc
+	 \param[in]
+   \return
+	 \return
+*/
+conseille();
+
+/*!
+   \brief Calcule la surface d’une zone à partir d’une pièce spécifiée
+   \param[in] nom : desc
+	 \param[in]
+   \return
+	 \return
+*/
+calculSurface();
+
+/*!
+   \brief Calcule la hauteur maximum d’une zone à partir d’une pièce spécifiée
+   \param[in] nom : desc
+	 \param[in]
+   \return
+	 \return
+*/
+calculHauteur();
+
 
 #endif

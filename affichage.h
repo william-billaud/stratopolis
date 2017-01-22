@@ -5,206 +5,88 @@
    \date 22/01/2017
 */
 
-/*!
-   \brief Affiche le menu principal (Jouer, Aide, Options, Quitter)
-   \param[in] nom : desc
-	 \param[in] 
-   \return
-	 \return
-*/
-afficheMenu()
-{
-
-}
+#include "outils.h"
 
 /*!
-   \brief Affiche les règles du jeu et le mode d’emploi du programme
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
+   \brief Affiche le menu principal (Jouer, Aide, Options, Quitter), et la sélection
+   \param[in] posX : position en abscisse du curseur de la souris
+	 \param[in] posY : position en ordonnée du curseur de la souris
+   \return 0 si le curseur ne survole aucun bouton
+   \return 1 si le curseur survole le bouton Jouer
+   \return 2 si le curseur survole le bouton Aide
+   \return 3 si le curseur survole le bouton Options
+   \return 4 si le curseur survole le bouton Quitter
 */
-afficheAide()
-{
-
-}
+int afficheMenu(int posX, int posY);
 
 /*!
-   \brief Affiche le menu de sélection des options
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
-*/
-afficheOption()
-{
+   \brief Affiche les règles du jeu et le mode d’emploi du programme, et la sélection
+   \param[in] posX : position en abscisse du curseur de la souris
+	 \param[in] posY : position en ordonnée du curseur de la souris
+   \return 0 si le curseur ne survole aucun bouton
+   \return 1 si le curseur survole le bouton Retour
 
-}
+*/
+int afficheAide(int posX, int posY);
 
 /*!
-   \brief Initialise une nouvelle partie avec les paramètres choisis
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
+   \brief Affiche le menu de sélection des options, et la sélection
+   \param[in] posX : position en abscisse du curseur de la souris
+	 \param[in] posY : position en ordonnée du curseur de la souris
+   \return 0 si le curseur ne survole aucun bouton
+   \return 1 si le curseur survole le bouton Retour
 */
-initialise()
-{
+int afficheOption(int posX, int posY);
 
-}
-
-/*!
-   \brief Initialise toutes les cases du plateau à « vide », et efface l’historique des coups de chaque case
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
-*/
-iniPlateau()
-{
-
-}
-
-/*!
-   \brief Initialise les listes de pièces disponibles pour les deux joueurs
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
-*/
-initialiseOrdrePieces()
-{
-
-}
-
-/*!
-   \brief Choisis un joueur aléatoire
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
-*/
-choisisJoueur()
-{
-
-}
-
-/*!
-   \brief Appelle les fonctions coupIA() et afficheConseil()
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
-*/
-conseille()
-{
-
-}
 
 /*!
    \brief Affiche un conseil pour un coup
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
+   \param[in] conseil : coup à afficher
+   \return rien
 */
-afficheConseil()
-{
-
-}
+void afficheConseil(coup conseil);
 
 /*!
    \brief Appelle les fonction dessinePredictif() et estValideCoup()
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
+   \param[in] coupJoueur : coup à afficher
+   \return rien
 */
-affichePredictif()
-{
-
-}
+void affichePredictif(coup coupJoueur);
 
 /*!
    \brief Affiche le prédictif de placement de la pièce
-   \param[in] nom : desc
-	 \param[in]
+   \param[in] coupJoueur : coup à afficher
+	 \param[in] estValide : validité du coup à afficher
    \return
-	 \return
 */
-dessinePredictif()
-{
-
-}
+void dessinePredictif(coup coupJoueur, bool estValide);
 
 /*!
    \brief Affiche l’interface de jeu
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
+   \param[in] nomJ1 : nom du premier joueur
+	 \param[in] nomJ2 : nom du deuxième joueur
+	 \return rien
 */
-afficheInterface()
-{
-
-}
+void afficheInterface(char[] nomJ1, char[] nomJ2);
 
 /*!
    \brief Affiche le plateau de jeu, la couleur et la hauteur de chaque case
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
+   \param[in] plat : plateau de jeu à afficher
+	 \return rien
 */
-afficheGrille()
-{
-
-}
+void afficheGrille(PLATEAU plat);
 
 /*!
    \brief Affiche le score
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
+   \param[in] scoreJ1 : score du premier joueur
+	 \param[in] scoreJ2 : score du deuxième joueur
+	 \return rien
 */
-afficheScore()
-{
-
-}
-
-/*!
-   \brief Calcule la surface d’une zone à partir d’une pièce spécifiée
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
-*/
-calculSurface()
-{
-
-}
-
-/*!
-   \brief Calcule la hauteur maximum d’une zone à partir d’une pièce spécifiée
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
-*/
-calculHauteur()
-{
-
-}
+void afficheScore(int scoreJ1, int scoreJ2);
 
 /*!
    \brief Met le jeu en pause
-   \param[in] nom : desc
-	 \param[in]
-   \return
-	 \return
+   \param[in] aucun
+   \return rien
 */
-pause()
-{
-
-}
+pause();
