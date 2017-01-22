@@ -88,4 +88,68 @@ int dejoueCoup(PLATEAU plat,coup coupAnnulle);
  * \return -1 si un problème a eu lieu
  */
 int initPlateau(PLATEAU plat);
+
+/*!
+   \brief Initialise une nouvelle partie avec les paramètres choisis
+   \param[in] nom : desc
+	 \param[in]
+   \return
+	 \return
+*/
+initialise();
+
+/*!
+   \brief Initialise toutes les cases du plateau à « vide », et efface l’historique des coups de chaque case
+   \param[in] nom : desc
+	 \param[in]
+   \return
+	 \return
+*/
+iniPlateau();
+
+/*!
+   \brief Initialise les listes de pièces disponibles pour les deux joueurs
+   \param[in] nom : desc
+	 \param[in]
+   \return
+	 \return
+*/
+initialiseOrdrePieces();
+
+/*!
+   \brief Choisis un joueur aléatoire
+   \param[in] nom : desc
+	 \param[in]
+   \return
+	 \return
+*/
+choisisJoueur();
+
+/*!
+   \brief Appelle les fonctions coupIA() et afficheConseil()
+   \param[in] nom : desc
+	 \param[in]
+   \return
+	 \return
+*/
+conseille();
+
+/*!
+   \brief Calcule la surface d’une zone à partir d’une pièce spécifiée
+   \param[in] nom : desc
+	 \param[in]
+   \return
+	 \return
+*/
+calculSurface();
+
+/*!
+   \brief Calcule la hauteur maximum d’une zone à partir d’une pièce spécifiée
+   \param[in] nom : desc
+	 \param[in]
+   \return
+	 \return
+*/
+calculHauteur();
+
 #endif
