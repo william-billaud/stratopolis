@@ -16,6 +16,7 @@
 #include <math.h>		// Pour pouvoir utiliser les librairies mathematiques
 #include "ESLib.h"
 #include "GfxLib.h"
+#include <time.h>
 
 #define TAILLEMAX 162
 
@@ -104,13 +105,12 @@ int getCouleurCase(historiqueCase c);
 int getHauteurCase(historiqueCase c);
 
 /*!
+\brief fonction permettant de recuperer un pointeur vers un case
 \param[in] x : abscisse de la case
 \param[in] y : ordonée de la case
-\return structure vide si les coordonée sont incorectes
 \return NULL si la case n'est pas disponible
 \return historiqueCase contenant les informations de la case
 */
-historiqueCase getCase(int x, int y);
 historiqueCase * getCase(int x, int y);
 
 /*!

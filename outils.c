@@ -92,7 +92,8 @@ int getNumeroPiece(historiqueCase c)
 		return -2;
 	}
 	numero = c.tabEtage[h].numeroPiece;
-	if (numero > 41 && !(h == 0 && numero == 42)) {
+    printf("numero : %d \n",numero);
+	if ((numero > 41 && !(h == 0 && numero == 42)) || ( h==0 && numero!=42)){
 		return -1;
 	}
 	return numero;

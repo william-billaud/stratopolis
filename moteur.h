@@ -75,7 +75,7 @@ int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
 int dejoueCoup(coup coupAnnulle);
 
 /*!
- * \brief initialise le plateau
+ * \brief initialise le plateau (pose la pièce initiale)
  * \return 0 si tout c'est bien passé
  * \return -1 si un problème a eu lieu
  */
@@ -96,10 +96,5 @@ int choisisJoueur(void);
  */
 int initOrdrePieces(int joueur);
 
-/*!
- * \brief initialise tout les paramètre d'une case a 0
- * \param c pointeur vers une case
- * \return 0
- */
-int setCaseAZero(historiqueCase * c);
+
 #endif
