@@ -13,7 +13,7 @@
 */
 int main(void)
 {
-	int testVar = 5;
+	int testVar = 10;
 		      /**<\var test description*/
 	printf("numero : %d", testVar);
 	return 0;

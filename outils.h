@@ -30,18 +30,6 @@ typedef enum {
 } couleur;
 
 /*!
-   \brief structure contenant les pieces
-
-	 Les informations concernant les couleur sont données pour la pièce positionnée en L
-*/
-typedef struct pieces {
-	couleur c1;		/*!< couleur de la case du haut  */
-	couleur c2;		/*!< couleur de la case du milieu */
-	couleur c3;		/*!< couleur de la case  a droite */
-	unsigned char numeroPiece;	/*!< numero de la pièce */
-} pieces;
-
-/*!
    \brief enum contenant les orientations des pièces
 
 	 les orientations sont données vis a vis du joueur regardant l'ecran, une pièces en L est donc en position HD
@@ -52,6 +40,18 @@ typedef enum {
 	BG /*!< pièce orientée avec un coté vers la gauche, et l'autre vers le bas */ ,
 	HG			/*!< pièce orientée avec un coté vers la gauche, et l'autre vers le haut */
 } orientation;
+
+/*!
+   \brief structure contenant les pieces
+
+	 Les informations concernant les couleur sont données pour la pièce positionnée en L
+*/
+typedef struct pieces {
+	couleur c1;		/*!< couleur de la case du haut  */
+	couleur c2;		/*!< couleur de la case du milieu */
+	couleur c3;		/*!< couleur de la case  a droite */
+	unsigned char numeroPiece;	/*!< numero de la pièce */
+} pieces;
 /*!
    \brief structure contenant des informations concernant un étage d'une case
 */
@@ -104,13 +104,14 @@ int getCouleurCase(historiqueCase c);
 int getHauteurCase(historiqueCase c);
 
 /*!
-\brief fonction permettant de recuperer le contenu d'une caseS
 \param[in] x : abscisse de la case
 \param[in] y : ordonée de la case
 \return structure vide si les coordonée sont incorectes
+\return NULL si la case n'est pas disponible
 \return historiqueCase contenant les informations de la case
 */
 historiqueCase getCase(int x, int y);
+historiqueCase * getCase(int x, int y);
 
 /*!
  * \brief initialise tout les paramètre d'une case a 0

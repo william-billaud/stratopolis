@@ -5,7 +5,7 @@ WARNING_FLAGS = -Wall -Wextra -Werror -pedantic -Wformat\
 
 CFLAGS = -std=c99 -m64 -O3 $(WARNING_FLAGS)
 
-CLIBS = libisentlib.a -lm -lGL -lGLU -lglut
+CLIBS =libisentlib.a -lm -lGL -lGLU -lglut
 
 all: main.o  moteur.o  affichage.o outils.o
 	gcc -o main main.o  moteur.o  affichage.o outils.o $(CLIBS)
