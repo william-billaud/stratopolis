@@ -12,6 +12,8 @@
 #define H_OUTILS
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>		// Pour pouvoir utiliser void exit(int)
+#include <math.h>		// Pour pouvoir utiliser les librairies mathematiques
 #include "ESLib.h"
 #include "GfxLib.h"
 
@@ -54,7 +56,7 @@ typedef enum {
    \brief structure contenant des informations concernant un étage d'une case
 */
 typedef struct etage {
-	unsigned char numeroPiece;	/*!< numero de la pièce , 42 correspond à une absence de pièces*/
+	unsigned char numeroPiece;	/*!< numero de la pièce , 42 correspond à une absence de pièces */
 	couleur couleurEtage;	/*!< couleur de la pieces sur case */
 } etage;
 

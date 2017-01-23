@@ -101,5 +101,5 @@ int initOrdrePieces(int joueur);
  * \param c pointeur vers une case
  * \return 0
  */
-int setCaseAZero(historiqueCase *c)
+int setCaseAZero(historiqueCase * c);
 #endif
