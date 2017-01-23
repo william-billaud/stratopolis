@@ -7,28 +7,28 @@
 */
 
 #include "outils.h"
+
+/**\var variable global contenant le plateau*/
 extern PLATEAU plat;
 
 /*!
-\brief fonction permettant de recuperer le contenu d'une caseS
+\brief fonction permettant de recuperer un pointeur vers un case
 \param[in] x : abscisse de la case
 \param[in] y : ordonée de la case
-\return structure dont la hauteur est -1
+\return NULL si la case n'est pas disponible
 \return historiqueCase contenant les informations de la case
 */
-historiqueCase getCase(int x, int y)
+historiqueCase *getCase(int x, int y)
 {
-
-	historiqueCase c;
 	//verifie que les coordonnées demandées sont dans le tableau
 	if (x < 0 || y < 0 || x > TAILLEMAX || y > TAILLEMAX) {
 		//si non attribue -1 a la hauteur
-		c.hauteur = -1;
+		return NULL;
 
 	} else {
-		c = plat[x][y];
+		return &plat[x][y];
 	}
-	return c;
+
 }
 
 /*!
@@ -92,8 +92,30 @@ int getNumeroPiece(historiqueCase c)
 		return -2;
 	}
 	numero = c.tabEtage[h].numeroPiece;
-	if (numero > 41 && !(h == 0 && numero == 42)) {
+	printf("numero : %d \n", numero);
+	if ((numero > 41 && !(h == 0 && numero == 42))
+	    || (h == 0 && numero != 42)) {
 		return -1;
 	}
 	return numero;
+}
+
+/**
+ * \brief verifie si une valeur est present dans un tableau 1D d'entier
+ * \param array tableau dans lequel il faut chercher la valeur
+ * \param h taille du tableau
+ * \param valeur valeur a chercher
+ * \return false si la valeur est absent
+ * \return true si la valeur est presente
+ */
+bool inArrayIny(int *array, unsigned int h, int valeur)
+{
+	int i;
+	for (i = 0; i < (int)h; ++i) {
+		if (*(array + i) == valeur) {
+			return true;
+		}
+
+	}
+	return false;
 }

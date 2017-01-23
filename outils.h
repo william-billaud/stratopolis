@@ -16,6 +16,7 @@
 #include <math.h>		// Pour pouvoir utiliser les librairies mathematiques
 #include "ESLib.h"
 #include "GfxLib.h"
+#include <time.h>
 
 #define TAILLEMAX 162
 
@@ -30,18 +31,6 @@ typedef enum {
 } couleur;
 
 /*!
-   \brief structure contenant les pieces
-
-	 Les informations concernant les couleur sont données pour la pièce positionnée en L
-*/
-typedef struct pieces {
-	couleur c1;		/*!< couleur de la case du haut  */
-	couleur c2;		/*!< couleur de la case du milieu */
-	couleur c3;		/*!< couleur de la case  a droite */
-	unsigned char numeroPiece;	/*!< numero de la pièce */
-} pieces;
-
-/*!
    \brief enum contenant les orientations des pièces
 
 	 les orientations sont données vis a vis du joueur regardant l'ecran, une pièces en L est donc en position HD
@@ -52,6 +41,18 @@ typedef enum {
 	BG /*!< pièce orientée avec un coté vers la gauche, et l'autre vers le bas */ ,
 	HG			/*!< pièce orientée avec un coté vers la gauche, et l'autre vers le haut */
 } orientation;
+
+/*!
+   \brief structure contenant les pieces
+
+	 Les informations concernant les couleur sont données pour la pièce positionnée en L
+*/
+typedef struct pieces {
+	couleur c1;		/*!< couleur de la case du haut  */
+	couleur c2;		/*!< couleur de la case du milieu */
+	couleur c3;		/*!< couleur de la case  a droite */
+	unsigned char numeroPiece;	/*!< numero de la pièce */
+} pieces;
 /*!
    \brief structure contenant des informations concernant un étage d'une case
 */
@@ -104,13 +105,13 @@ int getCouleurCase(historiqueCase c);
 int getHauteurCase(historiqueCase c);
 
 /*!
-\brief fonction permettant de recuperer le contenu d'une caseS
+\brief fonction permettant de recuperer un pointeur vers un case
 \param[in] x : abscisse de la case
 \param[in] y : ordonée de la case
-\return structure vide si les coordonée sont incorectes
+\return NULL si la case n'est pas disponible
 \return historiqueCase contenant les informations de la case
 */
-historiqueCase getCase(int x, int y);
+historiqueCase *getCase(int x, int y);
 
 /*!
  * \brief initialise tout les paramètre d'une case a 0
@@ -128,5 +129,22 @@ int setCaseAZero(historiqueCase * c);
  */
 int getNumeroPiece(historiqueCase c);
 
+/**
+ * \brief verifie si une valeur est present dans un tableau 1D d'entier
+ * \param array tableau dans lequel il faut chercher la valeur
+ * \param h taille du tableau
+ * \param valeur valeur a chercher
+ * \return false si la valeur est absent
+ * \return true si la valeur est presente
+ * \warning si le tableau n'a pas été initialisé entièrement, la valeur peut etres présente dans la partie non initialisée
+ * \warning si h est trop grand, il y a un risque de core dumped
+ */
+bool inArrayIny(int *array, unsigned int h, int valeur);
+
+//definition des variables globales
+/**\var variable global contenant le plateau*/
 PLATEAU plat;
+/**\var tableau contenant l'ordre des pièces de joueurs 1 et 2, ordreJoueur[0]= ordre des pièces du joueur 1
+ * ordreJoueur[1]= ordre des pièces du joueur 2*/
+ORDREPIECE ordreJoueurs[2];
 #endif
