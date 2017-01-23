@@ -96,5 +96,4 @@ int choisisJoueur(void);
  */
 int initOrdrePieces(int joueur);
 
-
 #endif

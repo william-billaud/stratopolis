@@ -111,7 +111,7 @@ int getHauteurCase(historiqueCase c);
 \return NULL si la case n'est pas disponible
 \return historiqueCase contenant les informations de la case
 */
-historiqueCase * getCase(int x, int y);
+historiqueCase *getCase(int x, int y);
 
 /*!
  * \brief initialise tout les paramètre d'une case a 0
@@ -129,5 +129,22 @@ int setCaseAZero(historiqueCase * c);
  */
 int getNumeroPiece(historiqueCase c);
 
+/**
+ * \brief verifie si une valeur est present dans un tableau 1D d'entier
+ * \param array tableau dans lequel il faut chercher la valeur
+ * \param h taille du tableau
+ * \param valeur valeur a chercher
+ * \return false si la valeur est absent
+ * \return true si la valeur est presente
+ * \warning si le tableau n'a pas été initialisé entièrement, la valeur peut etres présente dans la partie non initialisée
+ * \warning si h est trop grand, il y a un risque de core dumped
+ */
+bool inArrayIny(int *array, unsigned int h, int valeur);
+
+//definition des variables globales
+/**\var variable global contenant le plateau*/
 PLATEAU plat;
+/**\var tableau contenant l'ordre des pièces de joueurs 1 et 2, ordreJoueur[0]= ordre des pièces du joueur 1
+ * ordreJoueur[1]= ordre des pièces du joueur 2*/
+ORDREPIECE ordreJoueurs[2];
 #endif
