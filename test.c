@@ -41,5 +41,6 @@ int main(void)
 		printf("%2d : %2d \t %2d : %2d  \n", k, ordreJoueurs[0][k], k,
 		       ordreJoueurs[1][k]);
 	}
+	printf(possedeTuileAdjacente(85,85) ? "vrai" : "faux");
 	return 0;
 }

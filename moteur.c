@@ -96,3 +96,28 @@ int initOrdrePieces(int joueur)
 
 	return 0;
 }
+
+/*!
+\brief recherche si la case possède une tuile adjacente
+\param x : ordonnee de la case
+\param y : abscisse de la case
+\return true si la case possede une tuile adjacente
+\return false si la case ne possède pas de tuile adjacente
+*/
+
+bool possedeTuileAdjacente(int x, int y)
+{
+    historiqueCase * tab[4];
+    int i;
+    tab[0]=getCase(x-1,y);
+    tab[1]=getCase(x+1,y);
+    tab[2]=getCase(x,y+1);
+    tab[3]=getCase(x,y-1);
+    for (i = 0; i < 4; ++i) {
+        if(getHauteurCase(*tab[i])>0)
+        {
+            return true;
+        }
+    }
+    return false;
+}
