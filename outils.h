@@ -14,8 +14,8 @@
 #include <stdio.h>
 #include <stdlib.h>		// Pour pouvoir utiliser void exit(int)
 #include <math.h>		// Pour pouvoir utiliser les librairies mathematiques
-#include "ESLib.h"
-#include "GfxLib.h"
+#include "lib/ESLib.h"
+#include "lib/GfxLib.h"
 #include <time.h>
 
 #define TAILLEMAX 162
@@ -144,6 +144,7 @@ bool inArrayIny(int *array, unsigned int h, int valeur);
 //definition des variables globales
 /**\var variable global contenant le plateau*/
 PLATEAU plat;
+
 /**\var tableau contenant l'ordre des pièces de joueurs 1 et 2, ordreJoueur[0]= ordre des pièces du joueur 1
  * ordreJoueur[1]= ordre des pièces du joueur 2*/
 ORDREPIECE ordreJoueurs[2];
