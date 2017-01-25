@@ -148,3 +148,96 @@ couleur couleurPiece(int numeroPiece,int numeroTuile){
         }
     }
 }
+
+/*!
+ * \brief initalise les pièces du jeu dans un tableau
+ * \return 0 si tout c'est bien passé
+ */
+int initPiece(void){
+    int i;
+    couleur c1,c2,c3;
+    for (i = 1; i <= 10; ++i) {
+        c1=vert;
+        c2=vert;
+        c3=vert;
+        switch (i)
+        {
+            case 1:
+                break;
+            case 2:
+                c3=rouge;
+                break;
+            case 3:
+                c2=rouge;
+                break;
+            case 4:
+                c1=rouge;
+                break;
+            case 5:
+                c3=neutre;
+                break;
+            case 6:
+                c2=neutre;
+                break;
+            case 7:
+                c1=neutre;
+                break;
+            case 8:
+                c1=neutre;
+                c2=neutre;
+                break;
+            case 9:
+                c2=neutre;
+                c3=neutre;
+                break;
+            case 10:
+                c1=neutre;
+                c3=neutre;
+                break;
+            default:
+                c1=neutre;
+                c2=neutre;
+                c3=neutre;
+                break;
+        }
+        PIECE[i].c1=c1;
+        PIECE[i].c2=c2;
+        PIECE[i].c3=c3;
+        PIECE[i].numeroPiece=(unsigned char) i;
+        PIECE[i+10].c1=c1;
+        PIECE[i+10].c2=c2;
+        PIECE[i+10].c3=c3;
+        PIECE[i+10].numeroPiece=(unsigned char) (i+10);
+        if(c1==vert)
+        {
+            c1=rouge;
+        }else if(c1==rouge)
+        {
+            c1=vert;
+        }
+        if(c2==vert)
+        {
+            c2=rouge;
+        }else if(c2==rouge)
+        {
+            c2=vert;
+        }
+        if(c3==vert)
+        {
+            c3=rouge;
+        }else if(c3==rouge)
+        {
+            c3=vert;
+        }
+        PIECE[i+20].c1=c1;
+        PIECE[i+20].c2=c2;
+        PIECE[i+20].c3=c3;
+        PIECE[i+20].numeroPiece=(unsigned char) (i+20);
+        PIECE[i+30].c1=c1;
+        PIECE[i+30].c2=c2;
+        PIECE[i+30].c3=c3;
+        PIECE[i+30].numeroPiece=(unsigned char) (i+30);
+    }
+    PIECE[0].numeroPiece=0;
+    return 0;
+}

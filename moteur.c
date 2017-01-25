@@ -175,16 +175,19 @@ bool estValideCoup(coup coupJoueur){
         default:
             return false;
     }
+    //recupère les case sur lequelle la pièce veux se poser
     c1=getCase(x1,y1);
     c3=getCase(x3,y3);
     if(c1==NULL || c3==NULL || c2 ==NULL)
     {
         return false;
     }
+    //verifie que toutes les case en dessous sont a la même hauteur
     if(getHauteurCase(*c1)!=getHauteurCase(*c2) || getHauteurCase(*c1)!= getHauteurCase(*c3))
     {
         return false;
     }
+    //si la pièce va êtres posée au niveau zero, verifie que l'une des tuile possède un coté adjacent a une autres tuile
     if(getHauteurCase(*c1)==0)
     {
         if(possedeTuileAdjacente(x1,y1)==false && possedeTuileAdjacente(x3,y3)==false && false==possedeTuileAdjacente(coupJoueur.xCoup,coupJoueur.yCoup))
@@ -192,12 +195,14 @@ bool estValideCoup(coup coupJoueur){
             return false;
         }
     } else{
+        //sinon verifie que toutes les superposition sont valide
         if(!estValideSuperposition( couleurPiece(coupJoueur.numeroPiece,1),(couleur)getCouleurCase(*c1)) || !estValideSuperposition( couleurPiece(coupJoueur.numeroPiece,2),(couleur)getCouleurCase(*c2)) || !estValideSuperposition( couleurPiece(coupJoueur.numeroPiece,3),(couleur)getCouleurCase(*c3)))
         {
             return false;
         }
 
     }
+    //verifie que la pièce va etresposé sur au moins deux autres pièces
     if(getNumeroPiece(*c1)==getNumeroPiece(*c2) && getNumeroPiece(*c1)==getNumeroPiece(*c3))
     {
         return false;

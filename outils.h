@@ -150,6 +150,11 @@ bool inArrayIny(int *array, unsigned int h, int valeur);
  */
 couleur couleurPiece(int numeroPiece,int numeroTuile);
 
+/*!
+ * \brief initalise les pièces du jeu dans un tableau
+ * \return 0 si tout c'est bien passé
+ */
+int initPiece(void);
 //definition des variables globales
 /**\var variable global contenant le plateau*/
 PLATEAU plat;
