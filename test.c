@@ -10,6 +10,8 @@
 /**\var variable global contenant le plateau*/
 extern PLATEAU plat;
 
+extern pieces PIECE[42];
+
 /**\var tableau contenant l'ordre des pièces des joueurs*/
 extern ORDREPIECE ordreJoueurs[2];
 

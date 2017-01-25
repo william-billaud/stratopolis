@@ -11,7 +11,7 @@
 /**\var variable global contenant le plateau*/
 extern PLATEAU plat;
 
-extern pieces PIECE[43];
+extern pieces PIECE[42];
 
 /*!
 \brief fonction permettant de recuperer un pointeur vers un case
@@ -74,7 +74,7 @@ int setCaseAZero(historiqueCase * c)
 	c->hauteur = 0;
 	for (i = 0; i < 20; i++) {
 		c->tabEtage[i].couleurEtage = vide;
-		c->tabEtage[i].numeroPiece = 42;
+		c->tabEtage[i].numeroPiece = 41;
 	}
 	return 0;
 }
@@ -84,7 +84,7 @@ int setCaseAZero(historiqueCase * c)
  * \param c case dont nous voulons récuperer le numero de la pièce
  * \return -2 : si la hauteur de la case est incorecte
  * \return -1 : si le numero de la case est incorecte
- * \return 42 si la case ne possède pas de pièce
+ * \return 41 si la case ne possède pas de pièce
  */
 int getNumeroPiece(historiqueCase c)
 {
@@ -94,9 +94,8 @@ int getNumeroPiece(historiqueCase c)
 		return -2;
 	}
 	numero = c.tabEtage[h].numeroPiece;
-	printf("numero : %d \n", numero);
-	if ((numero > 41 && !(h == 0 && numero == 42))
-	    || (h == 0 && numero != 42)) {
+	if ((numero > 40 && !(h == 0 && numero == 41))
+	    || (h == 0 && numero != 41)) {
 		return -1;
 	}
 	return numero;

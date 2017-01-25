@@ -87,12 +87,12 @@ int initOrdrePieces(int joueur)
 		//tirage d'une valeur aléatoire comprise entre 0 et n (nombre de pièce à tirer restante
 		r = rand() % (n);
 		//la pièce tirée est ajouté à la liste
-		ordreJoueurs[joueur - 1][i] = liste[r];
+		ordreJoueurs[joueur - 1][i] = liste[r]+20*(joueur-1);
 		//sa place dans la liste est remplacé par la celle la plus en haut du tableau
 		liste[r] = liste[n];
 	}
 	// on ajoute le dernier terme
-	ordreJoueurs[joueur - 1][19] = liste[0];
+	ordreJoueurs[joueur - 1][19] = liste[0]+20*(joueur-1);
 
 	return 0;
 }

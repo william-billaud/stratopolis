@@ -160,5 +160,5 @@ ORDREPIECE ordreJoueurs[2];
 /*!
  * \brief tableau contenant les pièces.
  */
-pieces PIECE[43];
+pieces PIECE[42];
 #endif
