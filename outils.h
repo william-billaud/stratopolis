@@ -141,6 +141,15 @@ int getNumeroPiece(historiqueCase c);
  */
 bool inArrayIny(int *array, unsigned int h, int valeur);
 
+/*!
+ * \brief retourne la couleur d'une pièce
+ * \param numeroPiece numero de la pièce
+ * \param numeroTuile numero de la tuile sur la pièce ( 1, 2 ou 3)
+ * \return la couleur correspondant au numero de la pièce
+ * \return neutre en cas d'erreur
+ */
+couleur couleurPiece(int numeroPiece,int numeroTuile);
+
 //definition des variables globales
 /**\var variable global contenant le plateau*/
 PLATEAU plat;
@@ -148,4 +157,8 @@ PLATEAU plat;
 /**\var tableau contenant l'ordre des pièces de joueurs 1 et 2, ordreJoueur[0]= ordre des pièces du joueur 1
  * ordreJoueur[1]= ordre des pièces du joueur 2*/
 ORDREPIECE ordreJoueurs[2];
+/*!
+ * \brief tableau contenant les pièces.
+ */
+pieces PIECE[43];
 #endif

@@ -11,6 +11,8 @@
 /**\var variable global contenant le plateau*/
 extern PLATEAU plat;
 
+extern pieces PIECE[43];
+
 /*!
 \brief fonction permettant de recuperer un pointeur vers un case
 \param[in] x : abscisse de la case
@@ -118,4 +120,32 @@ bool inArrayIny(int *array, unsigned int h, int valeur)
 
 	}
 	return false;
+}
+
+/*!
+ * \brief retourne la couleur d'une pièce
+ * \param numeroPiece numero de la pièce
+ * \param numeroTuile numero de la tuile sur la pièce ( 1, 2 ou 3)
+ * \return la couleur correspondant au numero de la pièce
+ * \return neutre en cas d'erreur
+ */
+couleur couleurPiece(int numeroPiece,int numeroTuile){
+
+    if(numeroPiece<0 || numeroPiece>41)
+    {
+        return neutre;
+
+    } else{
+        switch (numeroTuile) {
+            case 1:
+                return PIECE[numeroPiece].c1;
+            case 2:
+                return PIECE[numeroPiece].c2;
+            case 3:
+                return PIECE[numeroPiece].c3;
+            default:
+                return neutre;
+
+        }
+    }
 }
