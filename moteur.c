@@ -121,3 +121,86 @@ bool possedeTuileAdjacente(int x, int y)
     }
     return false;
 }
+
+/*!
+ * \brief permet de savoir si une superposition de couleur est valide
+ * \param haut pièce du haut
+ * \param bas pièce du bas
+ * \return true si la superposition est valide
+ * \return false si la superpostion est invalide
+ */
+bool estValideSuperposition(couleur haut,couleur bas)
+{
+    if((haut==rouge && bas==vert) || (haut==bas && bas==rouge))
+    {
+        return false;
+    } else
+    {
+        return true;
+    }
+}
+
+/*!
+\brief verifie qu'un coup est valide
+\param[in] coupJoueur coup du joueur
+\return true si le coup est valide
+\return false si le coup n'est pas possible
+*/
+bool estValideCoup(coup coupJoueur){
+    historiqueCase *c1,*c2,*c3;
+    int x1,x3,y1,y3;
+    c2=getCase(coupJoueur.xCoup,coupJoueur.yCoup);
+    x1=coupJoueur.xCoup;
+    y1=coupJoueur.yCoup;
+    x3=coupJoueur.xCoup;
+    y3=coupJoueur.yCoup;
+    switch (coupJoueur.orientationPiece)
+    {
+        case HD:
+            y1+=1;
+            x3+=1;
+            break;
+        case BD:
+            x1+=1;
+            y3-=1;
+            break;
+        case BG:
+            y1-=1;
+            x3-=1;
+            break;
+        case HG:
+            x1-=1;
+            y3+=1;
+            break;
+        default:
+            return false;
+    }
+    c1=getCase(x1,y1);
+    c3=getCase(x3,y3);
+    if(c1==NULL || c3==NULL || c2 ==NULL)
+    {
+        return false;
+    }
+    if(getHauteurCase(*c1)!=getHauteurCase(*c2) || getHauteurCase(*c1)!= getHauteurCase(*c3))
+    {
+        return false;
+    }
+    if(getHauteurCase(*c1)==0)
+    {
+        if(possedeTuileAdjacente(x1,y1)==false && possedeTuileAdjacente(x3,y3)==false && false==possedeTuileAdjacente(coupJoueur.xCoup,coupJoueur.yCoup))
+        {
+            return false;
+        }
+    } else{
+        if(!estValideSuperposition( couleurPiece(coupJoueur.numeroPiece,1),(couleur)getCouleurCase(*c1)) || !estValideSuperposition( couleurPiece(coupJoueur.numeroPiece,2),(couleur)getCouleurCase(*c2)) || !estValideSuperposition( couleurPiece(coupJoueur.numeroPiece,1),(couleur)getCouleurCase(*c2)))
+        {
+            return false;
+        }
+
+    }
+    if(getNumeroPiece(*c1)==getNumeroPiece(*c2) && getNumeroPiece(*c1)==getNumeroPiece(*c3))
+    {
+        return false;
+    }
+    return true;
+}
