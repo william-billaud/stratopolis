@@ -190,6 +190,7 @@ bool estValideCoup(coup coupJoueur){
     //si la pièce va êtres posée au niveau zero, verifie que l'une des tuile possède un coté adjacent a une autres tuile
     if(getHauteurCase(*c1)==0)
     {
+
         if(possedeTuileAdjacente(x1,y1)==false && possedeTuileAdjacente(x3,y3)==false && false==possedeTuileAdjacente(coupJoueur.xCoup,coupJoueur.yCoup))
         {
             return false;
@@ -200,12 +201,67 @@ bool estValideCoup(coup coupJoueur){
         {
             return false;
         }
+        //verifie que la pièce va etresposé sur au moins deux autres pièces
+        if(getNumeroPiece(*c1)==getNumeroPiece(*c2) && getNumeroPiece(*c1)==getNumeroPiece(*c3))
+        {
+            return false;
+        }
+    }
 
-    }
-    //verifie que la pièce va etresposé sur au moins deux autres pièces
-    if(getNumeroPiece(*c1)==getNumeroPiece(*c2) && getNumeroPiece(*c1)==getNumeroPiece(*c3))
-    {
-        return false;
-    }
     return true;
+}
+
+/*!
+\brief pose une tuile sur le plateau
+\param[in] coupJoueur : coup du joueur
+\return 1 si le coup a pu être effectué
+\return 0 si le coup est invalide
+*/
+int joueCoup(coup coupJoueur){
+
+    if(estValideCoup(coupJoueur)==false)
+    {
+        return 0;
+    }
+    historiqueCase *c1,*c2,*c3;
+    int x1,x3,y1,y3;
+    c2=getCase(coupJoueur.xCoup,coupJoueur.yCoup);
+    x1=coupJoueur.xCoup;
+    y1=coupJoueur.yCoup;
+    x3=coupJoueur.xCoup;
+    y3=coupJoueur.yCoup;
+    switch (coupJoueur.orientationPiece)
+    {
+        case HD:
+            y1+=1;
+            x3+=1;
+            break;
+        case BD:
+            x1+=1;
+            y3-=1;
+            break;
+        case BG:
+            y1-=1;
+            x3-=1;
+            break;
+        case HG:
+            x1-=1;
+            y3+=1;
+            break;
+        default:
+            return false;
+    }
+    //recupère les case sur lequelle la pièce veux se poser
+    c1=getCase(x1,y1);
+    c3=getCase(x3,y3);
+    c1->hauteur= (char) (getHauteurCase(*c1) + 1);
+    c2->hauteur= (char) (getHauteurCase(*c2) + 1);
+    c3->hauteur= (char) (getHauteurCase(*c3) + 1);
+    c1->tabEtage[getHauteurCase(*c1)].numeroPiece=coupJoueur.numeroPiece;
+    c2->tabEtage[getHauteurCase(*c2)].numeroPiece=coupJoueur.numeroPiece;
+    c3->tabEtage[getHauteurCase(*c3)].numeroPiece=coupJoueur.numeroPiece;
+    c1->tabEtage[getHauteurCase(*c1)].couleurEtage=PIECE[coupJoueur.numeroPiece].c1;
+    c2->tabEtage[getHauteurCase(*c2)].couleurEtage=PIECE[coupJoueur.numeroPiece].c2;
+    c3->tabEtage[getHauteurCase(*c3)].couleurEtage= PIECE[coupJoueur.numeroPiece].c3;
+    return 1;
 }

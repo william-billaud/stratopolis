@@ -49,5 +49,11 @@ int main(void)
     for (j = 0; j <41 ; ++j) {
         printf("pieces numero : %2d , c1 = %d , c2 = %d, c3= %d \n",PIECE[j].numeroPiece,PIECE[j].c1,PIECE[j].c2,PIECE[j].c3);
     }
+	coup cp;
+	cp.numeroPiece=14;
+	cp.xCoup=85;
+	cp.yCoup=80;
+	cp.orientationPiece=HD;
+	printf("joue coup %d\n",joueCoup(cp));
     return 0;
 }

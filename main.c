@@ -6,7 +6,6 @@
 * \date 22/01/2107
 */
 
-#include <math.h>
 #include "affichage.h"
 #ifndef M_PI
 #define M_PI 3.14
