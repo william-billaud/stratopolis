@@ -248,7 +248,26 @@ int joueCoup(coup coupJoueur){
  * \return 1 si tout c'est bien passé
  * \return -1 si le coup n'as pas pu etres annullé
 */
-/*
+
 int dejoueCoup(coup coupAnnulle){
-    return 0;
-}*/
+    historiqueCase* caseCoups[3];
+    if(getCasesFromCoup(coupAnnulle,caseCoups)==-1)
+    {
+        return -1;
+    }
+    int i;
+    //on verifie que rien n'a été posée sur la pièce
+    for (i = 0; i < 3; ++i) {
+        if(coupAnnulle.numeroPiece!=getNumeroPiece(*(caseCoups[i])))
+        {
+            return -2;
+        }
+    }
+    for (i = 0; i < 3; ++i){
+        caseCoups[i]->tabEtage[getHauteurCase(*(caseCoups[i]))].couleurEtage=vide;
+        caseCoups[i]->tabEtage[getHauteurCase(*(caseCoups[i]))].numeroPiece=41;
+        caseCoups[i]->hauteur-=1;
+    }
+    return 1;
+
+}
