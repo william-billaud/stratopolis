@@ -70,6 +70,7 @@ typedef struct historiqueCase {
 	char hauteur;		/*!< hauteur de la case (0 si la case est vide) */
 	etage tabEtage[20];	/*!< tableau contenant tous les étages de la case */
 } historiqueCase;
+
 /*!
    \brief structure contenant les informations pour jouer un coup
 */
@@ -84,6 +85,7 @@ typedef struct coup {
  * \brief tableau contenant l'ordre des pièces
  */
 typedef int ORDREPIECE[20];
+
 /*!
  * \brief tableau contenant le plateau de jeu
  */
@@ -155,6 +157,16 @@ couleur couleurPiece(int numeroPiece,int numeroTuile);
  * \return 0 si tout c'est bien passé
  */
 int initPiece(void);
+
+/*!
+ * \brief retourne une case d'un coup
+ * \param coupJoueur coup du joueur
+ * \param [out] tableau contenant les cases
+ * \return -1 si une case contient un pointeur null
+ * \return 0 si tout c'est bien passé
+ */
+int getCasesFromCoup(coup coupJoueur,historiqueCase* tab[3]);
+
 //definition des variables globales
 /**\var variable global contenant le plateau*/
 PLATEAU plat;

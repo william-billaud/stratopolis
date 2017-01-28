@@ -223,45 +223,32 @@ int joueCoup(coup coupJoueur){
     {
         return 0;
     }
-    historiqueCase *c1,*c2,*c3;
-    int x1,x3,y1,y3;
-    c2=getCase(coupJoueur.xCoup,coupJoueur.yCoup);
-    x1=coupJoueur.xCoup;
-    y1=coupJoueur.yCoup;
-    x3=coupJoueur.xCoup;
-    y3=coupJoueur.yCoup;
-    switch (coupJoueur.orientationPiece)
+    historiqueCase* caseCoups[3];
+    if(getCasesFromCoup(coupJoueur,caseCoups)==-1)
     {
-        case HD:
-            y1+=1;
-            x3+=1;
-            break;
-        case BD:
-            x1+=1;
-            y3-=1;
-            break;
-        case BG:
-            y1-=1;
-            x3-=1;
-            break;
-        case HG:
-            x1-=1;
-            y3+=1;
-            break;
-        default:
-            return false;
+        return -1;
     }
-    //recupère les case sur lequelle la pièce veux se poser
-    c1=getCase(x1,y1);
-    c3=getCase(x3,y3);
-    c1->hauteur= (char) (getHauteurCase(*c1) + 1);
-    c2->hauteur= (char) (getHauteurCase(*c2) + 1);
-    c3->hauteur= (char) (getHauteurCase(*c3) + 1);
-    c1->tabEtage[getHauteurCase(*c1)].numeroPiece=coupJoueur.numeroPiece;
-    c2->tabEtage[getHauteurCase(*c2)].numeroPiece=coupJoueur.numeroPiece;
-    c3->tabEtage[getHauteurCase(*c3)].numeroPiece=coupJoueur.numeroPiece;
-    c1->tabEtage[getHauteurCase(*c1)].couleurEtage=PIECE[coupJoueur.numeroPiece].c1;
-    c2->tabEtage[getHauteurCase(*c2)].couleurEtage=PIECE[coupJoueur.numeroPiece].c2;
-    c3->tabEtage[getHauteurCase(*c3)].couleurEtage= PIECE[coupJoueur.numeroPiece].c3;
+    int i;
+    for (i = 0; i < 3 ; ++i) {
+        //change la hauteur des case
+        caseCoups[i]->hauteur+=1;
+        //ajoute la numero de pièce a cette hauteur
+        caseCoups[i]->tabEtage[getHauteurCase(*(caseCoups[i]))].numeroPiece=coupJoueur.numeroPiece;
+    }
+    //modifie les couleurs des cases
+    caseCoups[0]->tabEtage[getHauteurCase(*(caseCoups[0]))].couleurEtage=PIECE[coupJoueur.numeroPiece].c1;
+    caseCoups[1]->tabEtage[getHauteurCase(*(caseCoups[1]))].couleurEtage=PIECE[coupJoueur.numeroPiece].c2;
+    caseCoups[2]->tabEtage[getHauteurCase(*(caseCoups[2]))].couleurEtage=PIECE[coupJoueur.numeroPiece].c3;
     return 1;
 }
+
+/*!
+ * \brief dejoue un coup
+ * \param[in] coupAnnulle : coup à annullée
+ * \return 1 si tout c'est bien passé
+ * \return -1 si le coup n'as pas pu etres annullé
+*/
+/*
+int dejoueCoup(coup coupAnnulle){
+    return 0;
+}*/

@@ -51,7 +51,7 @@ int main(void)
     }
 	coup cp;
 	cp.numeroPiece=14;
-	cp.xCoup=85;
+	cp.xCoup=82;
 	cp.yCoup=80;
 	cp.orientationPiece=HD;
 	printf("joue coup %d\n",joueCoup(cp));

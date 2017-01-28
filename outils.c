@@ -241,3 +241,50 @@ int initPiece(void){
     PIECE[0].numeroPiece=0;
     return 0;
 }
+
+/*!
+ * \brief retourne une case d'un coup
+ * \param coupJoueur coup du joueur
+ * \param [out] tableau contenant les cases
+ * \return -1 si une case contient un pointeur null
+ * \return 0 si tout c'est bien passé
+ */
+int getCasesFromCoup(coup coupJoueur,historiqueCase* tab[3])
+{
+    int x1,x3,y1,y3;
+    tab[1]=getCase(coupJoueur.xCoup,coupJoueur.yCoup);
+    x1=coupJoueur.xCoup;
+    y1=coupJoueur.yCoup;
+    x3=coupJoueur.xCoup;
+    y3=coupJoueur.yCoup;
+    switch (coupJoueur.orientationPiece)
+    {
+        case HD:
+            y1+=1;
+            x3+=1;
+            break;
+        case BD:
+            x1+=1;
+            y3-=1;
+            break;
+        case BG:
+            y1-=1;
+            x3-=1;
+            break;
+        case HG:
+            x1-=1;
+            y3+=1;
+            break;
+        default:
+            return -1;
+    }
+    tab[0]=getCase(x1,y1);
+    tab[2]=getCase(x3,y3);
+    if(tab[0]==NULL || tab[1]==NULL || tab[2]==NULL)
+    {
+        return -1;
+    }
+    return 0;
+
+
+}
