@@ -69,6 +69,8 @@ tabEtage[hauteur] correspond à la pièce visible
 typedef struct historiqueCase {
 	char hauteur;		/*!< hauteur de la case (0 si la case est vide) */
 	etage tabEtage[20];	/*!< tableau contenant tous les étages de la case */
+	int x;
+	int y;
 } historiqueCase;
 
 /*!
@@ -150,7 +152,7 @@ bool inArrayIny(int *array, unsigned int h, int valeur);
  * \return la couleur correspondant au numero de la pièce
  * \return neutre en cas d'erreur
  */
-couleur couleurPiece(int numeroPiece,int numeroTuile);
+couleur couleurPiece(int numeroPiece, int numeroTuile);
 
 /*!
  * \brief initalise les pièces du jeu dans un tableau
@@ -165,7 +167,7 @@ int initPiece(void);
  * \return -1 si une case contient un pointeur null
  * \return 0 si tout c'est bien passé
  */
-int getCasesFromCoup(coup coupJoueur,historiqueCase* tab[3]);
+int getCasesFromCoup(coup coupJoueur, historiqueCase * tab[3]);
 
 //definition des variables globales
 /**\var variable global contenant le plateau*/

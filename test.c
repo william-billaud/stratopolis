@@ -18,7 +18,7 @@ extern ORDREPIECE ordreJoueurs[2];
 int main(void)
 {
 	initPlateau();
-    initPiece();
+	initPiece();
 	historiqueCase *c;
 	//test get hauteur
 	printf("getHauteur : %d \n", getHauteurCase(plat[80][80]));
@@ -44,17 +44,19 @@ int main(void)
 		printf("%2d : %2d \t %2d : %2d  \n", k, ordreJoueurs[0][k], k,
 		       ordreJoueurs[1][k]);
 	}
-	printf(possedeTuileAdjacente(85,85) ? "vrai\n" : "faux\n");
-    int j;
-    for (j = 0; j <41 ; ++j) {
-        printf("pieces numero : %2d , c1 = %d , c2 = %d, c3= %d \n",PIECE[j].numeroPiece,PIECE[j].c1,PIECE[j].c2,PIECE[j].c3);
-    }
+	printf(possedeTuileAdjacente(85, 85) ? "vrai\n" : "faux\n");
+	int j;
+	for (j = 0; j < 41; ++j) {
+		printf("pieces numero : %2d , c1 = %d , c2 = %d, c3= %d \n",
+		       PIECE[j].numeroPiece, PIECE[j].c1, PIECE[j].c2,
+		       PIECE[j].c3);
+	}
 	coup cp;
-	cp.numeroPiece=14;
-	cp.xCoup=82;
-	cp.yCoup=80;
-	cp.orientationPiece=HD;
-	printf("joue le coup %d\n",joueCoup(cp));
-    printf("dejoue le coup %d\n",dejoueCoup(cp));
-    return 0;
+	cp.numeroPiece = 14;
+	cp.xCoup = 82;
+	cp.yCoup = 80;
+	cp.orientationPiece = HD;
+	printf("joue le coup %d\n", joueCoup(cp));
+	printf("dejoue le coup %d\n", dejoueCoup(cp));
+	return 0;
 }

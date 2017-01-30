@@ -103,5 +103,5 @@ int initOrdrePieces(int joueur);
  * \return true si la superposition est valide
  * \return false si la superpostion est invalide
  */
-bool estValideSuperposition(couleur haut,couleur bas);
+bool estValideSuperposition(couleur haut, couleur bas);
 #endif
