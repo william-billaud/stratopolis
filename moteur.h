@@ -6,9 +6,11 @@
    \date 22/01/2017
 */
 
-#include "outils.h"
 #ifndef H_MOTEUR
 #define H_MOTEUR
+
+
+#include "outils.h"
 
 /*!
 \brief verifie qu'un coup est valide

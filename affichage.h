@@ -5,12 +5,10 @@
    \author Billaud
    \date 22/01/2017
 */
-#include "outils.h"
-#include "moteur.h"
-
 #ifndef H_AFFICHAGE
 #define H_AFFICHAGE
 
+#include "moteur.h"
 /*!
    \brief Affiche le menu principal (Jouer, Aide, Options, Quitter), et la sélection
    \param[in] posX : position en abscisse du curseur de la souris
@@ -91,5 +89,14 @@ void afficheScore(int scoreJ1, int scoreJ2);
    \return rien
 */
 void pause(void);
+
+/*!
+   \brief Affiche un cercle
+   \param[in] centreX : coordonnée en abscisse du centre
+	 \param[in] centreY : coordonnée en ordonnée du centre
+   \param[in] rayon : taille du rayon
+	 \return rien
+*/
+void cercle(float centreX, float centreY, float rayon);
 
 #endif
