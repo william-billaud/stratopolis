@@ -92,4 +92,13 @@ void afficheScore(int scoreJ1, int scoreJ2);
 */
 void pause(void);
 
+/*!
+  \brief Fonction de trace de cercle
+  \param[in] centreX : coordonnée en abscisse du centre du cercle
+  \param[in] centreY : coordonnée en ordonnée du centre du cercle
+  \param[in] rayon : rayon du cercle
+  \return rien
+*/
+void cercle(float centreX, float centreY, float rayon);
+
 #endif
