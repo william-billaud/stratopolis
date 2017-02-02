@@ -10,7 +10,6 @@
 
 #ifndef H_OUTILS
 #define H_OUTILS
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>		// Pour pouvoir utiliser void exit(int)
 #include <math.h>		// Pour pouvoir utiliser les librairies mathematiques
