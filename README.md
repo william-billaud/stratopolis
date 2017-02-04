@@ -1,1 +1,1 @@
-Projet Strotapolis version 1
+Projet Strotapolis
