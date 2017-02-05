@@ -75,7 +75,7 @@ void afficheInterface(char nomJ1[15], char nomJ2[15]);
    \brief Affiche le plateau de jeu, la couleur et la hauteur de chaque case
 	 \return rien
 */
-void afficheGrille(void);
+void afficheGrille(unsigned int zoom);
 
 /*!
    \brief Affiche le score

@@ -27,10 +27,14 @@ void gestionEvenement(EvenementGfx evenement)
 
 	switch (evenement) {
 	case Initialisation:
+		printf("%s\n", "Initialisation");
+		initPlateau();
 		demandeAnimation_ips(50);
 		break;
 
 	case Affichage:
+		effaceFenetre(78, 61, 40);
+		afficheGrille(10);
 		break;
 
 	case Clavier:
@@ -38,7 +42,7 @@ void gestionEvenement(EvenementGfx evenement)
 		       caractereClavier());
 
 		switch (caractereClavier()) {
-		case 'Q':	/* Pour sortir quelque peu proprement du programme */
+		case 'Q':
 		case 'q':
 			exit(0);
 

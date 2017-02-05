@@ -121,6 +121,24 @@ bool inArrayIny(int *array, unsigned int h, int valeur)
 	return false;
 }
 
+/**
+ * \brief compare deux flottants
+ * \param a : premier flottant à comparer
+ * \param b : deuxième flottant à comparer
+ * \param minOuMax : false si on cherche le plus petit, true si on cherche le plus grand
+ * \return a ou b
+ */
+float compare(float a, float b, bool minOuMax)
+{
+	if (a <= b && !minOuMax) {
+		return a;
+	}
+	if (a >= b && minOuMax) {
+		return a;
+	}
+	return b;
+}
+
 /*!
  * \brief retourne la couleur d'une pièce
  * \param numeroPiece numero de la pièce
