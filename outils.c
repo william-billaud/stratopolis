@@ -8,8 +8,8 @@
 
 #include "outils.h"
 
-/**\var variable global contenant le plateau*/
 extern PLATEAU plat;
+/**< variable global contenant le plateau*/
 
 extern pieces PIECE[42];
 
@@ -239,7 +239,7 @@ int initPiece(void)
 /*!
  * \brief retourne une case d'un coup
  * \param coupJoueur coup du joueur
- * \param [out] tableau contenant les cases
+ * \param [out] tab tableau contenant les cases
  * \return -1 si une case contient un pointeur null
  * \return 0 si tout c'est bien passé
  */

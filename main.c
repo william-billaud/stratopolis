@@ -7,20 +7,38 @@
 */
 
 #include "affichage.h"
+/**
+ * \brief definition de pi si elle n'a pas été importé depuis math.h
+ */
 #ifndef M_PI
 #define M_PI 3.14
 #endif
 
-/// Largeur et hauteur par defaut d'une image correspondant a nos criteres
+/// Largeur par defaut d'une image correspondant a nos criteres
 #define LargeurFenetre 800
+/// hauteur par defaut d'une image correspondant a nos critères
 #define HauteurFenetre 600
 
-// Fonction de trace de cercle
+/**
+ * \brief Fonction de trace de cercle
+ * \param centreX abcsisse du centre du cercle
+ * \param centreY ordonnée du centre du cercle
+ * \param rayon rayon du cercle
+ */
 void cercle(float centreX, float centreY, float rayon);
-/* La fonction de gestion des evenements, appelee automatiquement par le systeme
-des qu'une evenement survient */
+/**
+ * \brief La fonction de gestion des evenements, appelee automatiquement par le systeme
+des qu'une evenement survient
+ * \param evenement nom de l'evenement
+ */
 void gestionEvenement(EvenementGfx evenement);
 
+/**
+ * \brief fonction main
+ * \param argc nombre d'argument
+ * \param argv tableau contenant les argument
+ * \return 0 si tout est bon
+ */
 int main(int argc, char **argv)
 {
 	initialiseGfx(argc, argv);

@@ -3,7 +3,7 @@
    \brief fichier contenant les prototypes des outils utiles dans tous les autres modules
    \author Billaud William
    \author Hipault Theo
-   \date \today
+   \date 07/02/2017
 
 	 fichier contenant les prototypes des fonctions,les structures de données et les enum utiles dans les autres modules
 */
@@ -17,6 +17,9 @@
 #include "lib/GfxLib.h"
 #include <time.h>
 
+/**
+ * \brief taille maximum du tableau
+ */
 #define TAILLEMAX 162
 
 /*!
@@ -68,8 +71,8 @@ tabEtage[hauteur] correspond à la pièce visible
 typedef struct historiqueCase {
 	char hauteur;		/*!< hauteur de la case (0 si la case est vide) */
 	etage tabEtage[20];	/*!< tableau contenant tous les étages de la case */
-	int x;
-	int y;
+	int x; /**< abscisse de la case dans le plateau*/
+	int y; /**< ordonnée de la case dans le plateau*/
 } historiqueCase;
 
 /*!
@@ -162,19 +165,21 @@ int initPiece(void);
 /*!
  * \brief retourne une case d'un coup
  * \param coupJoueur coup du joueur
- * \param [out] tableau contenant les cases
+ * \param [out] tab tableau contenant les cases
  * \return -1 si une case contient un pointeur null
  * \return 0 si tout c'est bien passé
  */
 int getCasesFromCoup(coup coupJoueur, historiqueCase * tab[3]);
 
 //definition des variables globales
-/**\var variable global contenant le plateau*/
-PLATEAU plat;
 
-/**\var tableau contenant l'ordre des pièces de joueurs 1 et 2, ordreJoueur[0]= ordre des pièces du joueur 1
- * ordreJoueur[1]= ordre des pièces du joueur 2*/
+PLATEAU plat;
+/**< variable global contenant le plateau*/
+
 ORDREPIECE ordreJoueurs[2];
+/**< tableau contenant l'ordre des pièces de joueurs 1 et 2, ordreJoueur[0]= ordre des pièces du joueur 1
+ * ordreJoueur[1]= ordre des pièces du joueur 2*/
+
 /*!
  * \brief tableau contenant les pièces.
  */
