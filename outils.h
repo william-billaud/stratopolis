@@ -14,8 +14,8 @@
 #include <stdio.h>
 #include <stdlib.h>		// Pour pouvoir utiliser void exit(int)
 #include <math.h>		// Pour pouvoir utiliser les librairies mathematiques
-#include "ESLib.h"
-#include "GfxLib.h"
+#include "lib/ESLib.h"
+#include "lib/GfxLib.h"
 #include <time.h>
 
 #define TAILLEMAX 162
@@ -69,7 +69,10 @@ tabEtage[hauteur] correspond à la pièce visible
 typedef struct historiqueCase {
 	char hauteur;		/*!< hauteur de la case (0 si la case est vide) */
 	etage tabEtage[20];	/*!< tableau contenant tous les étages de la case */
+	int x;
+	int y;
 } historiqueCase;
+
 /*!
    \brief structure contenant les informations pour jouer un coup
 */
@@ -84,6 +87,7 @@ typedef struct coup {
  * \brief tableau contenant l'ordre des pièces
  */
 typedef int ORDREPIECE[20];
+
 /*!
  * \brief tableau contenant le plateau de jeu
  */
@@ -141,10 +145,39 @@ int getNumeroPiece(historiqueCase c);
  */
 bool inArrayIny(int *array, unsigned int h, int valeur);
 
+/*!
+ * \brief retourne la couleur d'une pièce
+ * \param numeroPiece numero de la pièce
+ * \param numeroTuile numero de la tuile sur la pièce ( 1, 2 ou 3)
+ * \return la couleur correspondant au numero de la pièce
+ * \return neutre en cas d'erreur
+ */
+couleur couleurPiece(int numeroPiece, int numeroTuile);
+
+/*!
+ * \brief initalise les pièces du jeu dans un tableau
+ * \return 0 si tout c'est bien passé
+ */
+int initPiece(void);
+
+/*!
+ * \brief retourne une case d'un coup
+ * \param coupJoueur coup du joueur
+ * \param [out] tableau contenant les cases
+ * \return -1 si une case contient un pointeur null
+ * \return 0 si tout c'est bien passé
+ */
+int getCasesFromCoup(coup coupJoueur, historiqueCase * tab[3]);
+
 //definition des variables globales
 /**\var variable global contenant le plateau*/
 PLATEAU plat;
+
 /**\var tableau contenant l'ordre des pièces de joueurs 1 et 2, ordreJoueur[0]= ordre des pièces du joueur 1
  * ordreJoueur[1]= ordre des pièces du joueur 2*/
 ORDREPIECE ordreJoueurs[2];
+/*!
+ * \brief tableau contenant les pièces.
+ */
+pieces PIECE[42];
 #endif
