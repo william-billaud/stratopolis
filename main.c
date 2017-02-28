@@ -29,12 +29,36 @@ void gestionEvenement(EvenementGfx evenement)
 	case Initialisation:
 		printf("%s\n", "Initialisation");
 		initPlateau();
+		plat[79][80].hauteur = 1;
+		plat[79][80].tabEtage[1].couleurEtage = vert;
+		plat[79][80].tabEtage[1].numeroPiece = 7;
+
+		plat[79][81].hauteur = 1;
+		plat[79][81].tabEtage[1].couleurEtage = rouge;
+		plat[79][81].tabEtage[1].numeroPiece = 7;
+
+		plat[80][81].hauteur = 1;
+		plat[80][81].tabEtage[1].couleurEtage = vert;
+		plat[80][81].tabEtage[1].numeroPiece = 7;
+
+		plat[80][79].hauteur = 1;
+		plat[80][79].tabEtage[1].couleurEtage = vert;
+		plat[80][79].tabEtage[1].numeroPiece = 10;
+
+		plat[81][79].hauteur = 1;
+		plat[81][79].tabEtage[1].couleurEtage = rouge;
+		plat[81][79].tabEtage[1].numeroPiece = 10;
+
+		plat[80][78].hauteur = 1;
+		plat[80][78].tabEtage[1].couleurEtage = rouge;
+		plat[80][78].tabEtage[1].numeroPiece = 10;
+
 		demandeAnimation_ips(50);
 		break;
 
 	case Affichage:
-		effaceFenetre(78, 61, 40);
-		afficheGrille(10);
+		effaceFenetre(255, 255, 255);
+		afficheGrille(3);
 		break;
 
 	case Clavier:

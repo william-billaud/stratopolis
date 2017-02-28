@@ -26,6 +26,11 @@ void cercle(float centreX, float centreY, float rayon)
 	}
 }
 
+/*!
+   \brief Affiche le plateau de jeu, la couleur et la hauteur de chaque case
+	 \param[in] zoom : niveau de zoom (minimum 1, maximum 81)
+	 \return rien
+*/
 void afficheGrille(unsigned int zoom)
 {
 	if (zoom < 1) {
@@ -35,44 +40,89 @@ void afficheGrille(unsigned int zoom)
 		zoom = 81;
 	}
 
-	int i, j;
+	int i, j, numero;
+	char hauteur[2];
 	int diagInf = 81 - zoom;
 	int diagSup = 81 + zoom;
-	float milieuX = largeurFenetre() / 2;
-	float milieuY = hauteurFenetre() / 2;
-	float ecart = 2 * compare(milieuX, milieuY, false) / 3;
 
-	float hauteur_zone_min = milieuY - ecart;
-	float largeur_zone_min = milieuX - ecart;
-	float largeur_zone_max = milieuX + ecart;
+	float ecart =
+	    2 * compare(largeurFenetre() / 2, hauteurFenetre() / 2, false) / 3;
 
-	float taille_case =
-	    ((largeur_zone_max - largeur_zone_min) / (diagSup - diagInf));
+	float h_zone_min = (hauteurFenetre() / 2) - ecart;
+	float h_zone_max = (hauteurFenetre() / 2) + ecart;
+	float l_zone_min = (largeurFenetre() / 2) - ecart;
+	float l_zone_max = (largeurFenetre() / 2) + ecart;
 
+	historiqueCase *maCase;
+	historiqueCase *case_h;
+	historiqueCase *case_b;
+	historiqueCase *case_g;
+	historiqueCase *case_d;
+
+	float taille_case = ((l_zone_max - l_zone_min) / (diagSup - diagInf));
+	couleur couleurCase;
+
+	//Affiche une bordure du plateau
+	couleurCourante(200, 200, 200);
+	rectangle(l_zone_min - 5, h_zone_min - 5,
+		  l_zone_max + 5, h_zone_max + 5);
+	couleurCourante(58, 41, 20);
+	rectangle(l_zone_min, h_zone_min, l_zone_max, h_zone_max);
+
+	//Parcours du plateu de jeu
 	for (i = diagInf; i < diagSup; i++) {
-		float caseXmin = largeur_zone_min + (i - diagInf) * taille_case;
+		float caseXmin = l_zone_min + (i - diagInf) * taille_case;
 		for (j = diagInf; j < diagSup; j++) {
 			float caseYmin =
-			    hauteur_zone_min + (j - diagInf) * taille_case;
-			historiqueCase *maCase = getCase(i, j);
-			couleur couleurCase = getCouleurCase(*maCase);
+			    h_zone_min + (j - diagInf) * taille_case;
+
+			maCase = getCase(i, j);
+			case_h = getCase(i, j + 1);
+			case_b = getCase(i, j - 1);
+			case_g = getCase(i - 1, j);
+			case_d = getCase(i + 1, j);
+
+			//Determine la coueur de la case
+			couleurCase = getCouleurCase(*maCase);
 			if (couleurCase == neutre) {
-				couleurCourante(78, 61, 40);
+				couleurCourante(255, 255, 255);
 			} else if (couleurCase == rouge) {
 				couleurCourante(247, 35, 12);
 			} else if (couleurCase == vert) {
 				couleurCourante(58, 242, 75);
 			}
 			if (couleurCase != vide) {
-				cercle(caseXmin + (taille_case / 2),
-				       caseYmin + (taille_case / 2),
-				       (taille_case / 2));
+				//Trace la case
+				rectangle(caseXmin, caseYmin,
+					  caseXmin + taille_case,
+					  caseYmin + taille_case);
 
-				/*couleurCourante(240, 255, 255);
-				   afficheChaine("1", taille_case,
-				   caseXmin + (taille_case / 2),
-				   caseYmin + (taille_case / 2));
+				//Determine les contours de la pièce
+				/*numero = getNumeroPiece(*maCase);
+				   (numero != getNumeroPiece(*case_h));
+				   (numero != getNumeroPiece(*case_b));
+				   (numero != getNumeroPiece(*case_g));
+				   (numero != getNumeroPiece(*case_d));
 				 */
+
+				//Affiche la hauteur de la case
+				sprintf(hauteur, "%d", getHauteurCase(*maCase));
+				couleurCourante(240, 255, 255);
+				epaisseurDeTrait(3);
+				afficheChaine("1", taille_case / 2,
+					      caseXmin + tailleChaine("1",
+								      taille_case
+								      / 2),
+					      caseYmin + tailleChaine("1",
+								      taille_case
+								      / 2));
+
+			} else {
+				//Trace le fond de la case
+				couleurCourante(78, 61, 40);
+				rectangle(caseXmin + 1, caseYmin + 1,
+					  caseXmin + taille_case - 1,
+					  caseYmin + taille_case - 1);
 			}
 		}
 	}
