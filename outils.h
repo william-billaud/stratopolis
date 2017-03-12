@@ -145,14 +145,6 @@ int getNumeroPiece(historiqueCase c);
  */
 bool inArrayIny(int *array, unsigned int h, int valeur);
 
-/**
- * \brief compare deux flottants
- * \param a : premier flottant à comparer
- * \param b : deuxième flottant à comparer
- * \param minOuMax : false si on cherche le plus petit, true si on cherche le plus grand
- * \return a ou b
- */
-float compare(float a, float b, bool minOuMax);
 
 /*!
  * \brief retourne la couleur d'une pièce

@@ -33,6 +33,7 @@ void cercle(float centreX, float centreY, float rayon)
 */
 void afficheGrille(unsigned int zoom)
 {
+	//Bloque le nombre maximum de cases à afficher
 	if (zoom < 1) {
 		zoom = 1;
 	}
@@ -40,89 +41,98 @@ void afficheGrille(unsigned int zoom)
 		zoom = 81;
 	}
 
-	int i, j, numero;
-	char hauteur[2];
-	int diagInf = 81 - zoom;
-	int diagSup = 81 + zoom;
+	float largeur = largeurFenetre();
+	float hauteur = hauteurFenetre();
+	//Définit l'écart entre le centre de la fenêtre et le bord du plateau
+	float ecart = ((largeur <= hauteur) * largeur
+		       + (largeur > hauteur) * hauteur) / 2.5;
+	float taille_case = ecart / zoom;
+	historiqueCase *maCase, *case_h, *case_b, *case_g, *case_d;
+	float minXcase, minYcase, maxXcase, maxYcase, margeH, margeB, margeG,
+	    margeD;
+	char hauteurCase[20];
 
-	float ecart =
-	    2 * compare(largeurFenetre() / 2, hauteurFenetre() / 2, false) / 3;
-
-	float h_zone_min = (hauteurFenetre() / 2) - ecart;
-	float h_zone_max = (hauteurFenetre() / 2) + ecart;
-	float l_zone_min = (largeurFenetre() / 2) - ecart;
-	float l_zone_max = (largeurFenetre() / 2) + ecart;
-
-	historiqueCase *maCase;
-	historiqueCase *case_h;
-	historiqueCase *case_b;
-	historiqueCase *case_g;
-	historiqueCase *case_d;
-
-	float taille_case = ((l_zone_max - l_zone_min) / (diagSup - diagInf));
-	couleur couleurCase;
-
-	//Affiche une bordure du plateau
+	//Affiche une bordure du plateau de 5 pixels
 	couleurCourante(200, 200, 200);
-	rectangle(l_zone_min - 5, h_zone_min - 5,
-		  l_zone_max + 5, h_zone_max + 5);
-	couleurCourante(58, 41, 20);
-	rectangle(l_zone_min, h_zone_min, l_zone_max, h_zone_max);
+	rectangle(largeur / 2 - ecart - 5,
+		  hauteur / 2 - ecart - 5,
+		  largeur / 2 + ecart + 5, hauteur / 2 + ecart + 5);
 
 	//Parcours du plateu de jeu
-	for (i = diagInf; i < diagSup; i++) {
-		float caseXmin = l_zone_min + (i - diagInf) * taille_case;
-		for (j = diagInf; j < diagSup; j++) {
-			float caseYmin =
-			    h_zone_min + (j - diagInf) * taille_case;
+	for (unsigned int i = (81 - zoom); i < (81 + zoom); i++) {
+		for (unsigned int j = (81 - zoom); j < (81 + zoom); j++) {
 
+			minXcase =
+			    largeur / 2 - ecart + (i - 81 + zoom) * taille_case;
+			minYcase =
+			    hauteur / 2 - ecart + (j - 81 + zoom) * taille_case;
+			maxXcase =
+			    largeur / 2 - ecart + (i - 80 + zoom) * taille_case;
+			maxYcase =
+			    hauteur / 2 - ecart + (j - 80 + zoom) * taille_case;
+
+			//Récupère la pièce courante t les pieces adjacentes
 			maCase = getCase(i, j);
 			case_h = getCase(i, j + 1);
 			case_b = getCase(i, j - 1);
 			case_g = getCase(i - 1, j);
 			case_d = getCase(i + 1, j);
 
+			//Détermine les contours de la pièce
+			margeH =
+			    (getNumeroPiece(*case_h) != getNumeroPiece(*maCase))
+			    || (getHauteurCase(*case_h) !=
+				getHauteurCase(*maCase));
+			margeB =
+			    (getNumeroPiece(*case_b) != getNumeroPiece(*maCase))
+			    || (getHauteurCase(*case_b) !=
+				getHauteurCase(*maCase));
+			margeG =
+			    (getNumeroPiece(*case_g) != getNumeroPiece(*maCase))
+			    || (getHauteurCase(*case_g) !=
+				getHauteurCase(*maCase));
+			margeD =
+			    (getNumeroPiece(*case_d) != getNumeroPiece(*maCase))
+			    || (getHauteurCase(*case_d) !=
+				getHauteurCase(*maCase));
+
+			//Trace le contour
+			couleurCourante(58, 41, 20);
+			rectangle(minXcase + margeG, minYcase + margeB,
+				  maxXcase - margeD, maxYcase - margeH);
+
 			//Determine la coueur de la case
-			couleurCase = getCouleurCase(*maCase);
-			if (couleurCase == neutre) {
-				couleurCourante(255, 255, 255);
-			} else if (couleurCase == rouge) {
+			couleur couleurCase = getCouleurCase(*maCase);
+			switch (couleurCase) {
+			case neutre:
+				couleurCourante(135, 87, 39);
+				break;
+			case rouge:
 				couleurCourante(247, 35, 12);
-			} else if (couleurCase == vert) {
+				break;
+			case vert:
 				couleurCourante(58, 242, 75);
-			}
-			if (couleurCase != vide) {
-				//Trace la case
-				rectangle(caseXmin, caseYmin,
-					  caseXmin + taille_case,
-					  caseYmin + taille_case);
-
-				//Determine les contours de la pièce
-				/*numero = getNumeroPiece(*maCase);
-				   (numero != getNumeroPiece(*case_h));
-				   (numero != getNumeroPiece(*case_b));
-				   (numero != getNumeroPiece(*case_g));
-				   (numero != getNumeroPiece(*case_d));
-				 */
-
-				//Affiche la hauteur de la case
-				sprintf(hauteur, "%d", getHauteurCase(*maCase));
-				couleurCourante(240, 255, 255);
-				epaisseurDeTrait(3);
-				afficheChaine("1", taille_case / 2,
-					      caseXmin + tailleChaine("1",
-								      taille_case
-								      / 2),
-					      caseYmin + tailleChaine("1",
-								      taille_case
-								      / 2));
-
-			} else {
-				//Trace le fond de la case
+				break;
+			case vide:
 				couleurCourante(78, 61, 40);
-				rectangle(caseXmin + 1, caseYmin + 1,
-					  caseXmin + taille_case - 1,
-					  caseYmin + taille_case - 1);
+				break;
+			}
+
+			//Trace la pièce
+			rectangle(minXcase + margeG + 2,
+				  minYcase + margeB + 2,
+				  maxXcase - margeD - 2, maxYcase - margeH - 2);
+			//Affiche la hauteur de la case
+			if (couleurCase != vide) {
+				sprintf(hauteurCase, "%d",
+					getHauteurCase(*maCase));
+				couleurCourante(240, 255, 255);
+				epaisseurDeTrait(2);
+				afficheChaine(hauteurCase, taille_case / 4,
+					      minXcase +
+					      tailleChaine(hauteurCase,
+							   taille_case),
+					      minYcase + taille_case / 4.5);
 			}
 		}
 	}
