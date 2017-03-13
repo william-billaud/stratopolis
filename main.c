@@ -24,19 +24,25 @@ int main(int argc, char **argv)
 void gestionEvenement(EvenementGfx evenement)
 {
 	static bool pleinEcran = false;	// Pour savoir si on est en mode plein ecran ou pas
-
+	int x,y;
+	static unsigned int zoom =3;
 	switch (evenement) {
 	case Initialisation:
 		printf("%s\n", "Initialisation");
 		initPiece();
 		initPlateau();
-
+			coup cp;
+			cp.numeroPiece = 14;
+			cp.xCoup = 82;
+			cp.yCoup = 80;
+			cp.orientationPiece = HD;
+			joueCoup(cp);
 		demandeAnimation_ips(50);
 		break;
 
 	case Affichage:
 		effaceFenetre(255, 255, 255);
-		afficheGrille(3);
+		afficheGrille(zoom);
 		break;
 
 	case Clavier:
@@ -74,11 +80,9 @@ void gestionEvenement(EvenementGfx evenement)
 
 	case BoutonSouris:
 		if (etatBoutonSouris() == GaucheAppuye) {
+			detecteCase(&x,&y,zoom);
 			printf("Bouton gauche appuye en : (%d, %d)\n",
-			       abscisseSouris(), ordonneeSouris());
-		} else if (etatBoutonSouris() == GaucheRelache) {
-			printf("Bouton gauche relache en : (%d, %d)\n",
-			       abscisseSouris(), ordonneeSouris());
+			       x,y);
 		}
 		break;
 

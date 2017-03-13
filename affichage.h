@@ -101,4 +101,5 @@ void pause(void);
 */
 void cercle(float centreX, float centreY, float rayon);
 
+int detecteCase(int *x, int *y,int zoom);
 #endif
