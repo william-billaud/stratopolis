@@ -158,7 +158,7 @@ int detecteCase(int *x, int *y, int zoom) {
     int ord=ordonneeSouris();
     //Définit l'écart entre le centre de la fenêtre et le bord du plateau
     float ecart = (float) (((largeur <= hauteur) * largeur
-                            + (largeur > hauteur) * hauteur) / 2.5);q
+                            + (largeur > hauteur) * hauteur) / 2.5);
     //on regarde si l'utilisateur a cliqué dans la grille
     if (abs>(largeur/2-ecart) && abs<(largeur/2+ecart) && ord <(hauteur/2+ecart) && ord>(hauteur/2-ecart)) {
         float taille_case = ecart / zoom;

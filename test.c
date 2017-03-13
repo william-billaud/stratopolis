@@ -7,14 +7,19 @@
 */
 
 #include "affichage.h"
-/**\var variable global contenant le plateau*/
+
 extern PLATEAU plat;
+/**<\var variable global contenant le plateau*/
 
 extern pieces PIECE[42];
 
-/**\var tableau contenant l'ordre des pièces des joueurs*/
 extern ORDREPIECE ordreJoueurs[2];
+/**<\var tableau contenant l'ordre des pièces des joueurs*/
 
+/**
+ * \brief fonction main de test
+ * \return int 0 ( tout c'est bien passé)
+ */
 int main(void)
 {
 	initPlateau();

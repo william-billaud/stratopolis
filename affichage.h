@@ -87,7 +87,6 @@ void afficheScore(int scoreJ1, int scoreJ2);
 
 /*!
    \brief Met le jeu en pause
-   \param[in] aucun
    \return rien
 */
 void pause(void);

@@ -9,10 +9,17 @@
 #include "affichage.h"
 
 #define LargeurFenetre 800
+/// hauteur par defaut d'une image correspondant a nos critères
 #define HauteurFenetre 600
 
 void gestionEvenement(EvenementGfx evenement);
 
+/**
+ * \brief fonction main
+ * \param argc nombre d'argument
+ * \param argv tableau contenant les argument
+ * \return 0 si tout est bon
+ */
 int main(int argc, char **argv)
 {
 	initialiseGfx(argc, argv);

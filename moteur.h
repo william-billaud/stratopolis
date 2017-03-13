@@ -47,7 +47,7 @@ bool possedeTuileAdjacente(int x, int y);
 \brief cherche un coup pour l'ia
 \param[in] joueur : joueur jouer par l'ia
 \param[in] niveauDifficulte : niveau de difficulté de l'ia
-\param[in] piecesDisponible : liste des pièces disponible
+\param[in] pieceDisponible : liste des pièces disponible
 \param[in] nbPieceRestante : nombre de pièces restantes
 \return un coup proposé par l'ia
 */

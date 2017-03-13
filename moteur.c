@@ -1,5 +1,5 @@
 /*!
-* \file moteur.c.c
+* \file moteur.c
 * \brief fichier contenant les fonction utils au moteur du jeu
 * \author billaud
 * \author hipault
@@ -8,10 +8,10 @@
 
 #include "moteur.h"
 
-/**\var variable global contenant le plateau*/
-extern PLATEAU plat;
-/**\var tableau contenant l'ordre des pièces des joueurs*/
-extern ORDREPIECE ordreJoueurs[2];
+extern PLATEAU plat;/**<\var variable global contenant le plateau*/
+
+extern ORDREPIECE ordreJoueurs[2];/**<\var tableau contenant l'ordre des pièces des joueurs*/
+
 /*!
  * \brief initialise le plateau (pose la pièce initiale)
  * \return 0 si tout c'est bien passé
@@ -20,9 +20,9 @@ extern ORDREPIECE ordreJoueurs[2];
 int initPlateau(void)
 {
 	int i_x;
-	    /**<\var index des abscisse*/
+	    /**< index des abscisse*/
 	int i_y;
-	    /**<\var indes des ordonées*/
+	    /**< index des ordonées*/
 
 	for (i_x = 0; i_x < TAILLEMAX; ++i_x) {
 		for (i_y = 0; i_y < TAILLEMAX; ++i_y) {
@@ -69,9 +69,9 @@ int initOrdrePieces(int joueur)
 	unsigned int a;
 		   /**<\var seed pour le rand()*/
 	int n;
-	  /**<\var nombre de pièces à tirer restantes*/
+	  /**< nombre de pièces à tirer restantes*/
 	int r;
-	  /**<\var resultat du tirage aléatoire*/
+	  /**< resultat du tirage aléatoire*/
 	if (joueur != 1 && joueur != 2) {
 		return -1;
 	}
@@ -81,7 +81,7 @@ int initOrdrePieces(int joueur)
 	}
 	/* recupère le timestamp actuelle et le stock dans a) */
 	a = (unsigned int)time(NULL);
-			       /**<\var seed recupere a partir du timestamp*/
+			       /**< seed recupere a partir du timestamp*/
 	//defini la seed du lancer aléatoire
 	srand(a + 100 * joueur);
 	for (i = 0; i < 19; ++i) {
