@@ -88,14 +88,16 @@ typedef enum { ToucheF1 =
 	ToucheFlecheHaut, ToucheFlecheBas, ToucheFlecheGauche,
 	    ToucheFlecheDroite, ToucheNonGeree
 } TouchesSpeciales;
-
+/**
+ * \brief informations sur les structure en 2D
+ */
 typedef struct {
-	int largeur;		// Largeur des donnees
-	int hauteur;		// Hauteur des donnees
-	float proportionX;
-	float proportionY;
-	int *donnees;		// Les donnees de la texture
-	unsigned int numero;	// L'identifiant OpenGL de la texture
+	int largeur;/**<Largeur des donnees*/
+	int hauteur;/**< Hauteur des donnees*/
+	float proportionX;/**< idk */
+	float proportionY;/**< idk */
+	int *donnees;/**<Les donnees de la texture*/
+	unsigned int numero;/**<L'identifiant OpenGL de la texture*/
 } Texture2D;
 
 // Pour initialiser la partie graphie de la bibliotheque
