@@ -5,7 +5,7 @@ WARNING_FLAGS = -Wall -Wextra -Werror -pedantic -Wformat\
 
 CFLAGS = -std=c99 -m64 -O3 $(WARNING_FLAGS)
 
-CLIBS =libisentlib.a -lm -lGL -lGLU -lglut
+CLIBS =lib/libisentlib.a -lm -lGL -lGLU -lglut -lX11
 
 all: main.o  moteur.o  affichage.o outils.o
 	gcc -o main main.o  moteur.o  affichage.o outils.o $(CLIBS)
@@ -38,3 +38,4 @@ test.o:	test.c moteur.h affichage.h
 clean:
 	rm -f *.o
 	rm -f main test
+	rm *~

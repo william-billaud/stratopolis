@@ -73,7 +73,7 @@ void afficheInterface(char nomJ1[15], char nomJ2[15]);
    \brief Affiche le plateau de jeu, la couleur et la hauteur de chaque case
 	 \return rien
 */
-void afficheGrille(void);
+void afficheGrille(unsigned int zoom);
 
 /*!
    \brief Affiche le score
@@ -91,11 +91,12 @@ void afficheScore(int scoreJ1, int scoreJ2);
 void pause(void);
 
 /*!
-   \brief Affiche un cercle
-   \param[in] centreX : coordonnée en abscisse du centre
-	 \param[in] centreY : coordonnée en ordonnée du centre
-   \param[in] rayon : taille du rayon
-	 \return rien
+  \brief Fonction de trace de cercle
+  \param[in] centreX : coordonnée en abscisse du centre du cercle
+  \param[in] centreY : coordonnée en ordonnée du centre du cercle
+  \param[in] rayon : rayon du cercle
+  \return rien
+>>>>>>> dev
 */
 void cercle(float centreX, float centreY, float rayon);
 

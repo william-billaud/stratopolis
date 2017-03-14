@@ -9,7 +9,6 @@
 #ifndef H_MOTEUR
 #define H_MOTEUR
 
-
 #include "outils.h"
 
 /*!
@@ -98,4 +97,12 @@ int choisisJoueur(void);
  */
 int initOrdrePieces(int joueur);
 
+/*!
+ * \brief permet de savoir si une superposition de couleur est valide
+ * \param haut pièce du haut
+ * \param bas pièce du bas
+ * \return true si la superposition est valide
+ * \return false si la superpostion est invalide
+ */
+bool estValideSuperposition(couleur haut, couleur bas);
 #endif
