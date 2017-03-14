@@ -71,11 +71,13 @@ void dessinePredictif(coup coupJoueur, bool estValide);
 */
 void afficheInterface(char nomJ1[15], char nomJ2[15]);
 
-/*!
-   \brief Affiche le plateau de jeu, la couleur et la hauteur de chaque case
-	 \return rien
-*/
-void afficheGrille(unsigned int zoom);
+/**
+ * \brief Affiche le plateau de jeu, la couleur et la hauteur de chaque case
+ * \param zoom
+ * \param basX
+ * \param basY
+ */
+void afficheGrille(unsigned int zoom,unsigned int basX, unsigned int basY);
 
 /*!
    \brief Affiche le score
@@ -100,5 +102,5 @@ void pause(void);
 */
 void cercle(float centreX, float centreY, float rayon);
 
-int detecteCase(int *x, int *y,int zoom);
+int detecteCase(int *x, int *y, int zoom,int basX, int basY);
 #endif

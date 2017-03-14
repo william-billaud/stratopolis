@@ -32,7 +32,7 @@ void gestionEvenement(EvenementGfx evenement)
 {
 	static bool pleinEcran = false;	// Pour savoir si on est en mode plein ecran ou pas
 	int x,y;
-	static unsigned int zoom =3;
+	static unsigned int zoom_d =160;
 	switch (evenement) {
 	case Initialisation:
 		printf("%s\n", "Initialisation");
@@ -49,7 +49,7 @@ void gestionEvenement(EvenementGfx evenement)
 
 	case Affichage:
 		effaceFenetre(255, 255, 255);
-		afficheGrille(zoom);
+		afficheGrille(zoom_d,80,80);
 		break;
 
 	case Clavier:
@@ -87,7 +87,7 @@ void gestionEvenement(EvenementGfx evenement)
 
 	case BoutonSouris:
 		if (etatBoutonSouris() == GaucheAppuye) {
-			detecteCase(&x,&y,zoom);
+			detecteCase(&x,&y,zoom_d,80,80);
 			printf("Bouton gauche appuye en : (%d, %d)\n",
 			       x,y);
 		}
