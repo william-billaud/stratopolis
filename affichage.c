@@ -7,7 +7,6 @@
 
 #include "affichage.h"
 
-
 /* Fonction de trace de cercle */
 void cercle(float centreX, float centreY, float rayon)
 {

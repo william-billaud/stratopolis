@@ -145,7 +145,6 @@ int getNumeroPiece(historiqueCase c);
  */
 bool inArrayIny(int *array, unsigned int h, int valeur);
 
-
 /*!
  * \brief retourne la couleur d'une pièce
  * \param numeroPiece numero de la pièce
