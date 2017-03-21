@@ -10,6 +10,7 @@
 
 #ifndef H_OUTILS
 #define H_OUTILS
+
 #include <stdio.h>
 #include <stdlib.h>		// Pour pouvoir utiliser void exit(int)
 #include <math.h>		// Pour pouvoir utiliser les librairies mathematiques
@@ -26,10 +27,10 @@
    \brief enum contenant les couleurs
 */
 typedef enum {
-	vide /*!< case vide ( niveau 0) */ ,
-	vert /*!< couleur du joueur 1 */ ,
-	rouge /*!< couleur du joueur 2 */ ,
-	neutre /*!< couleur neutre */ ,
+    vide /*!< case vide ( niveau 0) */ ,
+    vert /*!< couleur du joueur 1 */ ,
+    rouge /*!< couleur du joueur 2 */ ,
+    neutre /*!< couleur neutre */ ,
 } couleur;
 
 /*!
@@ -38,10 +39,10 @@ typedef enum {
 	 les orientations sont données vis a vis du joueur regardant l'ecran, une pièces en L est donc en position HD
 */
 typedef enum {
-	HD /*!< pièce orientée avec un coté vers la haut, et l'autre vers la droite */ ,
-	BD /*!< pièce orientée avec un coté vers le bas, et l'autre vers la droite */ ,
-	BG /*!< pièce orientée avec un coté vers la gauche, et l'autre vers le bas */ ,
-	HG			/*!< pièce orientée avec un coté vers la gauche, et l'autre vers le haut */
+    HD /*!< pièce orientée avec un coté vers la haut, et l'autre vers la droite */ ,
+    BD /*!< pièce orientée avec un coté vers le bas, et l'autre vers la droite */ ,
+    BG /*!< pièce orientée avec un coté vers la gauche, et l'autre vers le bas */ ,
+    HG            /*!< pièce orientée avec un coté vers la gauche, et l'autre vers le haut */
 } orientation;
 
 /*!
@@ -50,17 +51,17 @@ typedef enum {
 	 Les informations concernant les couleur sont données pour la pièce positionnée en L
 */
 typedef struct pieces {
-	couleur c1;		/*!< couleur de la case du haut  */
-	couleur c2;		/*!< couleur de la case du milieu */
-	couleur c3;		/*!< couleur de la case  a droite */
-	unsigned char numeroPiece;	/*!< numero de la pièce */
+    couleur c1;        /*!< couleur de la case du haut  */
+    couleur c2;        /*!< couleur de la case du milieu */
+    couleur c3;        /*!< couleur de la case  a droite */
+    unsigned char numeroPiece;    /*!< numero de la pièce */
 } pieces;
 /*!
    \brief structure contenant des informations concernant un étage d'une case
 */
 typedef struct etage {
-	unsigned char numeroPiece;	/*!< numero de la pièce , 42 correspond à une absence de pièces */
-	couleur couleurEtage;	/*!< couleur de la pieces sur case */
+    unsigned char numeroPiece;    /*!< numero de la pièce , 42 correspond à une absence de pièces */
+    couleur couleurEtage;    /*!< couleur de la pieces sur case */
 } etage;
 
 /*!
@@ -69,20 +70,20 @@ typedef struct etage {
 tabEtage[hauteur] correspond à la pièce visible
 */
 typedef struct historiqueCase {
-	char hauteur;		/*!< hauteur de la case (0 si la case est vide) */
-	etage tabEtage[20];	/*!< tableau contenant tous les étages de la case */
-	int x; /**< abscisse de la case dans le plateau*/
-	int y; /**< ordonnée de la case dans le plateau*/
+    int hauteur;        /*!< hauteur de la case (0 si la case est vide) */
+    etage tabEtage[20];    /*!< tableau contenant tous les étages de la case */
+    int x; /**< abscisse de la case dans le plateau*/
+    int y; /**< ordonnée de la case dans le plateau*/
 } historiqueCase;
 
 /*!
    \brief structure contenant les informations pour jouer un coup
 */
 typedef struct coup {
-	unsigned char numeroPiece;	/*!< numero de la pièces à jouer */
-	unsigned int xCoup;	/*!< abscisse de la case central de la pièces (C2) */
-	unsigned int yCoup;	/*!< ordonnee de la case central de la pièces (C2) */
-	orientation orientationPiece;	/*!< orientation de la pièce */
+    unsigned char numeroPiece;    /*!< numero de la pièces à jouer */
+    unsigned int xCoup;    /*!< abscisse de la case central de la pièces (C2) */
+    unsigned int yCoup;    /*!< ordonnee de la case central de la pièces (C2) */
+    orientation orientationPiece;    /*!< orientation de la pièce */
 } coup;
 
 /*!
@@ -124,7 +125,7 @@ historiqueCase *getCase(int x, int y);
  * \param c pointeur vers une case
  * \return 0
  */
-int setCaseAZero(historiqueCase * c);
+int setCaseAZero(historiqueCase *c);
 
 /*!
  * \brief fonction permettant de récuperer le numero de la pièce en haut d'une case
@@ -170,7 +171,7 @@ int initPiece(void);
  * \return -1 si une case contient un pointeur null
  * \return 0 si tout c'est bien passé
  */
-int getCasesFromCoup(coup coupJoueur, historiqueCase * tab[3]);
+int getCasesFromCoup(coup coupJoueur, historiqueCase *tab[3]);
 
 //definition des variables globales
 

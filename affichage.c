@@ -157,7 +157,7 @@ void afficheGrille(unsigned int zoom,unsigned int basX, unsigned int basY) {
  * \return 1 si l'utilisateur a clique dans la grille
  * \return 0 si l'utilisateur à clique en dehors de la grille
  */
-int detecteCase(int *x, int *y, int zoom,int basX, int basY) {
+int detecteCase(int *x, int *y, int zoom,unsigned int basX, unsigned int basY) {
 
     if (zoom < 1) {
         zoom = 1;
@@ -167,11 +167,11 @@ int detecteCase(int *x, int *y, int zoom,int basX, int basY) {
     }
     if(basX+zoom>=TAILLEMAX)
     {
-        basX=TAILLEMAX-1-zoom;
+        basX= (unsigned int) (TAILLEMAX - 1 - zoom);
     }
     if(basY+zoom>=TAILLEMAX)
     {
-        basY=TAILLEMAX-1-zoom;
+        basY= (unsigned int) (TAILLEMAX - 1 - zoom);
     }
 
     float largeur = largeurFenetre();
@@ -184,18 +184,6 @@ int detecteCase(int *x, int *y, int zoom,int basX, int basY) {
     //on regarde si l'utilisateur a cliqué dans la grille
     if (abs>(largeur/2-ecart) && abs<(largeur/2+ecart) && ord <(hauteur/2+ecart) && ord>(hauteur/2-ecart)) {
         float taille_case = 2*ecart / zoom;
-/*    minXcase =
-            largeur / 2 - ecart + (i - 81 + zoom) * taille_case;
-            2*abs=largeur-2*ecart+(i - 81 + zoom) * taille_case*2
-            (abs-largeur/2+ecart)/taille_case+81-zomm
-    //
-    minYcase =
-            hauteur / 2 - ecart + (j - 81 + zoom) * taille_case;
-    maxXcase =
-            largeur / 2 - ecart + (i - 80 + zoom) * taille_case;
-    maxYcase =
-            hauteur / 2 - ecart + (j - 80 + zoom) * taille_case;
-*/
         *x = (int) (((abs + ecart - largeur / 2) / taille_case) + basX);
         *y = (int) (((ord + ecart - hauteur / 2) / taille_case) + basY);
         return 1;

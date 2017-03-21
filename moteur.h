@@ -11,6 +11,24 @@
 #define H_MOTEUR
 
 /*!
+ * \brief structure contenant les information pour crée une liste de case adjacente
+ */
+typedef struct caseCalcul {
+    int x /**<\var abscisse de la case*/;
+    int y /**<\var ordonnée de la case*/;
+    int hauteur /**<\var hauteur de la case*/;
+    struct caseCalcul *next /**<\var pointeur vers une autre case appartenant au meme block*/;
+} caseCalcul;
+
+/*!
+ * \brief structure servant a crées une liste des block de cases differents
+ */
+typedef struct listeBlock{
+    caseCalcul *debutBlock /**<\var debut du block de case de la meme couleurs adjacent*/;
+    struct listeBlock *next /**<\var pointeur vers le block suivant */;
+} listeBlock;
+
+/*!
 \brief verifie qu'un coup est valide
 \param[in] coupJoueur coup du joueur
 \return true si le coup est valide
@@ -104,4 +122,37 @@ int initOrdrePieces(int joueur);
  * \return false si la superpostion est invalide
  */
 bool estValideSuperposition(couleur haut, couleur bas);
+
+/*!
+ * \brief fonction permettant de savoir si un couple de coordonée est present dans une liste simplement chainée
+ * \param x abscisse à tester
+ * \param y ordonée à tester
+ * \param caseDebut tête de la liste
+ * \return true si le couple est present dans la liste
+ * \return false si le couple n'est pas present dans la liste
+ */
+bool estDansBlock(int x,int y,caseCalcul* caseDebut);
+
+/*!
+ * \brief ajoute une caseCalcul en debut de ligne et initialise ses valeurs
+ * \param tete pointeur de le tête precedente
+ * \param x abscisse de la case
+ * \param y ordonnée de la case
+ * \param hauteur hauteur de la case
+ * \return pointeur vers la nouvelle tete
+ */
+caseCalcul* ajouteCaseCalcul(caseCalcul* tete,int x,int y,int hauteur);
+
+/*!
+ * \brief fonction liberant une liste de caseCalcul
+ * \param tete tete de la liste à libérer
+ */
+void libereCaseCalcul(caseCalcul *tete);
+
+/*!
+ * \brief calcul le score donnée par une liste
+ * \param tete tete de la liste
+ * \return score de la liste
+ */
+int scoreListe(caseCalcul* tete);
 #endif

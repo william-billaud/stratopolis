@@ -20,88 +20,89 @@ void gestionEvenement(EvenementGfx evenement);
  * \param argv tableau contenant les argument
  * \return 0 si tout est bon
  */
-int main(int argc, char **argv)
-{
-	initialiseGfx(argc, argv);
-	prepareFenetreGraphique("OpenGL", LargeurFenetre, HauteurFenetre);
-	lanceBoucleEvenements();
-	return 0;
+int main(int argc, char **argv) {
+    initialiseGfx(argc, argv);
+    prepareFenetreGraphique("OpenGL", LargeurFenetre, HauteurFenetre);
+    lanceBoucleEvenements();
+    return 0;
 }
 
-void gestionEvenement(EvenementGfx evenement)
-{
-	static bool pleinEcran = false;	// Pour savoir si on est en mode plein ecran ou pas
-	int x,y;
-	static unsigned int zoom_d =160;
-	switch (evenement) {
-	case Initialisation:
-		printf("%s\n", "Initialisation");
-		initPiece();
-		initPlateau();
-			coup cp;
-			cp.numeroPiece = 14;
-			cp.xCoup = 82;
-			cp.yCoup = 80;
-			cp.orientationPiece = HD;
-			joueCoup(cp);
-		demandeAnimation_ips(50);
-		break;
+void gestionEvenement(EvenementGfx evenement) {
+    static bool pleinEcran = false;    // Pour savoir si on est en mode plein ecran ou pas
+    unsigned int x_d = 80, y_d=80;
+    int x,y;
+    static unsigned int zoom_d = 20;
+    switch (evenement) {
+        case Initialisation:
+            printf("%s\n", "Initialisation");
+            initPiece();
+            initPlateau();
+            coup cp;
+            cp.numeroPiece = 14;
+            cp.xCoup = 82;
+            cp.yCoup = 80;
+            cp.orientationPiece = HD;
+            joueCoup(cp);
+            activeGestionDeplacementPassifSouris();
+            demandeAnimation_ips(50);
+            break;
 
-	case Affichage:
-		effaceFenetre(255, 255, 255);
-		afficheGrille(zoom_d,80,80);
-		break;
+        case Affichage:
+            effaceFenetre(255, 255, 255);
+            afficheGrille(zoom_d, x_d, y_d);
+            break;
 
-	case Clavier:
-		printf("%c : ASCII %d\n", caractereClavier(),
-		       caractereClavier());
+        case Clavier:
+            printf("%c : ASCII %d\n", caractereClavier(),
+                   caractereClavier());
 
-		switch (caractereClavier()) {
-		case 'Q':
-		case 'q':
-			exit(0);
+            switch (caractereClavier()) {
+                case 'Q':
+                case 'q':
+                    exit(0);
 
-		case 'F':
-		case 'f':
-			pleinEcran = !pleinEcran;	// Changement de mode plein ecran
-			if (pleinEcran)
-				modePleinEcran();
-			else
-				redimensionneFenetre(LargeurFenetre,
-						     HauteurFenetre);
-			break;
+                case 'F':
+                case 'f':
+                    pleinEcran = !pleinEcran;    // Changement de mode plein ecran
+                    if (pleinEcran)
+                        modePleinEcran();
+                    else
+                        redimensionneFenetre(LargeurFenetre,
+                                             HauteurFenetre);
+                    break;
 
-		case 'R':
-		case 'r':
-			// On force un rafraichissement
-			rafraichisFenetre();
-			break;
-		default:
-			break;
-		}
-		break;
+                case 'R':
+                case 'r':
+                    // On force un rafraichissement
+                    rafraichisFenetre();
+                    break;
+                default:
+                    break;
+            }
+            break;
 
-	case ClavierSpecial:
-		printf("ASCII %d\n", toucheClavier());
-		break;
+        case ClavierSpecial:
+            printf("ASCII %d\n", toucheClavier());
+            break;
 
-	case BoutonSouris:
-		if (etatBoutonSouris() == GaucheAppuye) {
-			detecteCase(&x,&y,zoom_d,80,80);
-			printf("Bouton gauche appuye en : (%d, %d)\n",
-			       x,y);
-		}
-		break;
+        case BoutonSouris:
+            if (etatBoutonSouris() == GaucheAppuye) {
+                detecteCase(&x, &y, zoom_d, x_d, y_d);
+                printf("Bouton gauche appuye en : (%d, %d)\n",
+                       x, y);
+            }
+            break;
 
-	case Souris:
-		break;
+        case Souris:
 
-	case Inactivite:
-		break;
+            break;
 
-	case Redimensionnement:
-		printf("Largeur : %d\t", largeurFenetre());
-		printf("Hauteur : %d\n", hauteurFenetre());
-		break;
-	}
+        case Inactivite:
+            break;
+
+        case Redimensionnement:
+            printf("Largeur : %d\t", largeurFenetre());
+            printf("Hauteur : %d\n", hauteurFenetre());
+            break;
+    }
 }
