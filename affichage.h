@@ -111,4 +111,13 @@ void cercle(float centreX, float centreY, float rayon);
  */
 int detecteCase(int *x, int *y, int zoom, unsigned int basX, unsigned int basY);
 
+/*!
+ * \brief trouve le meilleur zooom pour le cadrage actuelle
+ * \param [out] x pointeur vers l'abscisse du meilleur zoom
+ * \param [out] y pointeur vers l'ordonnée du meilleur zoom
+ * \param [out] zoom pointeur vers le meilleur zoom
+ * \return -1 en cas d'erreur
+ * \return 0 si non
+ */
+int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom);
 #endif
