@@ -33,21 +33,19 @@ void cercle(float centreX, float centreY, float rayon)
  * \param basX abscisse de la case du bas
  * \param basY abscisse de la case du bas
  */
-void afficheGrille(unsigned int zoom,unsigned int basX, unsigned int basY) {
+void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY) {
     //Bloque le nombre maximum de cases à afficher
     if (zoom < 1) {
         zoom = 1;
     }
     if (zoom >= TAILLEMAX) {
-        zoom = TAILLEMAX-1;
+        zoom = TAILLEMAX - 1;
     }
-    if(basX+zoom>=TAILLEMAX)
-    {
-        basX=TAILLEMAX-1-zoom;
+    if (basX + zoom >= TAILLEMAX) {
+        basX = TAILLEMAX - 1 - zoom;
     }
-    if(basY+zoom>=TAILLEMAX)
-    {
-        basY=TAILLEMAX-1-zoom;
+    if (basY + zoom >= TAILLEMAX) {
+        basY = TAILLEMAX - 1 - zoom;
     }
 
 
@@ -56,7 +54,7 @@ void afficheGrille(unsigned int zoom,unsigned int basX, unsigned int basY) {
     //Définit l'écart entre le centre de la fenêtre et le bord du plateau
     float ecart = (float) (((largeur <= hauteur) * largeur
                             + (largeur > hauteur) * hauteur) / 2.5);
-    float taille_case = 2*ecart / zoom;
+    float taille_case = 2 * ecart / zoom;
     historiqueCase *maCase, *case_h, *case_b, *case_g, *case_d;
     float minXcase, minYcase, maxXcase, maxYcase, margeH, margeB, margeG,
             margeD;
@@ -74,14 +72,14 @@ void afficheGrille(unsigned int zoom,unsigned int basX, unsigned int basY) {
         for (j = (basY); j < (basY + zoom); j++) {
 
             minXcase =
-                    largeur / 2 - ecart + (i - basX ) * taille_case;
+                    largeur / 2 - ecart + (i - basX) * taille_case;
             //
             minYcase =
-                    hauteur / 2 - ecart + (j - basY ) * taille_case;
+                    hauteur / 2 - ecart + (j - basY) * taille_case;
             maxXcase =
-                    largeur / 2 - ecart + (i - basX +1) * taille_case;
+                    largeur / 2 - ecart + (i - basX + 1) * taille_case;
             maxYcase =
-                    hauteur / 2 - ecart + (j - basY+1) * taille_case;
+                    hauteur / 2 - ecart + (j - basY + 1) * taille_case;
 
             //Récupère la pièce courante t les pieces adjacentes
             maCase = getCase(i, j);
@@ -149,6 +147,7 @@ void afficheGrille(unsigned int zoom,unsigned int basX, unsigned int basY) {
         }
     }
 }
+
 /**
  * \brief donne les coordonée dans le plateau des coordonnée de la soursi
  * \param [out]x abscisse de la casse ou la souris est
@@ -157,21 +156,19 @@ void afficheGrille(unsigned int zoom,unsigned int basX, unsigned int basY) {
  * \return 1 si l'utilisateur a clique dans la grille
  * \return 0 si l'utilisateur à clique en dehors de la grille
  */
-int detecteCase(int *x, int *y, int zoom,unsigned int basX, unsigned int basY) {
+int detecteCase(int *x, int *y, int zoom, unsigned int basX, unsigned int basY) {
 
     if (zoom < 1) {
         zoom = 1;
     }
     if (zoom >= TAILLEMAX) {
-        zoom = TAILLEMAX-1;
+        zoom = TAILLEMAX - 1;
     }
-    if(basX+zoom>=TAILLEMAX)
-    {
-        basX= (unsigned int) (TAILLEMAX - 1 - zoom);
+    if (basX + zoom >= TAILLEMAX) {
+        basX = (unsigned int) (TAILLEMAX - 1 - zoom);
     }
-    if(basY+zoom>=TAILLEMAX)
-    {
-        basY= (unsigned int) (TAILLEMAX - 1 - zoom);
+    if (basY + zoom >= TAILLEMAX) {
+        basY = (unsigned int) (TAILLEMAX - 1 - zoom);
     }
 
     float largeur = largeurFenetre();
@@ -179,16 +176,17 @@ int detecteCase(int *x, int *y, int zoom,unsigned int basX, unsigned int basY) {
     //Définit l'écart entre le centre de la fenêtre et le bord du plateau
     float ecart = (float) (((largeur <= hauteur) * largeur
                             + (largeur > hauteur) * hauteur) / 2.5);
-    int abs=abscisseSouris();
-    int ord=ordonneeSouris();
+    int abs = abscisseSouris();
+    int ord = ordonneeSouris();
     //on regarde si l'utilisateur a cliqué dans la grille
-    if (abs>(largeur/2-ecart) && abs<(largeur/2+ecart) && ord <(hauteur/2+ecart) && ord>(hauteur/2-ecart)) {
-        float taille_case = 2*ecart / zoom;
+    if (abs > (largeur / 2 - ecart) && abs < (largeur / 2 + ecart) && ord < (hauteur / 2 + ecart) &&
+        ord > (hauteur / 2 - ecart)) {
+        float taille_case = 2 * ecart / zoom;
         *x = (int) (((abs + ecart - largeur / 2) / taille_case) + basX);
         *y = (int) (((ord + ecart - hauteur / 2) / taille_case) + basY);
         return 1;
     }
-    *x=-1;
-    *y=-1;
+    *x = -1;
+    *y = -1;
     return 0;
 }

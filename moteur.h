@@ -7,6 +7,7 @@
 */
 
 #include "outils.h"
+
 #ifndef H_MOTEUR
 #define H_MOTEUR
 
@@ -14,18 +15,20 @@
  * \brief structure contenant les information pour crée une liste de case adjacente
  */
 typedef struct caseCalcul {
-    int x /**<\var abscisse de la case*/;
-    int y /**<\var ordonnée de la case*/;
-    int hauteur /**<\var hauteur de la case*/;
-    struct caseCalcul *next /**<\var pointeur vers une autre case appartenant au meme block*/;
+    int x /**<\var abscisse de la case*/ ;
+    int y /**<\var ordonnée de la case*/ ;
+    int hauteur /**<\var hauteur de la case*/ ;
+    struct caseCalcul *next
+    /**<\var pointeur vers une autre case appartenant au meme block*/ ;
 } caseCalcul;
 
 /*!
  * \brief structure servant a crées une liste des block de cases differents
  */
-typedef struct listeBlock{
-    caseCalcul *debutBlock /**<\var debut du block de case de la meme couleurs adjacent*/;
-    struct listeBlock *next /**<\var pointeur vers le block suivant */;
+typedef struct listeBlock {
+    caseCalcul *debutBlock
+    /**<\var debut du block de case de la meme couleurs adjacent*/ ;
+    struct listeBlock *next /**<\var pointeur vers le block suivant */ ;
 } listeBlock;
 
 /*!
@@ -41,6 +44,7 @@ bool estValideCoup(coup coupJoueur);
 \param[in] coupJoueur : coup du joueur
 \return 1 si le coup a pu être effectué
 \return 0 si le coup est invalide
+\return -1 en cas d'erreur
 */
 int joueCoup(coup coupJoueur);
 
@@ -70,7 +74,7 @@ bool possedeTuileAdjacente(int x, int y);
 \return un coup proposé par l'ia
 */
 coup coupIA(int joueur, int niveauDifficulte, int *pieceDisponible,
-	    int nbPieceRestante);
+            int nbPieceRestante);
 
 /*!
  * \brief algorithme min max
@@ -82,7 +86,7 @@ coup coupIA(int joueur, int niveauDifficulte, int *pieceDisponible,
  * \return score de la situation
  */
 int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
-	   int ProfondeurMaximum, coup * meilleurCoup);
+           int ProfondeurMaximum, coup *meilleurCoup);
 
 /*!
  * \brief dejoue un coup
@@ -131,7 +135,7 @@ bool estValideSuperposition(couleur haut, couleur bas);
  * \return true si le couple est present dans la liste
  * \return false si le couple n'est pas present dans la liste
  */
-bool estDansBlock(int x,int y,caseCalcul* caseDebut);
+bool estDansBlock(int x, int y, caseCalcul *caseDebut);
 
 /*!
  * \brief ajoute une caseCalcul en debut de ligne et initialise ses valeurs
@@ -141,7 +145,7 @@ bool estDansBlock(int x,int y,caseCalcul* caseDebut);
  * \param hauteur hauteur de la case
  * \return pointeur vers la nouvelle tete
  */
-caseCalcul* ajouteCaseCalcul(caseCalcul* tete,int x,int y,int hauteur);
+caseCalcul *ajouteCaseCalcul(caseCalcul *tete, int x, int y, int hauteur);
 
 /*!
  * \brief fonction liberant une liste de caseCalcul
@@ -154,5 +158,14 @@ void libereCaseCalcul(caseCalcul *tete);
  * \param tete tete de la liste
  * \return score de la liste
  */
-int scoreListe(caseCalcul* tete);
+int scoreListe(caseCalcul *tete);
+
+/*!
+ * \brief concatene deux liste de caseCalcul dans listeBlock et libère la case ainsi libere
+ * \param block listeBlock dans laquelle il faut concatener les liste de caseCalcul
+ * \param listeA
+ * \param listeB liste à ajouter a la fin de listeA
+ */
+void concateneCaseCalcul(listeBlock *block, caseCalcul *listeA, caseCalcul *listeB);
+
 #endif
