@@ -29,8 +29,8 @@ int main(int argc, char **argv) {
 
 void gestionEvenement(EvenementGfx evenement) {
     static bool pleinEcran = false;    // Pour savoir si on est en mode plein ecran ou pas
-    unsigned int x_d = 80, y_d=80;
-    int x,y;
+    unsigned int x_d = 80, y_d = 80;
+    int x, y;
     static unsigned int zoom_d = 20;
     switch (evenement) {
         case Initialisation:
@@ -43,6 +43,16 @@ void gestionEvenement(EvenementGfx evenement) {
             cp.yCoup = 80;
             cp.orientationPiece = HD;
             joueCoup(cp);
+            cp.numeroPiece = 10;
+            cp.xCoup = 84;
+            cp.yCoup = 80;
+            cp.orientationPiece = HD;
+            joueCoup(cp);
+            cp.numeroPiece = 23;
+            cp.yCoup = 80;
+            cp.xCoup = 82;
+            cp.orientationPiece=HG;
+            printf("%d \n",joueCoup(cp));
             activeGestionDeplacementPassifSouris();
             demandeAnimation_ips(50);
             break;
@@ -74,6 +84,8 @@ void gestionEvenement(EvenementGfx evenement) {
                 case 'R':
                 case 'r':
                     // On force un rafraichissement
+                    printf("le score du joueur 1 est de : %d \n", calculScore(1));
+                    printf("le score du joueur 2 est de : %d \n", calculScore(2));
                     rafraichisFenetre();
                     break;
                 default:
@@ -88,8 +100,7 @@ void gestionEvenement(EvenementGfx evenement) {
         case BoutonSouris:
             if (etatBoutonSouris() == GaucheAppuye) {
                 detecteCase(&x, &y, zoom_d, x_d, y_d);
-                printf("Bouton gauche appuye en : (%d, %d)\n",
-                       x, y);
+                printf("Bouton gauche appuye en : (%d, %d)\n", x, y);
             }
             break;
 

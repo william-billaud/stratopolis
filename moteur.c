@@ -127,7 +127,7 @@ bool possedeTuileAdjacente(int x, int y) {
  * \return false si la superpostion est invalide
  */
 bool estValideSuperposition(couleur haut, couleur bas) {
-    if ((haut == rouge && bas == vert) || (haut == bas && bas == rouge)) {
+    if ((haut == rouge && bas == vert) || (haut == vert && bas == rouge)) {
         return false;
     } else {
         return true;
@@ -145,7 +145,7 @@ bool estValideCoup(coup coupJoueur) {
     int x1, x3, y1, y3;
     historiqueCase *caseCoups[3];
     if (getCasesFromCoup(coupJoueur, caseCoups) == -1) {
-        return -1;
+        return false;
     }
     c1 = caseCoups[0];
     c2 = caseCoups[1];
@@ -196,6 +196,7 @@ bool estValideCoup(coup coupJoueur) {
 \param[in] coupJoueur : coup du joueur
 \return 1 si le coup a pu être effectué
 \return 0 si le coup est invalide
+\return -1 en cas d'erreur
 */
 int joueCoup(coup coupJoueur) {
 
@@ -212,8 +213,9 @@ int joueCoup(coup coupJoueur) {
         //change la hauteur des case
         caseCoups[i]->hauteur += 1;
         //ajoute la numero de pièce a cette hauteur
-        caseCoups[i]->tabEtage[getHauteurCase(*(caseCoups[i]))].
-                numeroPiece = coupJoueur.numeroPiece;
+        caseCoups[i]->
+                tabEtage[getHauteurCase(*(caseCoups[i]))].numeroPiece =
+                coupJoueur.numeroPiece;
     }
     //modifie les couleurs des cases
     caseCoups[0]->tabEtage[getHauteurCase(*(caseCoups[0]))].couleurEtage =
@@ -245,10 +247,11 @@ int dejoueCoup(coup coupAnnulle) {
         }
     }
     for (i = 0; i < 3; ++i) {
-        caseCoups[i]->tabEtage[getHauteurCase(*(caseCoups[i]))].
-                couleurEtage = vide;
-        caseCoups[i]->tabEtage[getHauteurCase(*(caseCoups[i]))].
-                numeroPiece = 41;
+        caseCoups[i]->
+                tabEtage[getHauteurCase(*(caseCoups[i]))].couleurEtage =
+                vide;
+        caseCoups[i]->
+                tabEtage[getHauteurCase(*(caseCoups[i]))].numeroPiece = 41;
         caseCoups[i]->hauteur -= 1;
     }
     return 1;
@@ -266,11 +269,12 @@ int calculScore(int joueur) {
     int scoreTmp;
     int i;
     int j;
-    int match /**<\var 0 si ni la case a gauche ou en dessous est de la meme couleur, 1 s l'uen des deux, 2 si les deux le sont*/;
+    int match = 0/**<\var 0 si ni la case a gauche ou en dessous est de la meme couleur, 1 s l'uen des deux, 2 si les deux le sont*/;
     couleur couleurJoueur;
     couleur couleurCase;
     listeBlock *liste = NULL;
     listeBlock *tmp = NULL;
+    listeBlock *tmpB = NULL;
     caseCalcul *listeCase = NULL;
     if (joueur == 1) {
         couleurJoueur = vert;
@@ -291,17 +295,22 @@ int calculScore(int joueur) {
                 listeCase = NULL;
                 tmp = liste;
                 while (listeCase == NULL && tmp != NULL) {
-                    if (estDansBlock(i - 1, j, tmp->debutBlock)) {
+                    if (estDansBlock
+                            (i - 1, j, tmp->debutBlock)) {
                         listeCase = tmp->debutBlock;
                     } else {
                         tmp = tmp->next;
                     }
                 }
                 if (tmp != NULL) {
-                    tmp->debutBlock = ajouteCaseCalcul(tmp->debutBlock, i, j, getHauteurCase(*getCase(i, j)));
+                    tmp->debutBlock =
+                            ajouteCaseCalcul(tmp->debutBlock, i,
+                                             j,
+                                             getHauteurCase
+                                                     (*getCase(i, j)));
                     match = 1;
                 } else {
-                    puts("erreur dans la calcul du score");
+                    puts("erreur dans la calcul du score A");
                 }
 
             }
@@ -310,21 +319,46 @@ int calculScore(int joueur) {
                     listeCase = NULL;
                     tmp = liste;
                     while (listeCase == NULL && tmp != NULL) {
-                        if (estDansBlock(i, j - 1, tmp->debutBlock)) {
-                            listeCase = tmp->debutBlock;
+                        if (estDansBlock
+                                (i, j - 1,
+                                 tmp->debutBlock)) {
+                            listeCase =
+                                    tmp->debutBlock;
                         } else {
                             tmp = tmp->next;
                         }
                     }
                     if (tmp != NULL) {
-                        tmp->debutBlock = ajouteCaseCalcul(tmp->debutBlock, i, j, getHauteurCase(*getCase(i, j)));
+                        tmp->debutBlock =
+                                ajouteCaseCalcul(tmp->
+                                                         debutBlock,
+                                                 i, j,
+                                                 getHauteurCase
+                                                         (*getCase
+                                                                 (i, j)));
                         match = 1;
                     } else {
-                        puts("erreur dans la calcul du score");
+                        puts("erreur dans la calcul du score B");
                     }
                 } else {
-                    if (!estDansBlock(i, j - 1, tmp->debutBlock)) {
-                        //TODO concatenation des liste ca va etre relou
+                    if (!estDansBlock
+                            (i, j - 1, tmp->debutBlock))
+                        tmpB = liste;
+                    listeCase = NULL;
+                    while (listeCase == NULL && tmpB != NULL) {
+                        if (estDansBlock
+                                (i, j - 1,
+                                 tmpB->debutBlock)) {
+                            listeCase =
+                                    tmpB->debutBlock;
+                        } else {
+                            tmpB = tmpB->next;
+                        }
+                    }
+                    if (tmpB != NULL) {
+                        concateneCaseCalcul(liste, tmp->debutBlock, tmpB->debutBlock);
+                    } else {
+                        puts("erreur dans calcul score C");
                     }
                 }
                 match += 1;
@@ -333,7 +367,10 @@ int calculScore(int joueur) {
                 // si aucun des deux on crée un nouvelle liste
                 tmp = malloc(sizeof *tmp);
                 tmp->next = liste;
-                tmp->debutBlock = ajouteCaseCalcul(NULL, i, j, getHauteurCase(*getCase(i, j)));
+                tmp->debutBlock =
+                        ajouteCaseCalcul(NULL, i, j,
+                                         getHauteurCase(*getCase
+                                                 (i, j)));
                 liste = tmp;
                 tmp = NULL;
             }
@@ -352,6 +389,7 @@ int calculScore(int joueur) {
     }
     return score;
 }
+
 /*!
  * \brief fonction permettant de savoir si un couple de coordonée est present dans une liste simplement chainée
  * \param x abscisse à tester
@@ -382,14 +420,12 @@ bool estDansBlock(int x, int y, caseCalcul *caseDebut) {
  */
 caseCalcul *ajouteCaseCalcul(caseCalcul *tete, int x, int y, int hauteur) {
     caseCalcul *ptr = malloc(sizeof *ptr);
-
     ptr->next = tete;
     ptr->y = y;
     ptr->x = x;
     ptr->hauteur = hauteur;
     return ptr;
 }
-
 
 /*!
  * \brief fonction liberant une liste de caseCalcul
@@ -420,6 +456,27 @@ int scoreListe(caseCalcul *tete) {
         tmp = tmp->next;
         etendu += 1;
     }
-
     return etendu * hauteur;
+}
+
+/*!
+ * \brief concatene deux liste de caseCalcul dans listeBlock et libère la case ainsi libere
+ * \param block listeBlock dans laquelle il faut concatener les liste de caseCalcul
+ * \param listeA
+ * \param listeB liste à ajouter a la fin de listeA
+ */
+void concateneCaseCalcul(listeBlock *block, caseCalcul *listeA, caseCalcul *listeB) {
+    listeBlock *tmp;
+    while (listeA->next != NULL) {
+        listeA = listeA->next;
+    }
+    listeA->next = listeB;
+
+    while (block->debutBlock != listeB) {
+        block = block->next;
+    }
+    tmp = block->next;
+    block->debutBlock = tmp->debutBlock;
+    block->next = tmp->next;
+    free(tmp);
 }

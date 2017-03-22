@@ -20,6 +20,11 @@ extern ORDREPIECE ordreJoueurs[2];
  * \brief fonction main de test
  * \return int 0 ( tout c'est bien passé)
  */
+
+void gestionEvenement(EvenementGfx evenement)
+{
+	puts("rien");
+}
 int main(void)
 {
 	initPlateau();
@@ -62,6 +67,9 @@ int main(void)
 	cp.yCoup = 80;
 	cp.orientationPiece = HD;
 	printf("joue le coup %d\n", joueCoup(cp));
-	printf("dejoue le coup %d\n", dejoueCoup(cp));
+	/*printf("dejoue le coup %d\n", dejoueCoup(cp));*/
+	printf("le score du joueur 1 est de : %d \n",calculScore(1));
+	printf("le score du joueur 2 est de : %d \n",calculScore(2));
+
 	return 0;
 }
