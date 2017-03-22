@@ -77,7 +77,7 @@ void afficheInterface(char nomJ1[15], char nomJ2[15]);
  * \param basX abscisse de la case du bas
  * \param basY abscisse de la case du bas
  */
-void afficheGrille(unsigned int zoom,unsigned int basX, unsigned int basY);
+void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY);
 
 /**
  * \brief Affiche le score
@@ -109,5 +109,6 @@ void cercle(float centreX, float centreY, float rayon);
  * \return 1 si l'utilisateur a clique dans la grille
  * \return 0 si l'utilisateur à clique en dehors de la grille
  */
-int detecteCase(int *x, int *y, int zoom,unsigned int basX, unsigned int basY);
+int detecteCase(int *x, int *y, int zoom, unsigned int basX, unsigned int basY);
+
 #endif

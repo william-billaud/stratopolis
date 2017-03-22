@@ -51,8 +51,8 @@ void gestionEvenement(EvenementGfx evenement) {
             cp.numeroPiece = 23;
             cp.yCoup = 80;
             cp.xCoup = 82;
-            cp.orientationPiece=HG;
-            printf("%d \n",joueCoup(cp));
+            cp.orientationPiece = HG;
+            printf("%d \n", joueCoup(cp));
             activeGestionDeplacementPassifSouris();
             demandeAnimation_ips(50);
             break;
