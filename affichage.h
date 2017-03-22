@@ -73,18 +73,17 @@ void afficheInterface(char nomJ1[15], char nomJ2[15]);
 
 /**
  * \brief Affiche le plateau de jeu, la couleur et la hauteur de chaque case
- * \param zoom
- * \param basX
- * \param basY
+ * \param [in] zoom : nombre de case affiché par ligne/colonne
+ * \param basX abscisse de la case du bas
+ * \param basY abscisse de la case du bas
  */
-void afficheGrille(unsigned int zoom,unsigned int basX, unsigned int basY);
+void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY);
 
-/*!
-   \brief Affiche le score
-   \param[in] scoreJ1 : score du premier joueur
-	 \param[in] scoreJ2 : score du deuxième joueur
-	 \return rien
-*/
+/**
+ * \brief Affiche le score
+ * \param [in] scoreJ1 : score du premier joueur
+ * \param [in] scoreJ2 : score du deuxième joueur
+ */
 void afficheScore(int scoreJ1, int scoreJ2);
 
 /*!
@@ -102,5 +101,23 @@ void pause(void);
 */
 void cercle(float centreX, float centreY, float rayon);
 
-int detecteCase(int *x, int *y, int zoom,int basX, int basY);
+/**
+ * \brief donne les coordonée dans le plateau des coordonnée de la soursi
+ * \param [out]x abscisse de la casse ou la souris est
+ * \param [out]y ordonnée de la casse ou la souris est
+ * \param [in] zoom zoom de la grille
+ * \return 1 si l'utilisateur a clique dans la grille
+ * \return 0 si l'utilisateur à clique en dehors de la grille
+ */
+int detecteCase(int *x, int *y, int zoom, unsigned int basX, unsigned int basY);
+
+/*!
+ * \brief trouve le meilleur zooom pour le cadrage actuelle
+ * \param [out] x pointeur vers l'abscisse du meilleur zoom
+ * \param [out] y pointeur vers l'ordonnée du meilleur zoom
+ * \param [out] zoom pointeur vers le meilleur zoom
+ * \return -1 en cas d'erreur
+ * \return 0 si non
+ */
+int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom);
 #endif

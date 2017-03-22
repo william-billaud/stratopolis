@@ -20,9 +20,9 @@ extern ORDREPIECE ordreJoueurs[2];/**<\var tableau contenant l'ordre des pièces
 int initPlateau(void)
 {
 	int i_x;
-	    /**< index des abscisse*/
+    /**< index des abscisse*/
 	int i_y;
-	    /**< index des ordonées*/
+    /**< index des ordonées*/
 
 	for (i_x = 0; i_x < TAILLEMAX; ++i_x) {
 		for (i_y = 0; i_y < TAILLEMAX; ++i_y) {
@@ -50,7 +50,7 @@ int choisisJoueur(void)
 {
 	/* recupère le timestamp actuelle et le stock dans a) */
 	unsigned int a = (unsigned int)time(NULL);
-					    /**<\var seed recupere a partir du timestamp*/
+    /**<\var seed recupere a partir du timestamp*/
 	//defini la seed du lancer aléatoire
 	srand(a);
 	//effectue le lancer aléatoire et redui les possibilité à 1 ou 2
@@ -67,11 +67,11 @@ int initOrdrePieces(int joueur)
 {
 	int i;
 	unsigned int a;
-		   /**<\var seed pour le rand()*/
+    /**<\var seed pour le rand()*/
 	int n;
-	  /**< nombre de pièces à tirer restantes*/
+    /**< nombre de pièces à tirer restantes*/
 	int r;
-	  /**< resultat du tirage aléatoire*/
+    /**< resultat du tirage aléatoire*/
 	if (joueur != 1 && joueur != 2) {
 		return -1;
 	}
@@ -81,7 +81,7 @@ int initOrdrePieces(int joueur)
 	}
 	/* recupère le timestamp actuelle et le stock dans a) */
 	a = (unsigned int)time(NULL);
-			       /**< seed recupere a partir du timestamp*/
+    /**< seed recupere a partir du timestamp*/
 	//defini la seed du lancer aléatoire
 	srand(a + 100 * joueur);
 	for (i = 0; i < 19; ++i) {
@@ -132,7 +132,7 @@ bool possedeTuileAdjacente(int x, int y)
  */
 bool estValideSuperposition(couleur haut, couleur bas)
 {
-	if ((haut == rouge && bas == vert) || (haut == bas && bas == rouge)) {
+	if ((haut == rouge && bas == vert) || (haut == vert && bas == rouge)) {
 		return false;
 	} else {
 		return true;
@@ -151,7 +151,7 @@ bool estValideCoup(coup coupJoueur)
 	int x1, x3, y1, y3;
 	historiqueCase *caseCoups[3];
 	if (getCasesFromCoup(coupJoueur, caseCoups) == -1) {
-		return -1;
+		return false;
 	}
 	c1 = caseCoups[0];
 	c2 = caseCoups[1];
@@ -202,6 +202,7 @@ bool estValideCoup(coup coupJoueur)
 \param[in] coupJoueur : coup du joueur
 \return 1 si le coup a pu être effectué
 \return 0 si le coup est invalide
+\return -1 en cas d'erreur
 */
 int joueCoup(coup coupJoueur)
 {
@@ -219,8 +220,9 @@ int joueCoup(coup coupJoueur)
 		//change la hauteur des case
 		caseCoups[i]->hauteur += 1;
 		//ajoute la numero de pièce a cette hauteur
-		caseCoups[i]->tabEtage[getHauteurCase(*(caseCoups[i]))].
-		    numeroPiece = coupJoueur.numeroPiece;
+		caseCoups[i]->
+		    tabEtage[getHauteurCase(*(caseCoups[i]))].numeroPiece =
+		    coupJoueur.numeroPiece;
 	}
 	//modifie les couleurs des cases
 	caseCoups[0]->tabEtage[getHauteurCase(*(caseCoups[0]))].couleurEtage =
@@ -253,12 +255,263 @@ int dejoueCoup(coup coupAnnulle)
 		}
 	}
 	for (i = 0; i < 3; ++i) {
-		caseCoups[i]->tabEtage[getHauteurCase(*(caseCoups[i]))].
-		    couleurEtage = vide;
-		caseCoups[i]->tabEtage[getHauteurCase(*(caseCoups[i]))].
-		    numeroPiece = 41;
+		caseCoups[i]->
+		    tabEtage[getHauteurCase(*(caseCoups[i]))].couleurEtage =
+		    vide;
+		caseCoups[i]->
+		    tabEtage[getHauteurCase(*(caseCoups[i]))].numeroPiece = 41;
 		caseCoups[i]->hauteur -= 1;
 	}
 	return 1;
 
+}
+
+/*!
+\brief calcul le score d'un joueur
+\param[in] joueur : numero du joueur
+\return score du joueur
+\return -1 en cas d'erreur
+*/
+int calculScore(int joueur)
+{
+	int score = 0;
+	int scoreTmp;
+	int i;
+	int j;
+	int match = 0
+	    /**<\var 0 si ni la case a gauche ou en dessous est de la meme couleur, 1 s l'uen des deux, 2 si les deux le sont*/
+	    ;
+	couleur couleurJoueur;
+	couleur couleurCase;
+	listeBlock *liste = NULL;
+	listeBlock *tmp = NULL;
+	listeBlock *tmpB = NULL;
+	caseCalcul *listeCase = NULL;
+	if (joueur == 1) {
+		couleurJoueur = vert;
+	} else if (joueur == 2) {
+		couleurJoueur = rouge;
+	} else {
+		return -1;
+	}
+	for (i = 0; i < TAILLEMAX; ++i) {
+		for (j = 0; j < TAILLEMAX; ++j) {
+			couleurCase = (couleur) getCouleurCase(*getCase(i, j));
+			//si la case n'est pas de la couleur du joueur on passe à la prochaine iteration
+			if (couleurCase != couleurJoueur) {
+				continue;
+			}
+			match = 0;
+			//si la case a droite est de la meme couleur
+			if (getCouleurCase(*getCase(i - 1, j)) == (int)
+			    couleurJoueur) {
+				listeCase = NULL;
+				tmp = liste;
+				//on cherche dans quelle block cette case est
+				while (listeCase == NULL && tmp != NULL) {
+					if (estDansBlock
+					    (i - 1, j, tmp->debutBlock)) {
+						listeCase = tmp->debutBlock;
+					} else {
+						tmp = tmp->next;
+					}
+				}
+				if (tmp != NULL) {
+					//si on l'a trouvé on ajoute la case actuelle au block de la case a droite
+					tmp->debutBlock =
+					    ajouteCaseCalcul(tmp->debutBlock, i,
+							     j,
+							     getHauteurCase
+							     (*getCase(i, j)));
+					match = 1;
+				} else {
+					puts("erreur dans la calcul du score A");
+				}
+
+			}
+			//si le case en dessous est de la meme couleur
+			if (getCouleurCase(*getCase(i, j - 1)) ==
+			    (int)couleurJoueur) {
+				//et si la case a droite n'était pas de la même couleur
+				if (match == 0) {
+					//on fat pareille que dans la cas ou la case a droite était de la meme couleur
+					listeCase = NULL;
+					tmp = liste;
+					while (listeCase == NULL && tmp != NULL) {
+						if (estDansBlock
+						    (i, j - 1,
+						     tmp->debutBlock)) {
+							listeCase =
+							    tmp->debutBlock;
+						} else {
+							tmp = tmp->next;
+						}
+					}
+					if (tmp != NULL) {
+						tmp->debutBlock =
+						    ajouteCaseCalcul
+						    (tmp->debutBlock, i, j,
+						     getHauteurCase(*getCase
+								    (i, j)));
+						match = 1;
+					} else {
+						puts("erreur dans la calcul du score B");
+					}
+				} else {
+					//si la case a droite et celle du dessous son de la bonne couleur
+					//on verifie si elle sont dans la meme block
+					//si elle sont dans le meme block, il n'y a rien à faire
+					if (!estDansBlock
+					    (i, j - 1, tmp->debutBlock)) {
+						tmpB = liste;
+						listeCase = NULL;
+						//si elle sont dans des block different, on cherche le block de la case du dessous
+						while (listeCase == NULL
+						       && tmpB != NULL) {
+							if (estDansBlock
+							    (i, j - 1,
+							     tmpB->debutBlock))
+							{
+								listeCase =
+								    tmpB->debutBlock;
+							} else {
+								tmpB =
+								    tmpB->next;
+							}
+						}
+						//et on concatene les deux
+						if (tmpB != NULL) {
+							concateneCaseCalcul
+							    (liste,
+							     tmp->debutBlock,
+							     tmpB->debutBlock);
+						} else {
+							puts("erreur dans calcul score C");
+						}
+					}
+				}
+				match += 1;
+			}
+			if (match == 0) {
+				// si aucun des deux on crée un nouvelle liste
+				tmp = malloc(sizeof *tmp);
+				tmp->next = liste;
+				tmp->debutBlock =
+				    ajouteCaseCalcul(NULL, i, j,
+						     getHauteurCase(*getCase
+								    (i, j)));
+				liste = tmp;
+				tmp = NULL;
+			}
+		}
+	}
+	//on calcul le score de chaque liste et on trouve le plus grand
+
+	//on libère chaque liste && on trouve celle avec la score le plus grand
+	while (liste != NULL) {
+		scoreTmp = scoreListe(liste->debutBlock);
+		score = (scoreTmp > score) ? scoreTmp : score;
+		libereCaseCalcul(liste->debutBlock);
+		tmp = liste;
+		liste = liste->next;
+		free(tmp);
+	}
+	return score;
+}
+
+/*!
+ * \brief fonction permettant de savoir si un couple de coordonée est present dans une liste simplement chainée
+ * \param x abscisse à tester
+ * \param y ordonée à tester
+ * \param caseDebut tête de la liste
+ * \return true si le couple est present dans la liste
+ * \return false si le couple n'est pas present dans la liste
+ */
+bool estDansBlock(int x, int y, caseCalcul * caseDebut)
+{
+	caseCalcul *caseTeste;
+	caseTeste = caseDebut;
+	while (caseTeste != NULL) {
+		if (caseTeste->x == x && caseTeste->y == y) {
+			return true;
+		}
+		caseTeste = caseTeste->next;
+	}
+	return false;
+}
+
+/*!
+ * \brief ajoute une caseCalcul en debut de ligne et initialise ses valeurs
+ * \param tete pointeur de le tête precedente
+ * \param x abscisse de la case
+ * \param y ordonnée de la case
+ * \param hauteur hauteur de la case
+ * \return pointeur vers la nouvelle tete
+ */
+caseCalcul *ajouteCaseCalcul(caseCalcul * tete, int x, int y, int hauteur)
+{
+	caseCalcul *ptr = malloc(sizeof *ptr);
+	ptr->next = tete;
+	ptr->y = y;
+	ptr->x = x;
+	ptr->hauteur = hauteur;
+	return ptr;
+}
+
+/*!
+ * \brief fonction liberant une liste de caseCalcul
+ * \param tete tete de la liste à libérer
+ */
+void libereCaseCalcul(caseCalcul * tete)
+{
+	caseCalcul *tmp;
+	while (tete != NULL) {
+		tmp = tete->next;
+		free(tete);
+		tete = tmp;
+	}
+}
+
+/*!
+ * \brief calcul le score donnée par une liste
+ * \param tete tete de la liste
+ * \return score de la liste
+ */
+int scoreListe(caseCalcul * tete)
+{
+	caseCalcul *tmp;
+	tmp = tete;
+	int hauteur = 0;
+	int etendu = 0;
+	while (tmp != NULL) {
+		//si la hauteur est plus grande que la maximum precedente on la remplace
+		hauteur = (tmp->hauteur > hauteur) ? tmp->hauteur : hauteur;
+		tmp = tmp->next;
+		etendu += 1;
+	}
+	return etendu * hauteur;
+}
+
+/*!
+ * \brief concatene deux liste de caseCalcul dans listeBlock et libère la case ainsi libere
+ * \param block listeBlock dans laquelle il faut concatener les liste de caseCalcul
+ * \param listeA
+ * \param listeB liste à ajouter a la fin de listeA
+ */
+void concateneCaseCalcul(listeBlock * block, caseCalcul * listeA,
+			 caseCalcul * listeB)
+{
+	listeBlock *tmp;
+	while (listeA->next != NULL) {
+		listeA = listeA->next;
+	}
+	listeA->next = listeB;
+
+	while (block->debutBlock != listeB) {
+		block = block->next;
+	}
+	tmp = block->next;
+	block->debutBlock = tmp->debutBlock;
+	block->next = tmp->next;
+	free(tmp);
 }

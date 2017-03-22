@@ -62,3 +62,5 @@ test
 #file create by doxygen
 html
 latex
+
+Doxyfile

@@ -40,7 +40,7 @@ historiqueCase *getCase(int x, int y)
 */
 int getHauteurCase(historiqueCase c)
 {
-	char i = c.hauteur;
+	int i = c.hauteur;
 	if (i < 0 || i > 19) {
 		i = -1;
 	}
@@ -59,7 +59,7 @@ int getCouleurCase(historiqueCase c)
 	if (getHauteurCase(c) == -1) {
 		return -1;
 	} else {
-		return c.tabEtage[(int)c.hauteur].couleurEtage;
+		return c.tabEtage[c.hauteur].couleurEtage;
 	}
 }
 

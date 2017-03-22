@@ -10,6 +10,7 @@
 
 #ifndef H_OUTILS
 #define H_OUTILS
+
 #include <stdio.h>
 #include <stdlib.h>		// Pour pouvoir utiliser void exit(int)
 #include <math.h>		// Pour pouvoir utiliser les librairies mathematiques
@@ -69,10 +70,12 @@ typedef struct etage {
 tabEtage[hauteur] correspond à la pièce visible
 */
 typedef struct historiqueCase {
-	char hauteur;		/*!< hauteur de la case (0 si la case est vide) */
+	int hauteur;		/*!< hauteur de la case (0 si la case est vide) */
 	etage tabEtage[20];	/*!< tableau contenant tous les étages de la case */
-	int x; /**< abscisse de la case dans le plateau*/
-	int y; /**< ordonnée de la case dans le plateau*/
+	int x;
+	   /**< abscisse de la case dans le plateau*/
+	int y;
+	   /**< ordonnée de la case dans le plateau*/
 } historiqueCase;
 
 /*!
@@ -146,7 +149,6 @@ int getNumeroPiece(historiqueCase c);
  * \warning si h est trop grand, il y a un risque de core dumped
  */
 bool inArrayIny(int *array, unsigned int h, int valeur);
-
 
 /*!
  * \brief retourne la couleur d'une pièce
