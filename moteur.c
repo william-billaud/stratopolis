@@ -95,7 +95,8 @@ int initOrdrePieces(int joueur)
 	}
 	// on ajoute le dernier terme
 	ordreJoueurs[joueur - 1][19] = liste[0] + 20 * (joueur - 1);
-
+	// on ajoute le nombre de pièces disponibles dans la dernière case
+	ordreJoueurs[joueur - 1][20] = 20;
 	return 0;
 }
 
