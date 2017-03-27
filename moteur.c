@@ -116,7 +116,7 @@ bool possedeTuileAdjacente(int x, int y)
 	tab[2] = getCase(x, y + 1);
 	tab[3] = getCase(x, y - 1);
 	for (i = 0; i < 4; ++i) {
-		if (getHauteurCase(*tab[i]) > 0) {
+		if (getHauteurCase(tab[i]) > 0) {
 			return true;
 		}
 	}
@@ -161,12 +161,12 @@ bool estValideCoup(coup coupJoueur)
 	y3 = caseCoups[2]->y;
 	y1 = caseCoups[0]->y;
 	//verifie que toutes les case en dessous sont a la même hauteur
-	if (getHauteurCase(*c1) != getHauteurCase(*c2)
-	    || getHauteurCase(*c1) != getHauteurCase(*c3)) {
+	if (getHauteurCase(c1) != getHauteurCase(c2)
+	    || getHauteurCase(c1) != getHauteurCase(c3)) {
 		return false;
 	}
 	//si la pièce va êtres posée au niveau zero, verifie que l'une des tuile possède un coté adjacent a une autres tuile
-	if (getHauteurCase(*c1) == 0) {
+	if (getHauteurCase(c1) == 0) {
 		if (possedeTuileAdjacente(x1, y1) == false
 		    && possedeTuileAdjacente(x3, y3) == false
 		    && false == possedeTuileAdjacente(coupJoueur.xCoup,
@@ -177,20 +177,20 @@ bool estValideCoup(coup coupJoueur)
 		//sinon verifie que toutes les superposition sont valide
 		if (!estValideSuperposition
 		    (couleurPiece(coupJoueur.numeroPiece, 1),
-		     (couleur) getCouleurCase(*c1))
+		     (couleur) getCouleurCase(c1))
 		    ||
 		    !estValideSuperposition(couleurPiece
 					    (coupJoueur.numeroPiece, 2),
-					    (couleur) getCouleurCase(*c2))
+					    (couleur) getCouleurCase(c2))
 		    ||
 		    !estValideSuperposition(couleurPiece
 					    (coupJoueur.numeroPiece, 3),
-					    (couleur) getCouleurCase(*c3))) {
+					    (couleur) getCouleurCase(c3))) {
 			return false;
 		}
 		//verifie que la pièce va etresposé sur au moins deux autres pièces
-		if (getNumeroPiece(*c1) == getNumeroPiece(*c2)
-		    && getNumeroPiece(*c1) == getNumeroPiece(*c3)) {
+		if (getNumeroPiece(c1) == getNumeroPiece(c2)
+		    && getNumeroPiece(c1) == getNumeroPiece(c3)) {
 			return false;
 		}
 	}
@@ -220,16 +220,15 @@ int joueCoup(coup coupJoueur)
 		//change la hauteur des case
 		caseCoups[i]->hauteur += 1;
 		//ajoute la numero de pièce a cette hauteur
-		caseCoups[i]->
-		    tabEtage[getHauteurCase(*(caseCoups[i]))].numeroPiece =
-		    coupJoueur.numeroPiece;
+		caseCoups[i]->tabEtage[getHauteurCase((caseCoups[i]))].
+		    numeroPiece = coupJoueur.numeroPiece;
 	}
 	//modifie les couleurs des cases
-	caseCoups[0]->tabEtage[getHauteurCase(*(caseCoups[0]))].couleurEtage =
+	caseCoups[0]->tabEtage[getHauteurCase((caseCoups[0]))].couleurEtage =
 	    PIECE[coupJoueur.numeroPiece].c1;
-	caseCoups[1]->tabEtage[getHauteurCase(*(caseCoups[1]))].couleurEtage =
+	caseCoups[1]->tabEtage[getHauteurCase((caseCoups[1]))].couleurEtage =
 	    PIECE[coupJoueur.numeroPiece].c2;
-	caseCoups[2]->tabEtage[getHauteurCase(*(caseCoups[2]))].couleurEtage =
+	caseCoups[2]->tabEtage[getHauteurCase((caseCoups[2]))].couleurEtage =
 	    PIECE[coupJoueur.numeroPiece].c3;
 	return 1;
 }
@@ -250,16 +249,15 @@ int dejoueCoup(coup coupAnnulle)
 	int i;
 	//on verifie que rien n'a été posée sur la pièce
 	for (i = 0; i < 3; ++i) {
-		if (coupAnnulle.numeroPiece != getNumeroPiece(*(caseCoups[i]))) {
+		if (coupAnnulle.numeroPiece != getNumeroPiece((caseCoups[i]))) {
 			return -2;
 		}
 	}
 	for (i = 0; i < 3; ++i) {
-		caseCoups[i]->
-		    tabEtage[getHauteurCase(*(caseCoups[i]))].couleurEtage =
-		    vide;
-		caseCoups[i]->
-		    tabEtage[getHauteurCase(*(caseCoups[i]))].numeroPiece = 41;
+		caseCoups[i]->tabEtage[getHauteurCase((caseCoups[i]))].
+		    couleurEtage = vide;
+		caseCoups[i]->tabEtage[getHauteurCase((caseCoups[i]))].
+		    numeroPiece = 41;
 		caseCoups[i]->hauteur -= 1;
 	}
 	return 1;
@@ -296,14 +294,14 @@ int calculScore(int joueur)
 	}
 	for (i = 0; i < TAILLEMAX; ++i) {
 		for (j = 0; j < TAILLEMAX; ++j) {
-			couleurCase = (couleur) getCouleurCase(*getCase(i, j));
+			couleurCase = (couleur) getCouleurCase(getCase(i, j));
 			//si la case n'est pas de la couleur du joueur on passe à la prochaine iteration
 			if (couleurCase != couleurJoueur) {
 				continue;
 			}
 			match = 0;
 			//si la case a droite est de la meme couleur
-			if (getCouleurCase(*getCase(i - 1, j)) == (int)
+			if (getCouleurCase(getCase(i - 1, j)) == (int)
 			    couleurJoueur) {
 				listeCase = NULL;
 				tmp = liste;
@@ -322,7 +320,7 @@ int calculScore(int joueur)
 					    ajouteCaseCalcul(tmp->debutBlock, i,
 							     j,
 							     getHauteurCase
-							     (*getCase(i, j)));
+							     (getCase(i, j)));
 					match = 1;
 				} else {
 					puts("erreur dans la calcul du score A");
@@ -330,7 +328,7 @@ int calculScore(int joueur)
 
 			}
 			//si le case en dessous est de la meme couleur
-			if (getCouleurCase(*getCase(i, j - 1)) ==
+			if (getCouleurCase(getCase(i, j - 1)) ==
 			    (int)couleurJoueur) {
 				//et si la case a droite n'était pas de la même couleur
 				if (match == 0) {
@@ -351,7 +349,7 @@ int calculScore(int joueur)
 						tmp->debutBlock =
 						    ajouteCaseCalcul
 						    (tmp->debutBlock, i, j,
-						     getHauteurCase(*getCase
+						     getHauteurCase(getCase
 								    (i, j)));
 						match = 1;
 					} else {
@@ -373,7 +371,8 @@ int calculScore(int joueur)
 							     tmpB->debutBlock))
 							{
 								listeCase =
-								    tmpB->debutBlock;
+								    tmpB->
+								    debutBlock;
 							} else {
 								tmpB =
 								    tmpB->next;
@@ -398,7 +397,7 @@ int calculScore(int joueur)
 				tmp->next = liste;
 				tmp->debutBlock =
 				    ajouteCaseCalcul(NULL, i, j,
-						     getHauteurCase(*getCase
+						     getHauteurCase(getCase
 								    (i, j)));
 				liste = tmp;
 				tmp = NULL;

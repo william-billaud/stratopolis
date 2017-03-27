@@ -38,11 +38,16 @@ historiqueCase *getCase(int x, int y)
 \param[in] c case dont la hauteur est demandé
 \return hauteur de la case, -1 en case d'erreur
 */
-int getHauteurCase(historiqueCase c)
+int getHauteurCase(historiqueCase * c)
 {
-	int i = c.hauteur;
-	if (i < 0 || i > 19) {
+	int i;
+	if (c == NULL) {
 		i = -1;
+	} else {
+		i = c->hauteur;
+		if (i < 0 || i > 19) {
+			i = -1;
+		}
 	}
 	return i;
 }
@@ -53,13 +58,13 @@ int getHauteurCase(historiqueCase c)
 \return couleur de la case
 \return -1 en case d'erreur
 */
-int getCouleurCase(historiqueCase c)
+int getCouleurCase(historiqueCase * c)
 {
 
 	if (getHauteurCase(c) == -1) {
 		return -1;
 	} else {
-		return c.tabEtage[c.hauteur].couleurEtage;
+		return c->tabEtage[c->hauteur].couleurEtage;
 	}
 }
 
@@ -86,14 +91,14 @@ int setCaseAZero(historiqueCase * c)
  * \return -1 : si le numero de la case est incorecte
  * \return 41 si la case ne possède pas de pièce
  */
-int getNumeroPiece(historiqueCase c)
+int getNumeroPiece(historiqueCase * c)
 {
 	int h = getHauteurCase(c);
 	int numero;
 	if (h == -1) {
 		return -2;
 	}
-	numero = c.tabEtage[h].numeroPiece;
+	numero = c->tabEtage[h].numeroPiece;
 	if ((numero > 40 && !(h == 0 && numero == 41))
 	    || (h == 0 && numero != 41)) {
 		return -1;
