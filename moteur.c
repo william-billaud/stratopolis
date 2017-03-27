@@ -221,9 +221,8 @@ int joueCoup(coup coupJoueur)
 		//change la hauteur des case
 		caseCoups[i]->hauteur += 1;
 		//ajoute la numero de pièce a cette hauteur
-		caseCoups[i]->
-		    tabEtage[getHauteurCase((caseCoups[i]))].numeroPiece =
-		    coupJoueur.numeroPiece;
+		caseCoups[i]->tabEtage[getHauteurCase((caseCoups[i]))].
+		    numeroPiece = coupJoueur.numeroPiece;
 	}
 	//modifie les couleurs des cases
 	caseCoups[0]->tabEtage[getHauteurCase((caseCoups[0]))].couleurEtage =
@@ -256,11 +255,10 @@ int dejoueCoup(coup coupAnnulle)
 		}
 	}
 	for (i = 0; i < 3; ++i) {
-		caseCoups[i]->
-		    tabEtage[getHauteurCase((caseCoups[i]))].couleurEtage =
-		    vide;
-		caseCoups[i]->
-		    tabEtage[getHauteurCase((caseCoups[i]))].numeroPiece = 41;
+		caseCoups[i]->tabEtage[getHauteurCase((caseCoups[i]))].
+		    couleurEtage = vide;
+		caseCoups[i]->tabEtage[getHauteurCase((caseCoups[i]))].
+		    numeroPiece = 41;
 		caseCoups[i]->hauteur -= 1;
 	}
 	return 1;
@@ -374,7 +372,8 @@ int calculScore(int joueur)
 							     tmpB->debutBlock))
 							{
 								listeCase =
-								    tmpB->debutBlock;
+								    tmpB->
+								    debutBlock;
 							} else {
 								tmpB =
 								    tmpB->next;
@@ -503,16 +502,17 @@ void concateneCaseCalcul(listeBlock * block, caseCalcul * listeA,
 			 caseCalcul * listeB)
 {
 	listeBlock *tmp;
+	//on parcours la listeA jusqu'au bout
 	while (listeA->next != NULL) {
 		listeA = listeA->next;
 	}
+	//on y ajoute la liste B
 	listeA->next = listeB;
-
-	while (block->debutBlock != listeB) {
+	//on parcours la liste de block a la recherche du debut de la listeB
+	while (block->next->debutBlock != listeB) {
 		block = block->next;
 	}
 	tmp = block->next;
-	block->debutBlock = tmp->debutBlock;
 	block->next = tmp->next;
 	free(tmp);
 }

@@ -80,6 +80,30 @@ void gestionEvenement(EvenementGfx evenement)
 		case 'Q':
 		case 'q':
 			exit(0);
+		case 'C':
+		case 'c':
+			initPiece();
+			initOrdrePieces(1);
+			initOrdrePieces(2);
+			initPlateau();
+			cp.numeroPiece = 14;
+			cp.xCoup = 82;
+			cp.yCoup = 80;
+			cp.orientationPiece = HD;
+			joueCoup(cp);
+			cp.numeroPiece = 10;
+			cp.xCoup = 84;
+			cp.yCoup = 80;
+			cp.orientationPiece = HD;
+			joueCoup(cp);
+			cp.numeroPiece = 23;
+			cp.yCoup = 80;
+			cp.xCoup = 82;
+			cp.orientationPiece = HG;
+			joueCoup(cp);
+			trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
+			rafraichisFenetre();
+			break;
 
 		case 'F':
 		case 'f':
