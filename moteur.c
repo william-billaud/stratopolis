@@ -289,9 +289,9 @@ int calculScore(int joueur)
 	listeBlock *tmpB = NULL;
 	caseCalcul *listeCase = NULL;
 	if (joueur == 1) {
-		couleurJoueur = vert;
-	} else if (joueur == 2) {
 		couleurJoueur = rouge;
+	} else if (joueur == 2) {
+		couleurJoueur = vert;
 	} else {
 		return -1;
 	}
