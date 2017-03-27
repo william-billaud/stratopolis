@@ -91,7 +91,7 @@ typedef struct coup {
 /*!
  * \brief tableau contenant l'ordre des pièces
  */
-typedef int ORDREPIECE[20];
+typedef int ORDREPIECE[21];
 
 /*!
  * \brief tableau contenant le plateau de jeu

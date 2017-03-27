@@ -149,6 +149,115 @@ void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY)
 	}
 }
 
+/*!
+ * \brief appelle couleurCourante() en fonction du paramètre
+ * \param [in]couleurCase couleur de la case à déterminer
+ * \return rien
+ */
+void determineCouleur(couleur couleurCase)
+{
+	switch (couleurCase) {
+	case neutre:
+		couleurCourante(135, 87, 39);
+		break;
+	case rouge:
+		couleurCourante(247, 35, 12);
+		break;
+	case vert:
+		couleurCourante(58, 242, 75);
+		break;
+	case vide:
+		couleurCourante(78, 61, 40);
+		break;
+	}
+}
+
+/*!
+   \brief Affiche l’interface de jeu
+   \param[in] nomJ1 : nom du premier joueur
+	 \param[in] nomJ2 : nom du deuxième joueur
+	 \return rien
+*/
+void afficheInterface(char nomJ1[15], char nomJ2[15])
+{
+//      pieces pieceJ1 = PIECE[ordreJoueurs[0][20 - ordreJoueurs[0][20]]];
+		/**< piece disponible pour le joueur 1*/
+//  pieces pieceJ2 = PIECE[ordreJoueurs[1][20 - ordreJoueurs[1][20]]];
+	  /**< piece disponible pour le joueur 2*/
+	char score[10];
+		/**< variable de recuperation des scores*/
+	char tuiles[10];
+		/**< variable de recuperation des nombres de tuiles*/
+	float taille =
+	    (largeurFenetre() >=
+	     hauteurFenetre()) * largeurFenetre() / 6 + (hauteurFenetre() >
+							 largeurFenetre()) *
+	    hauteurFenetre() / 6;
+		/**< taille des interfaces a afficher*/
+
+	//Affiche le fond de l'application
+	couleurCourante(78, 61, 40);
+	rectangle(0, 0, largeurFenetre(), hauteurFenetre());
+
+	//Fond interfaces des joueurs
+	couleurCourante(247, 35, 12);
+	rectangle(0, 0, taille, hauteurFenetre());
+	couleurCourante(58, 242, 75);
+	rectangle(largeurFenetre(), 0, largeurFenetre() - taille,
+		  hauteurFenetre());
+
+	//Affiche les noms des deux joueurs
+	couleurCourante(240, 255, 255);
+	epaisseurDeTrait(1);
+	afficheChaine(nomJ1, taille / 6, taille / 10,
+		      hauteurFenetre() - taille / 4);
+	afficheChaine(nomJ2, taille / 6, largeurFenetre() - taille * 9 / 10,
+		      hauteurFenetre() - taille / 4);
+
+	//Affiche les scores des deux joueurs
+	afficheChaine("Score :", taille / 6, taille / 10, taille / 2);
+	sprintf(score, "%d", calculScore(1));
+	afficheChaine(score, taille / 6, taille / 10, taille / 4);
+
+	afficheChaine("Score : ", taille / 6,
+		      largeurFenetre() - taille * 9 / 10, taille / 2);
+	sprintf(score, "%d", calculScore(2));
+	afficheChaine(score, taille / 6, largeurFenetre() - taille * 9 / 10,
+		      taille / 4);
+
+	//Affiche les tuiles restantes des deux joueurs
+	afficheChaine("Tuiles :", taille / 6, taille / 10, taille);
+	sprintf(tuiles, "%d", ordreJoueurs[0][20]);
+	afficheChaine(tuiles, taille / 6, taille / 10, taille / 1.25);
+	afficheChaine("Tuiles : ", taille / 6,
+		      largeurFenetre() - taille * 9 / 10, taille);
+	sprintf(tuiles, "%d", ordreJoueurs[1][20]);
+	afficheChaine(tuiles, taille / 6,
+		      largeurFenetre() - taille * 9 / 10, taille / 1.25);
+
+/*	//Affiche les zones de sélection de tuile
+	float x_min = taille / 10;
+	float x_max = taille * 9 / 10;
+	float y_max = hauteurFenetre() * 2 / 3;
+	float y_min = y_max - taille * 8 / 10;
+
+	couleurCourante(78, 61, 40);
+	rectangle(x_min, y_min, x_max, y_max);
+	rectangle(largeurFenetre() - x_min, y_min, largeurFenetre() - x_max,
+		  y_max);
+
+	//Affiche les pièces disponibles
+	determineCouleur(pieceJ1.c1);
+	rectangle(x_min, y_max, x_max - (x_max - x_min) / 2,
+		  y_max - (y_max - y_min) / 2);
+	determineCouleur(pieceJ1.c2);
+	rectangle(x_min, y_min, x_max - (x_max - x_min) / 2,
+		  y_max - (y_max - y_min) / 2);
+	determineCouleur(pieceJ1.c3);
+	rectangle(x_max - (x_max - x_min) / 2, y_max, x_max - (x_max - x_min) / 2,
+			y_max - (y_max - y_min) / 2);*/
+}
+
 /**
  * \brief donne les coordonée dans le plateau des coordonnée de la soursi
  * \param [out]x abscisse de la casse ou la souris est
