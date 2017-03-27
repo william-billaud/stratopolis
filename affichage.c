@@ -90,21 +90,21 @@ void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY)
 
 			//Détermine les contours de la pièce
 			margeH =
-			    (getNumeroPiece(*case_h) != getNumeroPiece(*maCase))
-			    || (getHauteurCase(*case_h) !=
-				getHauteurCase(*maCase));
+			    (getNumeroPiece(case_h) != getNumeroPiece(maCase))
+			    || (getHauteurCase(case_h) !=
+				getHauteurCase(maCase));
 			margeB =
-			    (getNumeroPiece(*case_b) != getNumeroPiece(*maCase))
-			    || (getHauteurCase(*case_b) !=
-				getHauteurCase(*maCase));
+			    (getNumeroPiece(case_b) != getNumeroPiece(maCase))
+			    || (getHauteurCase(case_b) !=
+				getHauteurCase(maCase));
 			margeG =
-			    (getNumeroPiece(*case_g) != getNumeroPiece(*maCase))
-			    || (getHauteurCase(*case_g) !=
-				getHauteurCase(*maCase));
+			    (getNumeroPiece(case_g) != getNumeroPiece(maCase))
+			    || (getHauteurCase(case_g) !=
+				getHauteurCase(maCase));
 			margeD =
-			    (getNumeroPiece(*case_d) != getNumeroPiece(*maCase))
-			    || (getHauteurCase(*case_d) !=
-				getHauteurCase(*maCase));
+			    (getNumeroPiece(case_d) != getNumeroPiece(maCase))
+			    || (getHauteurCase(case_d) !=
+				getHauteurCase(maCase));
 
 			//Trace le contour
 			couleurCourante(58, 41, 20);
@@ -112,7 +112,7 @@ void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY)
 				  maxXcase - margeD, maxYcase - margeH);
 
 			//Determine la coueur de la case
-			couleur couleurCase = (couleur) getCouleurCase(*maCase);
+			couleur couleurCase = (couleur) getCouleurCase(maCase);
 			switch (couleurCase) {
 			case neutre:
 				couleurCourante(135, 87, 39);
@@ -135,7 +135,7 @@ void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY)
 			//Affiche la hauteur de la case
 			if (couleurCase != vide) {
 				sprintf(hauteurCase, "%d",
-					getHauteurCase(*maCase));
+					getHauteurCase(maCase));
 				couleurCourante(240, 255, 255);
 				epaisseurDeTrait(2);
 				afficheChaine(hauteurCase, taille_case / 4,
@@ -147,6 +147,115 @@ void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY)
 			}
 		}
 	}
+}
+
+/*!
+ * \brief appelle couleurCourante() en fonction du paramètre
+ * \param [in]couleurCase couleur de la case à déterminer
+ * \return rien
+ */
+void determineCouleur(couleur couleurCase)
+{
+	switch (couleurCase) {
+	case neutre:
+		couleurCourante(135, 87, 39);
+		break;
+	case rouge:
+		couleurCourante(247, 35, 12);
+		break;
+	case vert:
+		couleurCourante(58, 242, 75);
+		break;
+	case vide:
+		couleurCourante(78, 61, 40);
+		break;
+	}
+}
+
+/*!
+   \brief Affiche l’interface de jeu
+   \param[in] nomJ1 : nom du premier joueur
+	 \param[in] nomJ2 : nom du deuxième joueur
+	 \return rien
+*/
+void afficheInterface(char nomJ1[15], char nomJ2[15])
+{
+//      pieces pieceJ1 = PIECE[ordreJoueurs[0][20 - ordreJoueurs[0][20]]];
+		/**< piece disponible pour le joueur 1*/
+//  pieces pieceJ2 = PIECE[ordreJoueurs[1][20 - ordreJoueurs[1][20]]];
+	  /**< piece disponible pour le joueur 2*/
+	char score[10];
+		/**< variable de recuperation des scores*/
+	char tuiles[10];
+		/**< variable de recuperation des nombres de tuiles*/
+	float taille =
+	    (largeurFenetre() >=
+	     hauteurFenetre()) * largeurFenetre() / 6 + (hauteurFenetre() >
+							 largeurFenetre()) *
+	    hauteurFenetre() / 6;
+		/**< taille des interfaces a afficher*/
+
+	//Affiche le fond de l'application
+	couleurCourante(78, 61, 40);
+	rectangle(0, 0, largeurFenetre(), hauteurFenetre());
+
+	//Fond interfaces des joueurs
+	couleurCourante(247, 35, 12);
+	rectangle(0, 0, taille, hauteurFenetre());
+	couleurCourante(58, 242, 75);
+	rectangle(largeurFenetre(), 0, largeurFenetre() - taille,
+		  hauteurFenetre());
+
+	//Affiche les noms des deux joueurs
+	couleurCourante(240, 255, 255);
+	epaisseurDeTrait(1);
+	afficheChaine(nomJ1, taille / 6, taille / 10,
+		      hauteurFenetre() - taille / 4);
+	afficheChaine(nomJ2, taille / 6, largeurFenetre() - taille * 9 / 10,
+		      hauteurFenetre() - taille / 4);
+
+	//Affiche les scores des deux joueurs
+	afficheChaine("Score :", taille / 6, taille / 10, taille / 2);
+	sprintf(score, "%d", calculScore(1));
+	afficheChaine(score, taille / 6, taille / 10, taille / 4);
+
+	afficheChaine("Score : ", taille / 6,
+		      largeurFenetre() - taille * 9 / 10, taille / 2);
+	sprintf(score, "%d", calculScore(2));
+	afficheChaine(score, taille / 6, largeurFenetre() - taille * 9 / 10,
+		      taille / 4);
+
+	//Affiche les tuiles restantes des deux joueurs
+	afficheChaine("Tuiles :", taille / 6, taille / 10, taille);
+	sprintf(tuiles, "%d", ordreJoueurs[0][20]);
+	afficheChaine(tuiles, taille / 6, taille / 10, taille / 1.25);
+	afficheChaine("Tuiles : ", taille / 6,
+		      largeurFenetre() - taille * 9 / 10, taille);
+	sprintf(tuiles, "%d", ordreJoueurs[1][20]);
+	afficheChaine(tuiles, taille / 6,
+		      largeurFenetre() - taille * 9 / 10, taille / 1.25);
+
+/*	//Affiche les zones de sélection de tuile
+	float x_min = taille / 10;
+	float x_max = taille * 9 / 10;
+	float y_max = hauteurFenetre() * 2 / 3;
+	float y_min = y_max - taille * 8 / 10;
+
+	couleurCourante(78, 61, 40);
+	rectangle(x_min, y_min, x_max, y_max);
+	rectangle(largeurFenetre() - x_min, y_min, largeurFenetre() - x_max,
+		  y_max);
+
+	//Affiche les pièces disponibles
+	determineCouleur(pieceJ1.c1);
+	rectangle(x_min, y_max, x_max - (x_max - x_min) / 2,
+		  y_max - (y_max - y_min) / 2);
+	determineCouleur(pieceJ1.c2);
+	rectangle(x_min, y_min, x_max - (x_max - x_min) / 2,
+		  y_max - (y_max - y_min) / 2);
+	determineCouleur(pieceJ1.c3);
+	rectangle(x_max - (x_max - x_min) / 2, y_max, x_max - (x_max - x_min) / 2,
+			y_max - (y_max - y_min) / 2);*/
 }
 
 /**
@@ -203,38 +312,31 @@ int detecteCase(int *x, int *y, int zoom, unsigned int basX, unsigned int basY)
  */
 int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom)
 {
-	unsigned int x_min = 0, x_max = 0, y_min = 0, y_max = 0;
-	unsigned int i = 0, j = 0;
-	bool haut = true, bas = true;
+	int x_min = 0, x_max = 0, y_min = 0, y_max = 0;
+	int i = 0, j = 0;
+	int zoomTmp;
+	bool haut = true, bas = true, gauche = true, droite = true;
 	//tant que les coordonnés du point le plus en bas à droite et celui en haut à gauche n'ont pas été trouvée
-	while (haut || bas) {
-		if (bas) {
-			if (vide != getCouleurCase(*getCase(i, j))) {
-				x_min = i;
-				y_min = j;
-				bas = false;
-			} else if (vide != getCouleurCase(*getCase(j, i))) {
-				y_min = i;
-				x_min = j;
-				bas = false;
-			}
+	while (haut || bas || droite || gauche) {
+		if (gauche && vide != getCouleurCase(getCase(i, j))) {
+			y_min = j;
+			gauche = false;
 		}
-		if (haut) {
-			if (vide !=
-			    getCouleurCase(*getCase
-					   (TAILLEMAX - i - 1,
-					    TAILLEMAX - j - 1))) {
-				x_max = TAILLEMAX - i - 1;
-				y_max = TAILLEMAX - j - 1;
-				haut = false;
-			} else if (vide !=
-				   getCouleurCase(*getCase
-						  (TAILLEMAX - j - 1,
-						   TAILLEMAX - i - 1))) {
-				y_max = TAILLEMAX - i - 1;
-				x_max = TAILLEMAX - j - 1;
-				haut = false;
-			}
+		if (bas && vide != getCouleurCase(getCase(j, i))) {
+			x_min = j;
+			bas = false;
+		}
+		if (droite && vide != getCouleurCase(getCase(TAILLEMAX - i - 1,
+							     TAILLEMAX - j -
+							     1))) {
+			y_max = TAILLEMAX - j - 1;
+			droite = false;
+		}
+		if (haut && vide !=
+		    getCouleurCase(getCase
+				   (TAILLEMAX - j - 1, TAILLEMAX - i - 1))) {
+			x_max = TAILLEMAX - j - 1;
+			haut = false;
 		}
 		i += 1;
 		if (i == TAILLEMAX) {
@@ -248,18 +350,28 @@ int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom)
 		}
 	}
 	//on laisse, si possible une marge de 2 carreau
-	*x = (x_min - 1 > 0) ? x_min - 2 : ((x_min > 0) ? x_min - 1 : x_min);
-	*y = (y_min - 1 > 0) ? y_min - 2 : ((y_min > 0) ? y_min - 1 : y_min);
-	y_max =
-	    (y_max + 2 <
-	     TAILLEMAX) ? y_max + 2 : ((y_max + 1 <
-					TAILLEMAX) ? y_max + 1 : y_max);
-	x_max =
-	    (x_max + 2 <
-	     TAILLEMAX) ? x_max + 2 : ((x_max + 1 <
-					TAILLEMAX) ? x_max + 1 : x_max);
+	x_min = x_min - 2;
+	y_min = y_min - 2;
+	y_max = y_max + 2;
+	x_max = x_max + 2;
+	//mise en place des plancher(0) et des saturation (TAILLEMAX-1) des valeurs
+	x_min = (x_min > 0) ? x_min : 0;
+	y_min = (y_min > 0) ? y_min : 0;
+	y_max = (y_max < TAILLEMAX) ? y_max : TAILLEMAX - 1;
+	x_max = (x_max < TAILLEMAX) ? x_max : TAILLEMAX - 1;
 	//le zoom vaut l'ecart maximum entre les abscisse ou les ordonnée
-	*zoom =
-	    ((x_max - *x) > (y_max - *y)) ? (x_max - *x) + 1 : (y_max - *y) + 1;
+	//centrage des pièces
+	if ((x_max - x_min) > (y_max - y_min)) {
+		zoomTmp = (x_max - x_min) + 1;
+		y_min = y_min - ((zoomTmp - (y_max - y_min)) / 2);
+		y_min = (y_min > 0) ? y_min : 0;
+	} else {
+		zoomTmp = (y_max - y_min) + 1;
+		x_min = x_min - ((zoomTmp - (x_max - x_min)) / 2);
+		x_min = (x_min > 0) ? x_min : 0;
+	}
+	*y = (unsigned int)y_min;
+	*x = (unsigned int)x_min;
+	*zoom = (unsigned int)zoomTmp;
 	return 0;
 }

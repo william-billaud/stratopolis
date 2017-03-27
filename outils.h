@@ -91,7 +91,7 @@ typedef struct coup {
 /*!
  * \brief tableau contenant l'ordre des pièces
  */
-typedef int ORDREPIECE[20];
+typedef int ORDREPIECE[21];
 
 /*!
  * \brief tableau contenant le plateau de jeu
@@ -104,14 +104,14 @@ typedef historiqueCase PLATEAU[TAILLEMAX][TAILLEMAX];
 \return couleur de la case
 \return -1 en case d'erreur
 */
-int getCouleurCase(historiqueCase c);
+int getCouleurCase(historiqueCase * c);
 
 /*!
 \brief retourne la hauteur d'une case
-\param[in] c case dont la hauteur est demandé
+\param[in] c pointeur vers la case dont la hauteur est demandé
 \return hauteur de la case, -1 en case d'erreur
 */
-int getHauteurCase(historiqueCase c);
+int getHauteurCase(historiqueCase * c);
 
 /*!
 \brief fonction permettant de recuperer un pointeur vers un case
@@ -136,7 +136,7 @@ int setCaseAZero(historiqueCase * c);
  * \return -1 : si le numero de la case est incorecte
  * \return 42 si la case ne possède pas de pièce
  */
-int getNumeroPiece(historiqueCase c);
+int getNumeroPiece(historiqueCase * c);
 
 /**
  * \brief verifie si une valeur est present dans un tableau 1D d'entier

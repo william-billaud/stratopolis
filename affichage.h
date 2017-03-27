@@ -120,4 +120,11 @@ int detecteCase(int *x, int *y, int zoom, unsigned int basX, unsigned int basY);
  * \return 0 si non
  */
 int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom);
+
+/*!
+ * \brief appelle couleurCourante() en fonction du paramètre
+ * \param [in]couleurCase couleur de la case à déterminer
+ * \return rien
+ */
+void determineCouleur(couleur couleurCase);
 #endif
