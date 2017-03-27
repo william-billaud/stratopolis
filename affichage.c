@@ -111,22 +111,9 @@ void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY)
 			rectangle(minXcase + margeG, minYcase + margeB,
 				  maxXcase - margeD, maxYcase - margeH);
 
-			//Determine la coueur de la case
+			//Determine la couleur de la case
 			couleur couleurCase = (couleur) getCouleurCase(*maCase);
-			switch (couleurCase) {
-			case neutre:
-				couleurCourante(135, 87, 39);
-				break;
-			case rouge:
-				couleurCourante(247, 35, 12);
-				break;
-			case vert:
-				couleurCourante(58, 242, 75);
-				break;
-			case vide:
-				couleurCourante(78, 61, 40);
-				break;
-			}
+			determineCouleur(couleurCase);
 
 			//Trace la pièce
 			rectangle(minXcase + margeG + 2,
@@ -146,6 +133,29 @@ void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY)
 						      taille_case / 4.5));
 			}
 		}
+	}
+}
+
+/*!
+ * \brief appelle couleurCourante() en fonction du paramètre
+ * \param [in]couleurCase couleur de la case à déterminer
+ * \return rien
+ */
+void determineCouleur(couleur couleurCase)
+{
+	switch (couleurCase) {
+	case neutre:
+		couleurCourante(135, 87, 39);
+		break;
+	case rouge:
+		couleurCourante(247, 35, 12);
+		break;
+	case vert:
+		couleurCourante(58, 242, 75);
+		break;
+	case vide:
+		couleurCourante(78, 61, 40);
+		break;
 	}
 }
 
@@ -223,7 +233,6 @@ void afficheInterface(char nomJ1[15], char nomJ2[15])
 		  (hauteurFenetre() * 2 / 3) - taille * 8 / 10);
 
 	//Affiche les pièces disponibles
-	 
 
 }
 
