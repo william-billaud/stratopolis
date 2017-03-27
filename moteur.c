@@ -501,7 +501,7 @@ int scoreListe(caseCalcul * tete)
 void concateneCaseCalcul(listeBlock * block, caseCalcul * listeA,
 			 caseCalcul * listeB)
 {
-	listeBlock *tmp;
+    	listeBlock *tmp;
 	//on parcours la listeA jusqu'au bout
 	while (listeA->next != NULL) {
 		listeA = listeA->next;
@@ -509,10 +509,19 @@ void concateneCaseCalcul(listeBlock * block, caseCalcul * listeA,
 	//on y ajoute la liste B
 	listeA->next = listeB;
 	//on parcours la liste de block a la recherche du debut de la listeB
-	while (block->next->debutBlock != listeB) {
-		block = block->next;
-	}
-	tmp = block->next;
-	block->next = tmp->next;
-	free(tmp);
+    //traitement speciale si listeB correspond au tout premier block
+    if(block->debutBlock==listeB)
+    {
+        block->debutBlock=block->next->debutBlock;
+        block->next=block->next->next;
+        free(block->next);
+    } else
+    {
+        while (block->next->debutBlock != listeB) {
+            block = block->next;
+        }
+        tmp = block->next;
+        block->next = tmp->next;
+        free(tmp);
+    }
 }
