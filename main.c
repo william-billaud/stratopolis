@@ -63,6 +63,13 @@ void gestionEvenement(EvenementGfx evenement)
 		joueCoup(cp);
 		trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
 		//joueurActuelle = choisisJoueur();
+
+		detecteCase(&x, &y, zoom_d, x_d, y_d);
+		coupJoueur.orientationPiece = orientationPiece;
+		coupJoueur.yCoup = (unsigned int)y;
+		coupJoueur.xCoup = (unsigned int)x;
+		coupJoueur.numeroPiece = ordreJoueurs[0][0];
+
 		activeGestionDeplacementPassifSouris();
 		demandeAnimation_ips(50);
 		break;
@@ -71,6 +78,14 @@ void gestionEvenement(EvenementGfx evenement)
 		effaceFenetre(255, 255, 255);
 		afficheInterface("Joueur 1", "Joueur 2");
 		afficheGrille(zoom_d, x_d, y_d);
+
+		detecteCase(&x, &y, zoom_d, x_d, y_d);
+		coupJoueur.orientationPiece = orientationPiece;
+		coupJoueur.yCoup = (unsigned int)y;
+		coupJoueur.xCoup = (unsigned int)x;
+		coupJoueur.numeroPiece = ordreJoueurs[0][0];
+
+		affichePredictif(coupJoueur, zoom_d);
 		break;
 
 	case Clavier:
@@ -112,6 +127,29 @@ void gestionEvenement(EvenementGfx evenement)
 
 	case ClavierSpecial:
 		printf("ASCII %d\n", toucheClavier());
+		switch (toucheClavier()) {
+		case ToucheFlecheDroite:
+			if (orientationPiece == HG) {
+				orientationPiece = HD;
+			} else {
+				orientationPiece += 1;
+			}
+			rafraichisFenetre();
+			break;
+
+		case ToucheFlecheGauche:
+			if (orientationPiece == HD) {
+				orientationPiece = HG;
+			} else {
+				orientationPiece -= 1;
+			}
+			rafraichisFenetre();
+			break;
+
+		default:
+			break;
+		}
+
 		break;
 
 	case BoutonSouris:
@@ -120,7 +158,7 @@ void gestionEvenement(EvenementGfx evenement)
 			coupJoueur.orientationPiece = orientationPiece;
 			coupJoueur.yCoup = (unsigned int)y;
 			coupJoueur.xCoup = (unsigned int)x;
-			coupJoueur.numeroPiece = 14;
+			coupJoueur.numeroPiece = ordreJoueurs[0][0];
 			joueCoup(coupJoueur);
 			printf("Bouton gauche appuye en : (%d, %d)\n", x, y);
 		}
