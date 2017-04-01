@@ -7,32 +7,6 @@
 
 #include "affichage.h"
 
-/* Fonction de trace de cercle */
-/*
-void cercle(float centreX, float centreY, float rayon)
-{
-	const int Pas = 20;	// Nombre de secteurs pour tracer le cercle
-	const double PasAngulaire = 2. * 3.14 / Pas;
-	int index;
-
-	for (index = 0; index < Pas; ++index)	// Pour chaque secteur
-	{
-		const double angle = 2. * 3.14 * index / Pas;	// on calcule l'angle de depart du secteur
-		triangle(centreX, centreY,
-			 (float)(centreX + rayon * cos(angle)),
-			 (float)(centreY + rayon * sin(angle)),
-			 (float)(centreX + rayon * cos(angle + PasAngulaire)),
-			 (float)(centreY + rayon * sin(angle + PasAngulaire)));
-		// On trace le secteur a l'aide d'un triangle => approximation d'un cercle
-	}
-}
-*/
-/**
- * \brief Affiche le plateau de jeu, la couleur et la hauteur de chaque case
- * \param [in] zoom : nombre de case affiché par ligne/colonne
- * \param basX abscisse de la case du bas
- * \param basY abscisse de la case du bas
- */
 void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY)
 {
 	//Bloque le nombre maximum de cases à afficher
@@ -52,8 +26,8 @@ void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY)
 	float largeur = largeurFenetre();
 	float hauteur = hauteurFenetre();
 	//Définit l'écart entre le centre de la fenêtre et le bord du plateau
-	float ecart = (float)(((largeur <= hauteur) * largeur
-			       + (largeur > hauteur) * hauteur) / 2.5);
+	float ecart = (((largeur <= hauteur) * largeur
+			       + (largeur > hauteur) * hauteur) / 2.5f);
 	float taille_case = 2 * ecart / zoom;
 	float minX, minY, maxX, maxY;
 
@@ -77,9 +51,9 @@ void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY)
 						      1) * taille_case;
 
 			//Affiche la case
-			afficheCase(getCouleurCase(getCase(i, j)),
-				    getHauteurCase(getCase(i, j)), minX, minY,
-				    maxX, maxY, false);
+			afficheCase((couleur) getCouleurCase(getCase(i, j)),
+						getHauteurCase(getCase(i, j)), minX, minY,
+						maxX, maxY, false);
 
 			//Affiche les bordures
 			afficheBorduresDeCase(getNumeroPiece(getCase(i, j)),
@@ -306,9 +280,9 @@ void afficheBordureEntreCases(int numero1, int numero2, float centreX1,
 */
 void afficheInterface(char nomJ1[15], char nomJ2[15])
 {
-	pieces pieceJ1 = PIECE[ordreJoueurs[0][20 - ordreJoueurs[0][20]]];
+	pieces pieceJ1 = PIECE[ordreJoueurs[0][ordreJoueurs[0][20]]];
 		/**< piece disponible pour le joueur 1*/
-	pieces pieceJ2 = PIECE[ordreJoueurs[1][20 - ordreJoueurs[1][20]]];
+	pieces pieceJ2 = PIECE[ordreJoueurs[1][ordreJoueurs[1][20]]];
 	  /**< piece disponible pour le joueur 2*/
 	char score[10];
 		/**< variable de recuperation des scores*/
@@ -326,9 +300,9 @@ void afficheInterface(char nomJ1[15], char nomJ2[15])
 	rectangle(0, 0, largeurFenetre(), hauteurFenetre());
 
 	//Fond interfaces des joueurs
-	couleurCourante(247, 35, 12);
-	rectangle(0, 0, taille, hauteurFenetre());
 	couleurCourante(58, 242, 75);
+	rectangle(0, 0, taille, hauteurFenetre());
+	couleurCourante(247, 35, 12);
 	rectangle(largeurFenetre(), 0, largeurFenetre() - taille,
 		  hauteurFenetre());
 
@@ -353,13 +327,13 @@ void afficheInterface(char nomJ1[15], char nomJ2[15])
 
 	//Affiche les tuiles restantes des deux joueurs
 	afficheChaine("Tuiles :", taille / 6, taille / 10, taille);
-	sprintf(tuiles, "%d", ordreJoueurs[0][20]);
-	afficheChaine(tuiles, taille / 6, taille / 10, taille / 1.25);
+	sprintf(tuiles, "%d", 20-ordreJoueurs[0][20]);
+	afficheChaine(tuiles, taille / 6, taille / 10,  (taille / 1.25f));
 	afficheChaine("Tuiles : ", taille / 6,
 		      largeurFenetre() - taille * 9 / 10, taille);
-	sprintf(tuiles, "%d", ordreJoueurs[1][20]);
+	sprintf(tuiles, "%d", 20-ordreJoueurs[1][20]);
 	afficheChaine(tuiles, taille / 6,
-		      largeurFenetre() - taille * 9 / 10, taille / 1.25);
+		      largeurFenetre() - taille * 9 / 10,  (taille / 1.25f));
 
 	//Affiche les zones de sélection de tuile
 	float x_min = taille / 10;
@@ -372,12 +346,11 @@ void afficheInterface(char nomJ1[15], char nomJ2[15])
 	rectangle(x_min, y_min, x_max, y_max);
 	rectangle(largeurFenetre() - x_min, y_min, largeurFenetre() - x_max,
 		  y_max);
-
-	affichePiece(pieceJ1.numeroPiece, HD, x_min + marge, y_min + marge,
-		     x_max - marge, y_max - marge, false);
-	affichePiece(pieceJ2.numeroPiece, HD, largeurFenetre() - x_max + marge,
-		     y_min + marge, largeurFenetre() - x_min - marge,
-		     y_max - marge, false);
+	affichePiece(pieceJ1.numeroPiece, HD, (int) (x_min + marge), (int) (y_min + marge),
+				 (int) (x_max - marge), (int) (y_max - marge), false);
+	affichePiece(pieceJ2.numeroPiece, HD, (int) (largeurFenetre() - x_max + marge),
+				 (int) (y_min + marge), (int) (largeurFenetre() - x_min - marge),
+				 (int) (y_max - marge), false);
 }
 
 /*!
@@ -399,9 +372,9 @@ void affichePredictif(coup coupJoueur, int zoom)
 void dessinePredictif(coup coupJoueur, bool estValide, int zoom)
 {
 	float taille =
-	    2 * (((largeurFenetre() <= hauteurFenetre()) * largeurFenetre()
-		  + (largeurFenetre() >
-		     hauteurFenetre()) * hauteurFenetre()) / 2.5) / zoom;
+			(float) (2 * (((largeurFenetre() <= hauteurFenetre()) * largeurFenetre()
+						   + (largeurFenetre() >
+                         hauteurFenetre()) * hauteurFenetre()) / 2.5) / zoom);
 
 	float minX, minY, maxX, maxY;
 	if (coupJoueur.orientationPiece == BD) {
@@ -426,7 +399,7 @@ void dessinePredictif(coup coupJoueur, bool estValide, int zoom)
 		maxY = ordonneeSouris() + taille * 3 / 2;
 	}
 	affichePiece(coupJoueur.numeroPiece, coupJoueur.orientationPiece,
-		     minX, minY, maxX, maxY, !estValide);
+				 (int) minX, (int) minY, (int) maxX, (int) maxY, !estValide);
 }
 
 /**

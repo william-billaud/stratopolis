@@ -168,5 +168,14 @@ int scoreListe(caseCalcul * tete);
  */
 void concateneCaseCalcul(listeBlock * block, caseCalcul * listeA,
 			 caseCalcul * listeB);
+/*!
+ * \brief
+ * \param joueur joueur pointeur vers un entier contenant le joueur qui commenceras
+ * \return -1 si l'initation des pièce du joueur 1 a eu un problème
+ * \return -2 si l'initiation des pièces du joueur 2 à eu un problème
+ * \return -4 si le plateau à été mal initialisé
+ * \return somme des retour precedent ( à la manière du chmod)
+ */
+int initPartie(int *joueur );
 
 #endif

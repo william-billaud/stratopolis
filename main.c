@@ -31,60 +31,46 @@ int main(int argc, char **argv)
 void gestionEvenement(EvenementGfx evenement)
 {
 	static bool pleinEcran = false;	// Pour savoir si on est en mode plein ecran ou pas
+    static enum {menu,classique,IA,victoire}mode;
 	//position du zoom par defaut
 	static unsigned int x_d = 80, y_d = 80;
 	static unsigned int zoom_d = 20;
 	int x, y;
 	static coup coupJoueur;
 	static orientation orientationPiece;
-	//static int joueurActuelle;
+	static int joueurActuelle;
 	switch (evenement) {
 	case Initialisation:
 		printf("%s\n", "Initialisation");
-		initPiece();
-		initOrdrePieces(1);
-		initOrdrePieces(2);
-		initPlateau();
-		coup cp;
-		cp.numeroPiece = 14;
-		cp.xCoup = 82;
-		cp.yCoup = 80;
-		cp.orientationPiece = HD;
-		joueCoup(cp);
-		cp.numeroPiece = 10;
-		cp.xCoup = 84;
-		cp.yCoup = 80;
-		cp.orientationPiece = HD;
-		joueCoup(cp);
-		cp.numeroPiece = 23;
-		cp.yCoup = 80;
-		cp.xCoup = 82;
-		cp.orientationPiece = HG;
-		joueCoup(cp);
+		initPartie(&joueurActuelle);
 		trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
-		//joueurActuelle = choisisJoueur();
 
 		detecteCase(&x, &y, zoom_d, x_d, y_d);
-		coupJoueur.orientationPiece = orientationPiece;
-		coupJoueur.yCoup = (unsigned int)y;
-		coupJoueur.xCoup = (unsigned int)x;
-		coupJoueur.numeroPiece = ordreJoueurs[0][0];
-
+        mode=classique;
 		activeGestionDeplacementPassifSouris();
 		break;
 
 	case Affichage:
-		effaceFenetre(255, 255, 255);
-		afficheInterface("Joueur 1", "Joueur 2");
-		afficheGrille(zoom_d, x_d, y_d);
+        effaceFenetre(255, 255, 255);
+        switch (mode)
+        {
+            case classique:
+            case IA:
+                afficheInterface("WILLIAM", "THEO");
+                afficheGrille(zoom_d, x_d, y_d);
 
-		detecteCase(&x, &y, zoom_d, x_d, y_d);
-		coupJoueur.orientationPiece = orientationPiece;
-		coupJoueur.yCoup = (unsigned int)y;
-		coupJoueur.xCoup = (unsigned int)x;
-		coupJoueur.numeroPiece = ordreJoueurs[0][0];
+                detecteCase(&x, &y, zoom_d, x_d, y_d);
+                coupJoueur.orientationPiece = orientationPiece;
+                coupJoueur.yCoup = (unsigned int)y;
+                coupJoueur.xCoup = (unsigned int)x;
+                coupJoueur.numeroPiece = (unsigned char) ordreJoueurs[joueurActuelle][ordreJoueurs[joueurActuelle][20]];
+                affichePredictif(coupJoueur, zoom_d);
+                break;
+            case menu:
+            case victoire:
+                break;
+        }
 
-		affichePredictif(coupJoueur, zoom_d);
 		break;
 
 	case Clavier:
@@ -95,31 +81,6 @@ void gestionEvenement(EvenementGfx evenement)
 		case 'Q':
 		case 'q':
 			exit(0);
-		case 'C':
-		case 'c':
-			initPiece();
-			initOrdrePieces(1);
-			initOrdrePieces(2);
-			initPlateau();
-			cp.numeroPiece = 14;
-			cp.xCoup = 82;
-			cp.yCoup = 80;
-			cp.orientationPiece = HD;
-			joueCoup(cp);
-			cp.numeroPiece = 10;
-			cp.xCoup = 84;
-			cp.yCoup = 80;
-			cp.orientationPiece = HD;
-			joueCoup(cp);
-			cp.numeroPiece = 23;
-			cp.yCoup = 80;
-			cp.xCoup = 82;
-			cp.orientationPiece = HG;
-			joueCoup(cp);
-			trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
-			rafraichisFenetre();
-			break;
-
 		case 'F':
 		case 'f':
 			pleinEcran = !pleinEcran;	// Changement de mode plein ecran
@@ -138,8 +99,16 @@ void gestionEvenement(EvenementGfx evenement)
 
 		case 'Z':
 		case 'z':
-			trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
-			printf("X : %d, Y : %d ZOOM : %d \n", x_d, y_d, zoom_d);
+            switch (mode) {
+                case menu:break;
+                case classique:
+                case IA:
+                    trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
+                    printf("X : %d, Y : %d ZOOM : %d \n", x_d, y_d, zoom_d);
+                    break;
+                case victoire:break;
+            }
+
 			rafraichisFenetre();
 			break;
 
@@ -152,6 +121,7 @@ void gestionEvenement(EvenementGfx evenement)
 		printf("ASCII %d\n", toucheClavier());
 		switch (toucheClavier()) {
 		case ToucheFlecheDroite:
+        case ToucheFlecheBas:
 			if (orientationPiece == HG) {
 				orientationPiece = HD;
 			} else {
@@ -161,6 +131,7 @@ void gestionEvenement(EvenementGfx evenement)
 			break;
 
 		case ToucheFlecheGauche:
+        case ToucheFlecheHaut :
 			if (orientationPiece == HD) {
 				orientationPiece = HG;
 			} else {
@@ -181,9 +152,22 @@ void gestionEvenement(EvenementGfx evenement)
 			coupJoueur.orientationPiece = orientationPiece;
 			coupJoueur.yCoup = (unsigned int)y;
 			coupJoueur.xCoup = (unsigned int)x;
-			coupJoueur.numeroPiece = ordreJoueurs[0][0];
-			joueCoup(coupJoueur);
-			printf("Bouton gauche appuye en : (%d, %d)\n", x, y);
+			coupJoueur.numeroPiece = (unsigned char) ordreJoueurs[joueurActuelle][0];
+            orientationPiece=HD;
+			if(joueCoup(coupJoueur)==1){
+                ordreJoueurs[joueurActuelle][20]+=1;
+                joueurActuelle=(joueurActuelle+1)%2;
+                if(ordreJoueurs[1][20]==20 &&ordreJoueurs[0][20]==20)
+                {
+                    if(calculScore(0)>calculScore(1))
+                    {
+                        puts("joueur vert à gagné");
+                    } else{
+                        puts("joueur rouge à gagné");
+                    }
+                    initPartie(&joueurActuelle);
+                }
+            }
 		}
 		rafraichisFenetre();
 		break;
