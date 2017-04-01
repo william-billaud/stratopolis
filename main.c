@@ -71,7 +71,6 @@ void gestionEvenement(EvenementGfx evenement)
 		coupJoueur.numeroPiece = ordreJoueurs[0][0];
 
 		activeGestionDeplacementPassifSouris();
-		demandeAnimation_ips(50);
 		break;
 
 	case Affichage:
@@ -96,6 +95,30 @@ void gestionEvenement(EvenementGfx evenement)
 		case 'Q':
 		case 'q':
 			exit(0);
+		case 'C':
+		case 'c':
+			initPiece();
+			initOrdrePieces(1);
+			initOrdrePieces(2);
+			initPlateau();
+			cp.numeroPiece = 14;
+			cp.xCoup = 82;
+			cp.yCoup = 80;
+			cp.orientationPiece = HD;
+			joueCoup(cp);
+			cp.numeroPiece = 10;
+			cp.xCoup = 84;
+			cp.yCoup = 80;
+			cp.orientationPiece = HD;
+			joueCoup(cp);
+			cp.numeroPiece = 23;
+			cp.yCoup = 80;
+			cp.xCoup = 82;
+			cp.orientationPiece = HG;
+			joueCoup(cp);
+			trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
+			rafraichisFenetre();
+			break;
 
 		case 'F':
 		case 'f':
@@ -162,13 +185,17 @@ void gestionEvenement(EvenementGfx evenement)
 			joueCoup(coupJoueur);
 			printf("Bouton gauche appuye en : (%d, %d)\n", x, y);
 		}
+		rafraichisFenetre();
 		break;
 
 	case Souris:
 
+		rafraichisFenetre();
 		break;
 
 	case Inactivite:
+		break;
+	case Temporisation:
 		break;
 
 	case Redimensionnement:
@@ -176,4 +203,5 @@ void gestionEvenement(EvenementGfx evenement)
 		printf("Hauteur : %d\n", hauteurFenetre());
 		break;
 	}
+
 }

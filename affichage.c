@@ -77,24 +77,19 @@ void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY)
 						      1) * taille_case;
 
 			//Affiche la case
-			afficheCase(getCouleurCase(*getCase(i, j)),
-				    getHauteurCase(*getCase(i, j)), minX, minY,
+			afficheCase(getCouleurCase(getCase(i, j)),
+				    getHauteurCase(getCase(i, j)), minX, minY,
 				    maxX, maxY, false);
 
 			//Affiche les bordures
-			afficheBorduresDeCase(getNumeroPiece(*getCase(i, j)),
-					      getNumeroPiece(*getCase
-							     (i, j + 1)),
-					      getNumeroPiece(*getCase
-							     (i + 1, j)),
-					      getNumeroPiece(*getCase
-							     (i, j - 1)),
-					      getNumeroPiece(*getCase
-							     (i - 1, j)),
+			afficheBorduresDeCase(getNumeroPiece(getCase(i, j)),
+					      getNumeroPiece(getCase(i, j + 1)),
+					      getNumeroPiece(getCase(i + 1, j)),
+					      getNumeroPiece(getCase(i, j - 1)),
+					      getNumeroPiece(getCase(i - 1, j)),
 					      minX + (maxX - minX) / 2,
 					      minY + (maxY - minY) / 2,
 					      taille_case);
-
 		}
 	}
 }
@@ -467,8 +462,7 @@ int detecteCase(int *x, int *y, int zoom, unsigned int basX, unsigned int basY)
 	int ord = ordonneeSouris();
 	//on regarde si l'utilisateur a cliqué dans la grille
 	if (abs > (largeur / 2 - ecart) && abs < (largeur / 2 + ecart)
-	    && ord < (hauteur / 2 + ecart)
-	    && ord > (hauteur / 2 - ecart)) {
+	    && ord < (hauteur / 2 + ecart) && ord > (hauteur / 2 - ecart)) {
 		float taille_case = 2 * ecart / zoom;
 		*x = (int)(((abs + ecart - largeur / 2) / taille_case) + basX);
 		*y = (int)(((ord + ecart - hauteur / 2) / taille_case) + basY);
@@ -495,22 +489,22 @@ int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom)
 	bool haut = true, bas = true, gauche = true, droite = true;
 	//tant que les coordonnés du point le plus en bas à droite et celui en haut à gauche n'ont pas été trouvée
 	while (haut || bas || droite || gauche) {
-		if (gauche && vide != getCouleurCase(*getCase(i, j))) {
+		if (gauche && vide != getCouleurCase(getCase(i, j))) {
 			y_min = j;
 			gauche = false;
 		}
-		if (bas && vide != getCouleurCase(*getCase(j, i))) {
+		if (bas && vide != getCouleurCase(getCase(j, i))) {
 			x_min = j;
 			bas = false;
 		}
-		if (droite && vide != getCouleurCase(*getCase(TAILLEMAX - i - 1,
-							      TAILLEMAX - j -
-							      1))) {
+		if (droite && vide != getCouleurCase(getCase(TAILLEMAX - i - 1,
+							     TAILLEMAX - j -
+							     1))) {
 			y_max = TAILLEMAX - j - 1;
 			droite = false;
 		}
 		if (haut && vide !=
-		    getCouleurCase(*getCase
+		    getCouleurCase(getCase
 				   (TAILLEMAX - j - 1, TAILLEMAX - i - 1))) {
 			x_max = TAILLEMAX - j - 1;
 			haut = false;
@@ -537,6 +531,7 @@ int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom)
 	y_max = (y_max < TAILLEMAX) ? y_max : TAILLEMAX - 1;
 	x_max = (x_max < TAILLEMAX) ? x_max : TAILLEMAX - 1;
 	//le zoom vaut l'ecart maximum entre les abscisse ou les ordonnée
+	//centrage des pièces
 	if ((x_max - x_min) > (y_max - y_min)) {
 		zoomTmp = (x_max - x_min) + 1;
 		y_min = y_min - ((zoomTmp - (y_max - y_min)) / 2);
