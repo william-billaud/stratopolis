@@ -51,17 +51,19 @@ void afficheConseil(coup conseil);
 /*!
    \brief Appelle les fonction dessinePredictif() et estValideCoup()
    \param[in] coupJoueur : coup à afficher
+	 \param[in] zoom : niveau de zoom du plateau de jeu
    \return rien
 */
-void affichePredictif(coup coupJoueur);
+void affichePredictif(coup coupJoueur, int zoom);
 
 /*!
    \brief Affiche le prédictif de placement de la pièce
    \param[in] coupJoueur : coup à afficher
 	 \param[in] estValide : validité du coup à afficher
-   \return
+	 \param[in] zoom : niveau de zoom du plateau de jeu
+	 \return
 */
-void dessinePredictif(coup coupJoueur, bool estValide);
+void dessinePredictif(coup coupJoueur, bool estValide, int zoom);
 
 /*!
    \brief Affiche l’interface de jeu
@@ -74,10 +76,62 @@ void afficheInterface(char nomJ1[15], char nomJ2[15]);
 /**
  * \brief Affiche le plateau de jeu, la couleur et la hauteur de chaque case
  * \param [in] zoom : nombre de case affiché par ligne/colonne
- * \param basX abscisse de la case du bas
- * \param basY abscisse de la case du bas
+ * \param basX : abscisse de la case du bas
+ * \param basY : abscisse de la case du bas
  */
 void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY);
+
+/**
+ * \brief Affiche une case d'une pièce
+ * \param [in] couleurCase : couleur de la case à afficher
+ * \param [in] hauteurCase : hauteur de la case à afficher
+ * \param [in] minX : coordonnee minimum en abscisse où afficher la case
+ * \param [in] minY : coordonnee minimum en ordonnée
+ * \param [in] maxX : coordonnee maximum en abscisse
+ * \param [in] maxY : coordonnee maximum en ordonée
+ * \param [in] estGrisee : determine si la case doit être grisée (true) ou non (false)
+  */
+void afficheCase(couleur couleurCase, int hauteurCase, float minX, float minY,
+		 float maxX, float maxY, bool estGrisee);
+
+/**
+  * \brief Affiche une case d'une pièce
+  * \param [in] numeroPiece : numero de la pièce à afficher
+  * \param [in] orientationPiece : orientation de la pièce
+  * \param [in] minX : coordonnee minimum en abscisse où afficher la case
+  * \param [in] minY : coordonnee minimum en ordonnée
+  * \param [in] maxX : coordonnee maximum en abscisse
+  * \param [in] maxY : coordonnee maximum en ordonée
+	* \param [in] estGrisee : determine si la case doit être grisée (true) ou non (false)
+   */
+void affichePiece(int numeroPiece, orientation orientationPiece, int minX,
+		  int minY, int maxX, int maxY, bool estGrisee);
+
+/**
+ * \brief Affiche les contours d'une case
+ * \param [in] numC : numéro de la case
+ * \param [in] numH : numéro de la case du haut
+ * \param [in] numD : numéro de la case de droite
+ * \param [in] numB : numéro de la case du bas
+ * \param [in] numG : numéro de la case de gauche
+ * \param [in] centreY : coordonnee en ordonnee du centre de la case
+ * \param [in] centreX : coordonnee en abscisse du centre de la case
+ * \param [in] taille_case : taille des cases
+  */
+void afficheBorduresDeCase(int numC, int numH, int numD, int numB, int numG,
+			   float centreX, float centreY, float taille_case);
+
+/**
+ * \brief Affiche la séparation entre deux cases de pièces différentes
+ * \param [in] numero1 : numéro de la première case
+ * \param [in] numero2 : numéro de la deuxième case
+ * \param [in] centreX1 : coordonnee en abscisse du centre de la première case
+ * \param [in] centreY1 : coordonnee en ordonnee du centre de la première case
+ * \param [in] centreX2 : coordonnee en abscisse du centre de la deuxième case
+ * \param [in] centreX2 : coordonnee en ordonnee du centre de la deuxième case
+  */
+void afficheBordureEntreCases(int numero1, int numero2, float centreX1,
+			      float centreY1, float centreX2, float centreY2);
 
 /**
  * \brief Affiche le score
@@ -123,8 +177,9 @@ int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom);
 
 /*!
  * \brief appelle couleurCourante() en fonction du paramètre
- * \param [in]couleurCase couleur de la case à déterminer
+ * \param [in] couleurCase couleur de la case à déterminer
+ * \param [in] estGrisee : determine si la couleur doit être grisée (true) ou non (false)
  * \return rien
  */
-void determineCouleur(couleur couleurCase);
+void determineCouleur(couleur couleurCase, bool estGrisee);
 #endif

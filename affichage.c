@@ -55,12 +55,10 @@ void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY)
 	float ecart = (float)(((largeur <= hauteur) * largeur
 			       + (largeur > hauteur) * hauteur) / 2.5);
 	float taille_case = 2 * ecart / zoom;
-	historiqueCase *maCase, *case_h, *case_b, *case_g, *case_d;
-	float minXcase, minYcase, maxXcase, maxYcase, margeH, margeB, margeG,
-	    margeD;
-	char hauteurCase[20];
+	float minX, minY, maxX, maxY;
+
 	//Affiche une bordure du plateau de 5 pixels
-	couleurCourante(200, 200, 200);
+	couleurCourante(38, 21, 0);
 	rectangle(largeur / 2 - ecart - 5,
 		  hauteur / 2 - ecart - 5,
 		  largeur / 2 + ecart + 5, hauteur / 2 + ecart + 5);
@@ -71,91 +69,237 @@ void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY)
 	for (i = (basX); i < (basX + zoom); i++) {
 		for (j = (basY); j < (basY + zoom); j++) {
 
-			minXcase =
-			    largeur / 2 - ecart + (i - basX) * taille_case;
-			//
-			minYcase =
-			    hauteur / 2 - ecart + (j - basY) * taille_case;
-			maxXcase =
-			    largeur / 2 - ecart + (i - basX + 1) * taille_case;
-			maxYcase =
-			    hauteur / 2 - ecart + (j - basY + 1) * taille_case;
+			minX = largeur / 2 - ecart + (i - basX) * taille_case;
+			minY = hauteur / 2 - ecart + (j - basY) * taille_case;
+			maxX = largeur / 2 - ecart + (i - basX +
+						      1) * taille_case;
+			maxY = hauteur / 2 - ecart + (j - basY +
+						      1) * taille_case;
 
-			//Récupère la pièce courante t les pieces adjacentes
-			maCase = getCase(i, j);
-			case_h = getCase(i, j + 1);
-			case_b = getCase(i, j - 1);
-			case_g = getCase(i - 1, j);
-			case_d = getCase(i + 1, j);
+			//Affiche la case
+			afficheCase(getCouleurCase(*getCase(i, j)),
+				    getHauteurCase(*getCase(i, j)), minX, minY,
+				    maxX, maxY, false);
 
-			//Détermine les contours de la pièce
-			margeH =
-			    (getNumeroPiece(*case_h) != getNumeroPiece(*maCase))
-			    || (getHauteurCase(*case_h) !=
-				getHauteurCase(*maCase));
-			margeB =
-			    (getNumeroPiece(*case_b) != getNumeroPiece(*maCase))
-			    || (getHauteurCase(*case_b) !=
-				getHauteurCase(*maCase));
-			margeG =
-			    (getNumeroPiece(*case_g) != getNumeroPiece(*maCase))
-			    || (getHauteurCase(*case_g) !=
-				getHauteurCase(*maCase));
-			margeD =
-			    (getNumeroPiece(*case_d) != getNumeroPiece(*maCase))
-			    || (getHauteurCase(*case_d) !=
-				getHauteurCase(*maCase));
+			//Affiche les bordures
+			afficheBorduresDeCase(getNumeroPiece(*getCase(i, j)),
+					      getNumeroPiece(*getCase
+							     (i, j + 1)),
+					      getNumeroPiece(*getCase
+							     (i + 1, j)),
+					      getNumeroPiece(*getCase
+							     (i, j - 1)),
+					      getNumeroPiece(*getCase
+							     (i - 1, j)),
+					      minX + (maxX - minX) / 2,
+					      minY + (maxY - minY) / 2,
+					      taille_case);
 
-			//Trace le contour
-			couleurCourante(58, 41, 20);
-			rectangle(minXcase + margeG, minYcase + margeB,
-				  maxXcase - margeD, maxYcase - margeH);
-
-			//Determine la couleur de la case
-			couleur couleurCase = (couleur) getCouleurCase(*maCase);
-			determineCouleur(couleurCase);
-
-			//Trace la pièce
-			rectangle(minXcase + margeG + 2,
-				  minYcase + margeB + 2,
-				  maxXcase - margeD - 2, maxYcase - margeH - 2);
-			//Affiche la hauteur de la case
-			if (couleurCase != vide) {
-				sprintf(hauteurCase, "%d",
-					getHauteurCase(*maCase));
-				couleurCourante(240, 255, 255);
-				epaisseurDeTrait(2);
-				afficheChaine(hauteurCase, taille_case / 4,
-					      minXcase +
-					      tailleChaine(hauteurCase,
-							   taille_case),
-					      (float)(minYcase +
-						      taille_case / 4.5));
-			}
 		}
+	}
+}
+
+/**
+  * \brief Affiche une case d'une pièce
+  * \param [in] numeroPiece : numero de la pièce à afficher
+  * \param [in] orientationPiece : orientation de la pièce
+  * \param [in] minX : coordonnee minimum en abscisse où afficher la pièce
+  * \param [in] minY : coordonnee minimum en ordonnée
+  * \param [in] maxX : coordonnee maximum en abscisse
+  * \param [in] maxY : coordonnee maximum en ordonée
+	* \param [in] estGrisee : determine si la case doit être grisée (true) ou non (false)
+   */
+void affichePiece(int numeroPiece, orientation orientationPiece, int minX,
+		  int minY, int maxX, int maxY, bool estGrisee)
+{
+	pieces maPiece = PIECE[numeroPiece];
+	couleur hautGauche, hautDroite, basDroite, basGauche;
+	float centreX, centreY;
+	if (orientationPiece == BD) {
+		hautGauche = maPiece.c2;
+		hautDroite = maPiece.c1;
+		basGauche = maPiece.c3;
+		basDroite = vide;
+	} else if (orientationPiece == HG) {
+		hautGauche = vide;
+		hautDroite = maPiece.c3;
+		basGauche = maPiece.c1;
+		basDroite = maPiece.c2;
+	} else if (orientationPiece == BG) {
+		hautGauche = maPiece.c3;
+		hautDroite = maPiece.c2;
+		basGauche = vide;
+		basDroite = maPiece.c1;
+	} else {
+		hautGauche = maPiece.c1;
+		hautDroite = vide;
+		basGauche = maPiece.c2;
+		basDroite = maPiece.c3;
+	}
+
+	centreX = maxX - (maxX - minX) / 2;
+	centreY = maxY - (maxX - minX) / 2;
+
+	if (hautGauche != vide) {
+		afficheCase(hautGauche, 0, minX, centreY, centreX, maxY,
+			    estGrisee);
+	}
+	if (hautDroite != vide) {
+		afficheCase(hautDroite, 0, centreX, centreY, maxX, maxY,
+			    estGrisee);
+	}
+	if (basGauche != vide) {
+		afficheCase(basGauche, 0, minX, minY, centreX, centreY,
+			    estGrisee);
+	}
+	if (basDroite != vide) {
+		afficheCase(basDroite, 0, centreX, minY, maxX, centreY,
+			    estGrisee);
+	}
+}
+
+/**
+ * \brief Affiche une case d'une pièce
+ * \param [in] couleurCase : couleur de la case à afficher
+ * \param [in] hauteurCase : hauteur de la case à afficher
+ * \param [in] minX : coordonnee minimum en abscisse où afficher la case
+ * \param [in] minY : coordonnee minimum en ordonnée
+ * \param [in] maxX : coordonnee maximum en abscisse
+ * \param [in] maxY : coordonnee maximum en ordonée
+ * \param [in] estGrisee : determine si la case doit être grisée (true) ou non (false)
+   */
+void afficheCase(couleur couleurCase, int hauteurCase, float minX,
+		 float minY, float maxX, float maxY, bool estGrisee)
+{
+	char hauteur[20];
+	int marge = 3;
+
+	//Trace le contour
+	couleurCourante(58, 41, 20);
+	rectangle(minX + 1, minY + 1, maxX - 1, maxY - 1);
+
+	//Determine la couleur de la case
+	determineCouleur(couleurCase, estGrisee);
+
+	//Trace la case
+	rectangle(minX + marge, minY + marge, maxX - marge, maxY - marge);
+
+	//Affiche la hauteur de la case
+	if (couleurCase != vide && hauteurCase > 0) {
+		sprintf(hauteur, "%d", hauteurCase);
+		couleurCourante(240, 255, 255);
+		epaisseurDeTrait(2);
+		afficheChaine(hauteur, (maxX - minX) / 4,
+			      minX +
+			      tailleChaine(hauteur,
+					   maxX - minX),
+			      (float)(minY + (maxX - minX) / 4.5));
 	}
 }
 
 /*!
  * \brief appelle couleurCourante() en fonction du paramètre
- * \param [in]couleurCase couleur de la case à déterminer
+ * \param [in] couleurCase couleur de la case à déterminer
+ * \param [in] estGrisee : determine si la couleur doit être grisée (true) ou non (false)
  * \return rien
  */
-void determineCouleur(couleur couleurCase)
+void determineCouleur(couleur couleurCase, bool estGrisee)
 {
 	switch (couleurCase) {
 	case neutre:
 		couleurCourante(135, 87, 39);
+		if (estGrisee) {
+			couleurCourante(50, 30, 0);
+		}
 		break;
 	case rouge:
 		couleurCourante(247, 35, 12);
+		if (estGrisee) {
+			couleurCourante(50, 0, 0);
+		}
 		break;
 	case vert:
 		couleurCourante(58, 242, 75);
+		if (estGrisee) {
+			couleurCourante(0, 50, 0);
+		}
 		break;
 	case vide:
 		couleurCourante(78, 61, 40);
 		break;
+	}
+}
+
+/**
+ * \brief Affiche les contours d'une case
+ * \param [in] numC : numéro de la case
+ * \param [in] numH : numéro de la case du haut
+ * \param [in] numD : numéro de la case de droite
+ * \param [in] numB : numéro de la case du bas
+ * \param [in] numG : numéro de la case de gauche
+ * \param [in] centreY : coordonnee en ordonnee du centre de la case
+ * \param [in] centreX : coordonnee en abscisse du centre de la case
+ * \param [in] taille_case : taille des cases
+  */
+void afficheBorduresDeCase(int numC, int numH, int numD, int numB, int numG,
+			   float centreX, float centreY, float taille_case)
+{
+	//Case de droite
+	afficheBordureEntreCases(numC, numD, centreX, centreY,
+				 centreX + taille_case, centreY);
+	//Case de gauche
+	afficheBordureEntreCases(numC, numG,
+				 centreX, centreY,
+				 centreX - taille_case, centreY);
+	//Case du haut
+	afficheBordureEntreCases(numC, numH,
+				 centreX, centreY,
+				 centreX, centreY + taille_case);
+	//Case du bas
+	afficheBordureEntreCases(numC, numB,
+				 centreX, centreY,
+				 centreX, centreY - taille_case);
+}
+
+/**
+ * \brief Affiche la séparation entre deux cases de pièces différentes
+ * \param [in] numero1 : numéro de la première pièce
+ * \param [in] numero2 : numéro de la deuxième pièce
+ * \param [in] centreX1 : coordonnee en abscisse du centre de la première case
+ * \param [in] centreY1 : coordonnee en ordonnee du centre de la première case
+ * \param [in] centreX2 : coordonnee en abscisse du centre de la deuxième case
+ * \param [in] centreX2 : coordonnee en ordonnee du centre de la deuxième case
+  */
+void afficheBordureEntreCases(int numero1, int numero2, float centreX1,
+			      float centreY1, float centreX2, float centreY2)
+{
+	float minX, minY, maxX, maxY, taille;
+	minX =
+	    (centreX1 <= centreX2) * centreX1 + (centreX2 <
+						 centreX1) * centreX2;
+	maxX =
+	    (centreX1 >= centreX2) * centreX1 + (centreX2 >
+						 centreX1) * centreX2;
+	minY =
+	    (centreY1 <= centreY2) * centreY1 + (centreY2 <
+						 centreY1) * centreY2;
+	maxY =
+	    (centreY1 >= centreY2) * centreY1 + (centreY2 >
+						 centreY1) * centreY2;
+	taille = (maxX - minX + maxY - minY) / 2;
+	if (numero1 != numero2) {
+		epaisseurDeTrait(2);
+		couleurCourante(100, 100, 100);
+		//Cas horizontal
+		if ((maxY - minY) == 0) {
+			ligne(minX + taille, minY + taille, minX + taille,
+			      minY - taille);
+		}
+		//Cas vertical
+		else {
+			ligne(minX + taille, minY + taille, minX - taille,
+			      minY + taille);
+		}
 	}
 }
 
@@ -167,9 +311,9 @@ void determineCouleur(couleur couleurCase)
 */
 void afficheInterface(char nomJ1[15], char nomJ2[15])
 {
-//	pieces pieceJ1 = PIECE[ordreJoueurs[0][20 - ordreJoueurs[0][20]]];
+	pieces pieceJ1 = PIECE[ordreJoueurs[0][20 - ordreJoueurs[0][20]]];
 		/**< piece disponible pour le joueur 1*/
-//  pieces pieceJ2 = PIECE[ordreJoueurs[1][20 - ordreJoueurs[1][20]]];
+	pieces pieceJ2 = PIECE[ordreJoueurs[1][20 - ordreJoueurs[1][20]]];
 	  /**< piece disponible pour le joueur 2*/
 	char score[10];
 		/**< variable de recuperation des scores*/
@@ -222,27 +366,72 @@ void afficheInterface(char nomJ1[15], char nomJ2[15])
 	afficheChaine(tuiles, taille / 6,
 		      largeurFenetre() - taille * 9 / 10, taille / 1.25);
 
-/*	//Affiche les zones de sélection de tuile
+	//Affiche les zones de sélection de tuile
 	float x_min = taille / 10;
 	float x_max = taille * 9 / 10;
 	float y_max = hauteurFenetre() * 2 / 3;
 	float y_min = y_max - taille * 8 / 10;
+	float marge = taille / 10;
 
-	couleurCourante(78, 61, 40);
+	couleurCourante(200, 200, 200);
 	rectangle(x_min, y_min, x_max, y_max);
 	rectangle(largeurFenetre() - x_min, y_min, largeurFenetre() - x_max,
 		  y_max);
 
-	//Affiche les pièces disponibles
-	determineCouleur(pieceJ1.c1);
-	rectangle(x_min, y_max, x_max - (x_max - x_min) / 2,
-		  y_max - (y_max - y_min) / 2);
-	determineCouleur(pieceJ1.c2);
-	rectangle(x_min, y_min, x_max - (x_max - x_min) / 2,
-		  y_max - (y_max - y_min) / 2);
-	determineCouleur(pieceJ1.c3);
-	rectangle(x_max - (x_max - x_min) / 2, y_max, x_max - (x_max - x_min) / 2,
-			y_max - (y_max - y_min) / 2);*/
+	affichePiece(pieceJ1.numeroPiece, HD, x_min + marge, y_min + marge,
+		     x_max - marge, y_max - marge, false);
+	affichePiece(pieceJ2.numeroPiece, HD, largeurFenetre() - x_max + marge,
+		     y_min + marge, largeurFenetre() - x_min - marge,
+		     y_max - marge, false);
+}
+
+/*!
+   \brief Appelle les fonction dessinePredictif() et estValideCoup()
+   \param[in] coupJoueur : coup à afficher
+   \return rien
+*/
+void affichePredictif(coup coupJoueur, int zoom)
+{
+	dessinePredictif(coupJoueur, estValideCoup(coupJoueur), zoom);
+}
+
+/*!
+   \brief Affiche le prédictif de placement de la pièce
+   \param[in] coupJoueur : coup à afficher
+	 \param[in] estValide : validité du coup à afficher
+   \return
+*/
+void dessinePredictif(coup coupJoueur, bool estValide, int zoom)
+{
+	float taille =
+	    2 * (((largeurFenetre() <= hauteurFenetre()) * largeurFenetre()
+		  + (largeurFenetre() >
+		     hauteurFenetre()) * hauteurFenetre()) / 2.5) / zoom;
+
+	float minX, minY, maxX, maxY;
+	if (coupJoueur.orientationPiece == BD) {
+		minX = abscisseSouris() - taille / 2;
+		minY = ordonneeSouris() - taille * 3 / 2;
+		maxX = abscisseSouris() + taille * 3 / 2;
+		maxY = ordonneeSouris() + taille / 2;
+	} else if (coupJoueur.orientationPiece == BG) {
+		minX = abscisseSouris() - taille * 3 / 2;
+		minY = ordonneeSouris() - taille * 3 / 2;
+		maxX = abscisseSouris() + taille / 2;
+		maxY = ordonneeSouris() + taille / 2;
+	} else if (coupJoueur.orientationPiece == HG) {
+		minX = abscisseSouris() - taille * 3 / 2;
+		minY = ordonneeSouris() - taille / 2;
+		maxX = abscisseSouris() + taille / 2;
+		maxY = ordonneeSouris() + taille * 3 / 2;
+	} else {
+		minX = abscisseSouris() - taille / 2;
+		minY = ordonneeSouris() - taille / 2;
+		maxX = abscisseSouris() + taille * 3 / 2;
+		maxY = ordonneeSouris() + taille * 3 / 2;
+	}
+	affichePiece(coupJoueur.numeroPiece, coupJoueur.orientationPiece,
+		     minX, minY, maxX, maxY, !estValide);
 }
 
 /**
