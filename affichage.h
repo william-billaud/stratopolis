@@ -66,12 +66,13 @@ void affichePredictif(coup coupJoueur, int zoom);
 void dessinePredictif(coup coupJoueur, bool estValide, int zoom);
 
 /*!
-   \brief Affiche l’interface de jeu
-   \param[in] nomJ1 : nom du premier joueur
-	 \param[in] nomJ2 : nom du deuxième joueur
-	 \return rien
+    \brief Affiche l’interface de jeu
+    \param[in] nomJ1 : nom du premier joueur
+    \param[in] nomJ2 : nom du deuxième joueur
+    \param[in] joueurActuelle : joueur dont c'est le tour
+    \return rien
 */
-void afficheInterface(char nomJ1[15], char nomJ2[15]);
+void afficheInterface(char nomJ1[15], char nomJ2[15],int joueurActuelle);
 
 /**
  * \brief Affiche le plateau de jeu, la couleur et la hauteur de chaque case

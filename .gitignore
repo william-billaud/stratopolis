@@ -64,3 +64,7 @@ html
 latex
 
 Doxyfile
+
+documents/tableau_exigence\.ods
+
+documents/\.~lock\.tableau_exigence\.ods#
