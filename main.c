@@ -157,7 +157,7 @@ void gestionEvenement(EvenementGfx evenement)
 			coupJoueur.yCoup = (unsigned int)y;
 			coupJoueur.xCoup = (unsigned int)x;
 			coupJoueur.numeroPiece =
-			    (unsigned char)ordreJoueurs[joueurActuelle][0];
+			    (unsigned char)ordreJoueurs[joueurActuelle][ordreJoueurs[joueurActuelle][20]];
 			orientationPiece = HD;
 			if (joueCoup(coupJoueur) == 1) {
 				ordreJoueurs[joueurActuelle][20] += 1;
