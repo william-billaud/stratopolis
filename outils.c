@@ -205,14 +205,14 @@ int initPiece(void)
 			c3 = neutre;
 			break;
 		}
-		PIECE[i].c1 = c1;
-		PIECE[i].c2 = c2;
-		PIECE[i].c3 = c3;
-		PIECE[i].numeroPiece = (unsigned char)i;
-		PIECE[i + 10].c1 = c1;
-		PIECE[i + 10].c2 = c2;
-		PIECE[i + 10].c3 = c3;
-		PIECE[i + 10].numeroPiece = (unsigned char)(i + 10);
+		PIECE[i+30].c1 = c1;
+		PIECE[i+30].c2 = c2;
+		PIECE[i+30].c3 = c3;
+		PIECE[i+30].numeroPiece = (unsigned char)(i+30);
+		PIECE[i + 20].c1 = c1;
+		PIECE[i + 20].c2 = c2;
+		PIECE[i + 20].c3 = c3;
+		PIECE[i + 20].numeroPiece = (unsigned char)(i+20);
 		if (c1 == vert) {
 			c1 = rouge;
 		} else if (c1 == rouge) {
@@ -228,14 +228,14 @@ int initPiece(void)
 		} else if (c3 == rouge) {
 			c3 = vert;
 		}
-		PIECE[i + 20].c1 = c1;
-		PIECE[i + 20].c2 = c2;
-		PIECE[i + 20].c3 = c3;
-		PIECE[i + 20].numeroPiece = (unsigned char)(i + 20);
-		PIECE[i + 30].c1 = c1;
-		PIECE[i + 30].c2 = c2;
-		PIECE[i + 30].c3 = c3;
-		PIECE[i + 30].numeroPiece = (unsigned char)(i + 30);
+		PIECE[i + 10].c1 = c1;
+		PIECE[i + 10].c2 = c2;
+		PIECE[i + 10].c3 = c3;
+		PIECE[i + 10].numeroPiece = (unsigned char)(i + 10);
+		PIECE[i ].c1 = c1;
+		PIECE[i ].c2 = c2;
+		PIECE[i ].c3 = c3;
+		PIECE[i ].numeroPiece = (unsigned char)(i);
 	}
 	PIECE[0].numeroPiece = 0;
 	return 0;

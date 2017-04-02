@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 
 void gestionEvenement(EvenementGfx evenement)
 {
-	static bool pleinEcran = false;	// Pour savoir si on est en mode plein ecran ou pas
+	static bool pleinEcran = true;	// Pour savoir si on est en mode plein ecran ou pas
 	static enum { menu, classique, IA, victoire } mode;
 	//position du zoom par defaut
 	static unsigned int x_d = 80, y_d = 80;
@@ -41,6 +41,7 @@ void gestionEvenement(EvenementGfx evenement)
 	static int joueurActuelle;
 	switch (evenement) {
 	case Initialisation:
+		modePleinEcran();
 		printf("%s\n", "Initialisation");
 		initPartie(&joueurActuelle);
 		trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
@@ -55,7 +56,7 @@ void gestionEvenement(EvenementGfx evenement)
 		switch (mode) {
 		case classique:
 		case IA:
-			afficheInterface("WILLIAM", "THEO");
+			afficheInterface("WILLIAM", "THEO",joueurActuelle);
 			afficheGrille(zoom_d, x_d, y_d);
 
 			detecteCase(&x, &y, zoom_d, x_d, y_d);
@@ -157,7 +158,7 @@ void gestionEvenement(EvenementGfx evenement)
 			coupJoueur.yCoup = (unsigned int)y;
 			coupJoueur.xCoup = (unsigned int)x;
 			coupJoueur.numeroPiece =
-			    (unsigned char)ordreJoueurs[joueurActuelle][0];
+			    (unsigned char)ordreJoueurs[joueurActuelle][ordreJoueurs[joueurActuelle][20]];
 			orientationPiece = HD;
 			if (joueCoup(coupJoueur) == 1) {
 				ordreJoueurs[joueurActuelle][20] += 1;
@@ -201,8 +202,13 @@ void gestionEvenement(EvenementGfx evenement)
 		break;
 
 	case Redimensionnement:
+		if(largeurFenetre()<400 || hauteurFenetre()<400)
+		{
+			redimensionneFenetre(400,400);
+		}
 		printf("Largeur : %d\t", largeurFenetre());
 		printf("Hauteur : %d\n", hauteurFenetre());
+		rafraichisFenetre();
 		break;
 	}
 
