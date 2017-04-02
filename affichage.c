@@ -278,7 +278,7 @@ void afficheBordureEntreCases(int numero1, int numero2, float centreX1,
 	 \param[in] nomJ2 : nom du deuxième joueur
 	 \return rien
 */
-void afficheInterface(char nomJ1[15], char nomJ2[15])
+void afficheInterface(char nomJ1[15], char nomJ2[15],int joueurActuelle)
 {
 	pieces pieceJ1 = PIECE[ordreJoueurs[0][ordreJoueurs[0][20]]];
 		/**< piece disponible pour le joueur 1*/
@@ -300,9 +300,10 @@ void afficheInterface(char nomJ1[15], char nomJ2[15])
 	rectangle(0, 0, largeurFenetre(), hauteurFenetre());
 
 	//Fond interfaces des joueurs
-	couleurCourante(58, 242, 75);
+
+    determineCouleur(rouge, (bool) joueurActuelle);
 	rectangle(0, 0, taille, hauteurFenetre());
-	couleurCourante(247, 35, 12);
+    determineCouleur(vert, (bool) ((joueurActuelle + 1) % 2));
 	rectangle(largeurFenetre(), 0, largeurFenetre() - taille,
 		  hauteurFenetre());
 

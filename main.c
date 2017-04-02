@@ -56,7 +56,7 @@ void gestionEvenement(EvenementGfx evenement)
 		switch (mode) {
 		case classique:
 		case IA:
-			afficheInterface("WILLIAM", "THEO");
+			afficheInterface("WILLIAM", "THEO",joueurActuelle);
 			afficheGrille(zoom_d, x_d, y_d);
 
 			detecteCase(&x, &y, zoom_d, x_d, y_d);
@@ -202,8 +202,13 @@ void gestionEvenement(EvenementGfx evenement)
 		break;
 
 	case Redimensionnement:
+		if(largeurFenetre()<400 || hauteurFenetre()<400)
+		{
+			redimensionneFenetre(400,400);
+		}
 		printf("Largeur : %d\t", largeurFenetre());
 		printf("Hauteur : %d\n", hauteurFenetre());
+		rafraichisFenetre();
 		break;
 	}
 
