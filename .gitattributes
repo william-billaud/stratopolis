@@ -1,0 +1,3 @@
+*.[ch] linguist-language=C
+documents/* linguist-documentation
+lib/* linguist-vendored

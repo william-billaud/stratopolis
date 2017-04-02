@@ -27,7 +27,7 @@ void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY)
 	float hauteur = hauteurFenetre();
 	//Définit l'écart entre le centre de la fenêtre et le bord du plateau
 	float ecart = (((largeur <= hauteur) * largeur
-			       + (largeur > hauteur) * hauteur) / 2.5f);
+			+ (largeur > hauteur) * hauteur) / 2.5f);
 	float taille_case = 2 * ecart / zoom;
 	float minX, minY, maxX, maxY;
 
@@ -52,8 +52,8 @@ void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY)
 
 			//Affiche la case
 			afficheCase((couleur) getCouleurCase(getCase(i, j)),
-						getHauteurCase(getCase(i, j)), minX, minY,
-						maxX, maxY, false);
+				    getHauteurCase(getCase(i, j)), minX, minY,
+				    maxX, maxY, false);
 
 			//Affiche les bordures
 			afficheBorduresDeCase(getNumeroPiece(getCase(i, j)),
@@ -327,13 +327,13 @@ void afficheInterface(char nomJ1[15], char nomJ2[15])
 
 	//Affiche les tuiles restantes des deux joueurs
 	afficheChaine("Tuiles :", taille / 6, taille / 10, taille);
-	sprintf(tuiles, "%d", 20-ordreJoueurs[0][20]);
-	afficheChaine(tuiles, taille / 6, taille / 10,  (taille / 1.25f));
+	sprintf(tuiles, "%d", 20 - ordreJoueurs[0][20]);
+	afficheChaine(tuiles, taille / 6, taille / 10, (taille / 1.25f));
 	afficheChaine("Tuiles : ", taille / 6,
 		      largeurFenetre() - taille * 9 / 10, taille);
-	sprintf(tuiles, "%d", 20-ordreJoueurs[1][20]);
+	sprintf(tuiles, "%d", 20 - ordreJoueurs[1][20]);
 	afficheChaine(tuiles, taille / 6,
-		      largeurFenetre() - taille * 9 / 10,  (taille / 1.25f));
+		      largeurFenetre() - taille * 9 / 10, (taille / 1.25f));
 
 	//Affiche les zones de sélection de tuile
 	float x_min = taille / 10;
@@ -346,11 +346,14 @@ void afficheInterface(char nomJ1[15], char nomJ2[15])
 	rectangle(x_min, y_min, x_max, y_max);
 	rectangle(largeurFenetre() - x_min, y_min, largeurFenetre() - x_max,
 		  y_max);
-	affichePiece(pieceJ1.numeroPiece, HD, (int) (x_min + marge), (int) (y_min + marge),
-				 (int) (x_max - marge), (int) (y_max - marge), false);
-	affichePiece(pieceJ2.numeroPiece, HD, (int) (largeurFenetre() - x_max + marge),
-				 (int) (y_min + marge), (int) (largeurFenetre() - x_min - marge),
-				 (int) (y_max - marge), false);
+	affichePiece(pieceJ1.numeroPiece, HD, (int)(x_min + marge),
+		     (int)(y_min + marge), (int)(x_max - marge),
+		     (int)(y_max - marge), false);
+	affichePiece(pieceJ2.numeroPiece, HD,
+		     (int)(largeurFenetre() - x_max + marge),
+		     (int)(y_min + marge),
+		     (int)(largeurFenetre() - x_min - marge),
+		     (int)(y_max - marge), false);
 }
 
 /*!
@@ -372,9 +375,10 @@ void affichePredictif(coup coupJoueur, int zoom)
 void dessinePredictif(coup coupJoueur, bool estValide, int zoom)
 {
 	float taille =
-			(float) (2 * (((largeurFenetre() <= hauteurFenetre()) * largeurFenetre()
-						   + (largeurFenetre() >
-                         hauteurFenetre()) * hauteurFenetre()) / 2.5) / zoom);
+	    (float)(2 *
+		    (((largeurFenetre() <= hauteurFenetre()) * largeurFenetre()
+		      + (largeurFenetre() >
+			 hauteurFenetre()) * hauteurFenetre()) / 2.5) / zoom);
 
 	float minX, minY, maxX, maxY;
 	if (coupJoueur.orientationPiece == BD) {
@@ -399,7 +403,7 @@ void dessinePredictif(coup coupJoueur, bool estValide, int zoom)
 		maxY = ordonneeSouris() + taille * 3 / 2;
 	}
 	affichePiece(coupJoueur.numeroPiece, coupJoueur.orientationPiece,
-				 (int) minX, (int) minY, (int) maxX, (int) maxY, !estValide);
+		     (int)minX, (int)minY, (int)maxX, (int)maxY, !estValide);
 }
 
 /**

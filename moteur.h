@@ -176,6 +176,6 @@ void concateneCaseCalcul(listeBlock * block, caseCalcul * listeA,
  * \return -4 si le plateau à été mal initialisé
  * \return somme des retour precedent ( à la manière du chmod)
  */
-int initPartie(int *joueur );
+int initPartie(int *joueur);
 
 #endif
