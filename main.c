@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 
 void gestionEvenement(EvenementGfx evenement)
 {
-	static bool pleinEcran = false;	// Pour savoir si on est en mode plein ecran ou pas
+	static bool pleinEcran = true;	// Pour savoir si on est en mode plein ecran ou pas
 	static enum { menu, classique, IA, victoire } mode;
 	//position du zoom par defaut
 	static unsigned int x_d = 80, y_d = 80;
@@ -41,6 +41,7 @@ void gestionEvenement(EvenementGfx evenement)
 	static int joueurActuelle;
 	switch (evenement) {
 	case Initialisation:
+		modePleinEcran();
 		printf("%s\n", "Initialisation");
 		initPartie(&joueurActuelle);
 		trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
