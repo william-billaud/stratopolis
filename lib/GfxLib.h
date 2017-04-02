@@ -35,10 +35,10 @@
 //		ajout de modePleinEcran et de redimensionneFenetre
 //
 //	Version 2.3 (23/10/2006) : ajout des fonctions Timer et du redessin programme
-//
+//	
 //	Version 2.2 (30/06/2006) : prepareFenetreGraphique fait cycler la position
 //		de depart des fenetres
-//
+//	
 //	Version 2.1 : main est sorti de la bibliotheque, pour des besoins pedagogiques,
 //		cassant la compatibilite avec les anciens codes. Cependant, on peut reintegrer
 //		le main manquant dans chaque programme, a partir du code suivant :
@@ -85,7 +85,8 @@
 
 typedef enum {Inactivite, Affichage, Clavier, ClavierSpecial, Souris, BoutonSouris, Initialisation, Redimensionnement, Temporisation}
 	EvenementGfx;
-typedef enum {GaucheAppuye, GaucheRelache, DroiteAppuye, DroiteRelache}
+//le scroll genere deux appelle de fonctionBoutonSouris, tmpScroll evite de doublé les scrolls
+typedef enum {GaucheAppuye, GaucheRelache, DroiteAppuye, DroiteRelache,ScrollUp,ScrollDown,TmpScroll}
 	EtatBoutonSouris;
 typedef enum {SuiteDePoints, SuiteDeLignes, SuiteDeTriangles, SuiteDeRectangles, BandeDeTriangles, BandeDeRectangles}
 	PrimitiveGfxLib;
