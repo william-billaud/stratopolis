@@ -174,6 +174,21 @@ int initPiece(void);
  */
 int getCasesFromCoup(coup coupJoueur, historiqueCase * tab[3]);
 
+/*!
+ * \brief
+ * \param a
+ * \param b
+ * \return
+ */
+int min(int a, int b);
+/*!
+ * \brief retourne le maximum entre a et b
+ * \param a
+ * \param b
+ * \return
+ */
+int max(int a, int b);
+
 //definition des variables globales
 
 PLATEAU plat;

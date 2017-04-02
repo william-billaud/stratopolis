@@ -284,3 +284,24 @@ int getCasesFromCoup(coup coupJoueur, historiqueCase * tab[3])
 	return 0;
 
 }
+
+/*!
+ * \brief
+ * \param a
+ * \param b
+ * \return
+ */
+int min(int a, int b)
+{
+	return (a>b)?b:a;
+}
+/*!
+ * \brief retourne le maximum entre a et b
+ * \param a
+ * \param b
+ * \return
+ */
+int max(int a, int b)
+{
+	return (a>b)?a:b;
+}

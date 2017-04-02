@@ -86,8 +86,7 @@ coup coupIA(int joueur, int niveauDifficulte, int *pieceDisponible,
  * \return score de la situation
  */
 int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
-	   int ProfondeurMaximum, coup * meilleurCoup);
-
+		   int ProfondeurMaximum, coup * meilleurCoup,int alpha,int beta);
 /*!
  * \brief dejoue un coup
  * \param[in] coupAnnulle : coup à annullée

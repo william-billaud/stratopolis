@@ -183,4 +183,6 @@ int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom);
  * \return rien
  */
 void determineCouleur(couleur couleurCase, bool estGrisee);
+
+void changeZoom(unsigned int *x_z, unsigned int *y_z, unsigned int *zoom,bool up);
 #endif
