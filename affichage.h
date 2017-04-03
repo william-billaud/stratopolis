@@ -72,7 +72,7 @@ void dessinePredictif(coup coupJoueur, bool estValide, int zoom);
     \param[in] joueurActuelle : joueur dont c'est le tour
     \return rien
 */
-void afficheInterface(char nomJ1[15], char nomJ2[15],int joueurActuelle);
+void afficheInterface(char nomJ1[15], char nomJ2[15], int joueurActuelle);
 
 /**
  * \brief Affiche le plateau de jeu, la couleur et la hauteur de chaque case
@@ -167,16 +167,6 @@ void cercle(float centreX, float centreY, float rayon);
 int detecteCase(int *x, int *y, int zoom, unsigned int basX, unsigned int basY);
 
 /*!
- * \brief trouve le meilleur zooom pour le cadrage actuelle
- * \param [out] x pointeur vers l'abscisse du meilleur zoom
- * \param [out] y pointeur vers l'ordonnée du meilleur zoom
- * \param [out] zoom pointeur vers le meilleur zoom
- * \return -1 en cas d'erreur
- * \return 0 si non
- */
-int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom);
-
-/*!
  * \brief appelle couleurCourante() en fonction du paramètre
  * \param [in] couleurCase couleur de la case à déterminer
  * \param [in] estGrisee : determine si la couleur doit être grisée (true) ou non (false)
@@ -184,5 +174,6 @@ int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom);
  */
 void determineCouleur(couleur couleurCase, bool estGrisee);
 
-void changeZoom(unsigned int *x_z, unsigned int *y_z, unsigned int *zoom,bool up);
+void changeZoom(unsigned int *x_z, unsigned int *y_z, unsigned int *zoom,
+		bool up);
 #endif

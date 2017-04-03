@@ -54,13 +54,13 @@ typedef struct pieces {
 	couleur c1;		/*!< couleur de la case du haut  */
 	couleur c2;		/*!< couleur de la case du milieu */
 	couleur c3;		/*!< couleur de la case  a droite */
-	unsigned char numeroPiece;	/*!< numero de la pièce */
+	unsigned int numeroPiece;	/*!< numero de la pièce */
 } pieces;
 /*!
    \brief structure contenant des informations concernant un étage d'une case
 */
 typedef struct etage {
-	unsigned char numeroPiece;	/*!< numero de la pièce , 42 correspond à une absence de pièces */
+	unsigned int numeroPiece;	/*!< numero de la pièce , 42 correspond à une absence de pièces */
 	couleur couleurEtage;	/*!< couleur de la pieces sur case */
 } etage;
 
@@ -82,7 +82,7 @@ typedef struct historiqueCase {
    \brief structure contenant les informations pour jouer un coup
 */
 typedef struct coup {
-	unsigned char numeroPiece;	/*!< numero de la pièces à jouer */
+	unsigned int numeroPiece;	/*!< numero de la pièces à jouer */
 	unsigned int xCoup;	/*!< abscisse de la case central de la pièces (C2) */
 	unsigned int yCoup;	/*!< ordonnee de la case central de la pièces (C2) */
 	orientation orientationPiece;	/*!< orientation de la pièce */
@@ -188,6 +188,16 @@ int min(int a, int b);
  * \return
  */
 int max(int a, int b);
+
+/*!
+ * \brief trouve le meilleur zooom pour le cadrage actuelle
+ * \param [out] x pointeur vers l'abscisse du meilleur zoom
+ * \param [out] y pointeur vers l'ordonnée du meilleur zoom
+ * \param [out] zoom pointeur vers le meilleur zoom
+ * \return -1 en cas d'erreur
+ * \return 0 si non
+ */
+int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom);
 
 //definition des variables globales
 
