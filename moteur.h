@@ -69,12 +69,10 @@ bool possedeTuileAdjacente(int x, int y);
 \brief cherche un coup pour l'ia
 \param[in] joueur : joueur jouer par l'ia
 \param[in] niveauDifficulte : niveau de difficulté de l'ia
-\param[in] pieceDisponible : liste des pièces disponible
-\param[in] nbPieceRestante : nombre de pièces restantes
+\param[in] nbPieceJoue : nombre de pièces deja
 \return un coup proposé par l'ia
 */
-coup coupIA(int joueur, int niveauDifficulte, int *pieceDisponible,
-	    int nbPieceRestante);
+coup coupIA(int joueur, int niveauDifficulte, int nbPieceJoue);
 
 /*!
  * \brief algorithme min max
@@ -86,8 +84,7 @@ coup coupIA(int joueur, int niveauDifficulte, int *pieceDisponible,
  * \return score de la situation
  */
 int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
-	   int ProfondeurMaximum, coup * meilleurCoup);
-
+	   int ProfondeurMaximum, int alpha, int beta, int tourActuelle);
 /*!
  * \brief dejoue un coup
  * \param[in] coupAnnulle : coup à annullée
