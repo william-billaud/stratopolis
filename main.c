@@ -55,7 +55,7 @@ void gestionEvenement(EvenementGfx evenement) {
             initPartie(&joueurActuelle);
             joueurActuelle = 0;
             trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
-            mode = IA;
+            mode = classique;
             activeGestionDeplacementPassifSouris();
             //timeStart = (unsigned int) time(NULL);
             demandeTemporisation(1000);
@@ -66,7 +66,7 @@ void gestionEvenement(EvenementGfx evenement) {
                 case IA:
                     if (joueurActuelle == 1) {
                         infoThread.estFini = 0;
-                        infoThread.niveauDifficulte = 20;
+                        infoThread.niveauDifficulte = 1;
                         infoThread.joueur = joueurActuelle;
                         if (detacheThread_sur(threadIa, (void *) &infoThread)) {
                             mode = tmpIA;

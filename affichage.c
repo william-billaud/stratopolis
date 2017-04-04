@@ -81,6 +81,10 @@ void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY)
 void affichePiece(int numeroPiece, orientation orientationPiece, int minX,
 		  int minY, int maxX, int maxY, bool estGrisee)
 {
+    if(numeroPiece<0 || numeroPiece>40)
+    {
+        return;
+    }
 	pieces maPiece = PIECE[numeroPiece];
 	couleur hautGauche, hautDroite, basDroite, basGauche;
 	float centreX, centreY;
@@ -280,10 +284,26 @@ void afficheBordureEntreCases(int numero1, int numero2, float centreX1,
 */
 void afficheInterface(char nomJ1[15], char nomJ2[15], int joueurActuelle)
 {
-	pieces pieceJ1 = PIECE[ordreJoueurs[0][ordreJoueurs[0][20]]];
-    /**< piece disponible pour le joueur 1*/
-	pieces pieceJ2 = PIECE[ordreJoueurs[1][ordreJoueurs[1][20]]];
-    /**< piece disponible pour le joueur 2*/
+    pieces pieceJ1;
+    pieces pieceJ2;
+    if(ordreJoueurs[0][20]<0 ||ordreJoueurs[0][20]>19)
+    {
+        pieceJ1.numeroPiece=42;
+
+    } else{
+        pieceJ1 = PIECE[ordreJoueurs[0][ordreJoueurs[0][20]]];
+        /**< piece disponible pour le joueur 1*/
+    }
+    if(ordreJoueurs[1][20]<0 ||ordreJoueurs[1][20]>19)
+    {
+        pieceJ2.numeroPiece=42;
+
+    } else{
+        pieceJ2 = PIECE[ordreJoueurs[1][ordreJoueurs[1][20]]];
+        /**< piece disponible pour le joueur 2*/
+    }
+    printf("J1 : %d, J2 : %d\n",ordreJoueurs[0][20],ordreJoueurs[1][20]);
+
 	char score[10];
     /**< variable de recuperation des scores*/
 	char tuiles[10];
@@ -355,7 +375,7 @@ void afficheInterface(char nomJ1[15], char nomJ2[15], int joueurActuelle)
 		     (int)(y_min + marge),
 		     (int)(largeurFenetre() - x_min - marge),
 		     (int)(y_max - marge), false);
-	afficheDuree(taille);
+	afficheDuree((int) taille);
 }
 
 /*!
