@@ -18,6 +18,7 @@
 #include "lib/GfxLib.h"
 #include <time.h>
 
+
 /**
  * \brief taille maximum du tableau
  */
@@ -208,8 +209,8 @@ ORDREPIECE ordreJoueurs[2];
 /**< tableau contenant l'ordre des pièces de joueurs 1 et 2, ordreJoueur[0]= ordre des pièces du joueur 1
  * ordreJoueur[1]= ordre des pièces du joueur 2*/
 
-/*!
- * \brief tableau contenant les pièces.
- */
 pieces PIECE[42];
+/**< tableau contenant les pièces */
+
+unsigned int timeStart; /**< variable contenant le time stamp su debut de la partie*/
 #endif

@@ -355,6 +355,7 @@ void afficheInterface(char nomJ1[15], char nomJ2[15], int joueurActuelle)
 		     (int)(y_min + marge),
 		     (int)(largeurFenetre() - x_min - marge),
 		     (int)(y_max - marge), false);
+	afficheDuree(taille);
 }
 
 /*!
@@ -484,4 +485,20 @@ void changeZoom(unsigned int *x_z, unsigned int *y_z, unsigned int *zoom,
 			*y_z = (unsigned int)y_c;
 		}
 	}
+}
+
+void afficheDuree(int taille)
+{
+	char chaine[20];
+	int dure = (int)(time(NULL) - timeStart);
+	int H = dure / 3600;
+	int m = (dure - H * 3600) / 60;
+	int s = (dure - H * 3600 - m * 60);
+	sprintf(chaine, "%.2dh%.2dm%.2ds", H, m, s);
+	epaisseurDeTrait(1);
+	couleurCourante(240, 255, 255);
+	epaisseurDeTrait(1);
+	afficheChaine(chaine, taille / 10, 2 * largeurFenetre() / 3,
+		      hauteurFenetre() - taille / 4);;
+
 }
