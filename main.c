@@ -102,19 +102,8 @@ void gestionEvenement(EvenementGfx evenement) {
                     afficheChaine("PARTIE FINI ", 10, largeurFenetre() / 3, hauteurFenetre() / 2);
                     break;
 
-                    /*effaceFenetre(255, 255, 255);
 
-                    //Force le redimensionnement de la fenêtre si besoin
-                    if (stopRedimensionnement == true) {
-                        forceRedimensionnement = false;
-                        stopRedimensionnement = false;
-                    }
-                    if (forceRedimensionnement == true) {
-                        redimensionneFenetre(600, 400);
-                        stopRedimensionnement = true;
-                    } else if ((hauteurFenetre() < 400) || (largeurFenetre() < 600)) {
-                        forceRedimensionnement = true
-                    */
+
             }
                 case Clavier:
                     switch (caractereClavier()) {
