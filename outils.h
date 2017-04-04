@@ -18,6 +18,7 @@
 #include "lib/GfxLib.h"
 #include <time.h>
 
+
 /**
  * \brief taille maximum du tableau
  */
@@ -199,6 +200,16 @@ int max(int a, int b);
  */
 int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom);
 
+
+/*!
+ * \brief fonction permettant de gèrer le temp
+ * \param ordre 0 pour reinitialiser le temp stocké
+ * \param n'importe qu'elle nombre pour récuper le temp stocké
+ * \return le temp stocké
+ * \return 0 si il a été reinitialisé
+ */
+int gestionDuree(int ordre);
+
 //definition des variables globales
 
 PLATEAU plat;
@@ -208,8 +219,7 @@ ORDREPIECE ordreJoueurs[2];
 /**< tableau contenant l'ordre des pièces de joueurs 1 et 2, ordreJoueur[0]= ordre des pièces du joueur 1
  * ordreJoueur[1]= ordre des pièces du joueur 2*/
 
-/*!
- * \brief tableau contenant les pièces.
- */
 pieces PIECE[42];
+/**< tableau contenant les pièces */
+
 #endif
