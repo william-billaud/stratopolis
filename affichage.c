@@ -7,20 +7,94 @@
 
 #include "affichage.h"
 
-void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY) {
-    //Bloque le nombre maximum de cases à afficher
-    if (zoom < 1) {
-        zoom = 1;
-    }
-    if (zoom >= TAILLEMAX) {
-        zoom = TAILLEMAX - 1;
-    }
-    if (basX + zoom >= TAILLEMAX) {
-        basX = TAILLEMAX - 1 - zoom;
-    }
-    if (basY + zoom >= TAILLEMAX) {
-        basY = TAILLEMAX - 1 - zoom;
-    }
+/*!
+   \brief Affiche le menu principal (Jouer, Aide, Options, Quitter), et la sélection
+   \return rien
+*/
+void afficheMenu()
+{
+	float tailleBoutonX = largeurFenetre() / 10;
+	float tailleBoutonY = hauteurFenetre() / 20;
+	float centreX = largeurFenetre() / 2;
+	float centreY = hauteurFenetre() / 2;
+	/*DonneesImageRGB *image5 = NULL;
+	   DonneesImageRGB *image6 = NULL;
+	   DonneesImageRGB *image7 = NULL;
+	   DonneesImageRGB *image8 = NULL;
+
+	   image5 = lisBMPRGB("ressources/ISEN.bmp");
+	   image6 = lisBMPRGB("ressources/imp.bmp");
+	   image7 = lisBMPRGB("ressources/cadre.bmp");
+	   image8 = lisBMPRGB("ressources/menu.bmp");
+	 */
+	couleurCourante(100, 100, 100);
+	rectangle(0, 0, largeurFenetre(), hauteurFenetre());
+
+	/*if (image7 != NULL) {
+	   ecrisImage((largeurFenetre() - image7->largeurImage) / 2, 120,
+	   image7->largeurImage, image7->hauteurImage,
+	   image7->donneesRGB);
+	   }
+	   if (image6 != NULL) {
+	   ecrisImage((largeurFenetre() - image6->largeurImage) / 2 - 270,
+	   0, image6->largeurImage, image6->hauteurImage,
+	   image6->donneesRGB);
+	   }
+
+	   if (image5 != NULL) {
+	   ecrisImage((largeurFenetre() - image5->largeurImage) / 2 + 280,
+	   290, image5->largeurImage, image5->hauteurImage,
+	   image5->donneesRGB);
+	   } */
+
+	couleurCourante(255, 0, 0);
+
+	rectangle(centreX - tailleBoutonX, centreY + 2 * tailleBoutonY,
+		  centreX + tailleBoutonX, centreY + 4 * tailleBoutonY);
+	rectangle(centreX - tailleBoutonX, centreY - tailleBoutonY,
+		  centreX + tailleBoutonX, centreY + tailleBoutonY);
+	rectangle(centreX - tailleBoutonX, centreY - 2 * tailleBoutonY,
+		  centreX + tailleBoutonX, centreY - 4 * tailleBoutonY);
+	rectangle(centreX - tailleBoutonX, centreY - 5 * tailleBoutonY,
+		  centreX + tailleBoutonX, centreY - 7 * tailleBoutonY);
+
+	couleurCourante(200, 200, 200);
+	epaisseurDeTrait(4);
+	afficheChaine("JOUER", 24, centreX - tailleChaine("JOUER", 24) / 2,
+		      centreY + 2 * tailleBoutonY + tailleBoutonY * 3 / 5);
+	afficheChaine("OPTION", 24, centreX - tailleChaine("OPTION", 24) / 2,
+		      centreY - tailleBoutonY + tailleBoutonY * 3 / 5);
+	afficheChaine("AIDE", 24, centreX - tailleChaine("AIDE", 24) / 2,
+		      centreY - 4 * tailleBoutonY + tailleBoutonY * 3 / 5);
+	afficheChaine("QUITTER", 24, centreX - tailleChaine("QUITTER", 24) / 2,
+		      centreY - 7 * tailleBoutonY + tailleBoutonY * 3 / 5);
+
+	/*if (image8 != NULL) {
+	   ecrisImage((largeurFenetre() - image8->largeurImage) / 2 - 20,
+	   458, image8->largeurImage, image8->hauteurImage,
+	   image8->donneesRGB);
+	   }
+	   libereDonneesImageRGB(&image5);
+	   libereDonneesImageRGB(&image6);
+	   libereDonneesImageRGB(&image7);
+	   libereDonneesImageRGB(&image8); */
+}
+
+void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY)
+{
+	//Bloque le nombre maximum de cases à afficher
+	if (zoom < 1) {
+		zoom = 1;
+	}
+	if (zoom >= TAILLEMAX) {
+		zoom = TAILLEMAX - 1;
+	}
+	if (basX + zoom >= TAILLEMAX) {
+		basX = TAILLEMAX - 1 - zoom;
+	}
+	if (basY + zoom >= TAILLEMAX) {
+		basY = TAILLEMAX - 1 - zoom;
+	}
 
     float largeur = largeurFenetre();
     float hauteur = hauteurFenetre();

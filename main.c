@@ -101,9 +101,71 @@ void gestionEvenement(EvenementGfx evenement) {
                     afficheChaine("PARTIE FINI ",10,largeurFenetre()/3,hauteurFenetre()/2);
                     break;
 
-            }
+		effaceFenetre(255, 255, 255);
 
-            break;
+		//Force le redimensionnement de la fenêtre si besoin
+		if (stopRedimensionnement == true) {
+			forceRedimensionnement = false;
+			stopRedimensionnement = false;
+		}
+		if (forceRedimensionnement == true) {
+			redimensionneFenetre(600, 400);
+			stopRedimensionnement = true;
+		} else if ((hauteurFenetre() < 400) || (largeurFenetre() < 600)) {
+			forceRedimensionnement = true;
+		}
+
+		switch (mode) {
+		case menu:
+			afficheMenu();
+			break;
+		case classique:
+			afficheInterface("WILLIAM", "THEO", joueurActuelle);
+			afficheGrille(zoom_d, x_d, y_d);
+
+			switch (modeEnJeu) {
+			case pieceSelectionnee:
+				detecteCase(&x, &y, zoom_d, x_d, y_d);
+				coupJoueur.orientationPiece = orientationPiece;
+				coupJoueur.yCoup = (unsigned int)y;
+				coupJoueur.xCoup = (unsigned int)x;
+				coupJoueur.numeroPiece = (unsigned char)
+				    ordreJoueurs[joueurActuelle][ordreJoueurs
+								 [joueurActuelle]
+								 [20]];
+				affichePredictif(coupJoueur, zoom_d);
+				break;
+			default:
+				break;
+			}
+			break;
+		case IA:
+
+				if (joueurActuelle == 1) {
+						infoThread.estFini = 0;
+						infoThread.niveauDifficulte = 20;
+						infoThread.joueur = joueurActuelle;
+						if (detacheThread_sur(threadIa, (void *) &infoThread)) {
+								mode = tmpIA;
+						}
+
+				}
+			break;
+			case tmpIA:
+					afficheInterface("WILLIAM", "THEO", joueurActuelle);
+					afficheGrille(zoom_d, x_d, y_d);
+					detecteCase(&x, &y, zoom_d, x_d, y_d);
+					coupJoueur.orientationPiece = orientationPiece;
+					coupJoueur.yCoup = (unsigned int) y;
+					coupJoueur.xCoup = (unsigned int) x;
+					coupJoueur.numeroPiece = (unsigned char)
+									ordreJoueurs[joueurActuelle][ordreJoueurs
+									[joueurActuelle][20]];
+					affichePredictif(coupJoueur, zoom_d);
+					break;
+		case victoire:
+			break;
+		}
 
         case Clavier:
             switch (caractereClavier()) {
@@ -291,5 +353,4 @@ void gestionEvenement(EvenementGfx evenement) {
             rafraichisFenetre();
             break;
     }
-
 }
