@@ -13,15 +13,9 @@
 
 /*!
    \brief Affiche le menu principal (Jouer, Aide, Options, Quitter), et la sélection
-   \param[in] posX : position en abscisse du curseur de la souris
-	 \param[in] posY : position en ordonnée du curseur de la souris
-   \return 0 si le curseur ne survole aucun bouton
-   \return 1 si le curseur survole le bouton Jouer
-   \return 2 si le curseur survole le bouton Aide
-   \return 3 si le curseur survole le bouton Options
-   \return 4 si le curseur survole le bouton Quitter
+   \return rien
 */
-int afficheMenu(int posX, int posY);
+void afficheMenu(void);
 
 /*!
    \brief Affiche les règles du jeu et le mode d’emploi du programme, et la sélection
@@ -180,4 +174,26 @@ void changeZoom(unsigned int *x_z, unsigned int *y_z, unsigned int *zoom,
  * \brief fonction affichant la durée de la partie (base sur la variable globale timeStart
  */
 void afficheDuree(int taille);
+
+/*!
+ * \brief fonction permettant de savoir si le clic est dans un rectangle
+ * \param xClic abscisse du clic
+ * \param yClic ordonnée du clic
+ * \param xMin abscisse minimum du rectangle
+ * \param yMin abscisse maximum du rectangle
+ * \param largeur largeur du rectangle
+ * \param hauteur hauteur du rectangle
+ * \return true si le clic est dans le rectangle
+ * \return false si le clic n'est pas dans le rectangle
+ */
+bool estDansRectangle(int xClic,int yClic,int xMin,int yMin,int largeur,int hauteur);
+
+/*!
+ * \brief detecte la zone de clic du menu principale
+ * \return 1 : jouer
+ * \return 2 :option
+ * \return 3 : Aide
+ * \return 4 : leave;
+ */
+int detecteMenuPrincipal(void);
 #endif
