@@ -106,26 +106,6 @@ int getNumeroPiece(historiqueCase * c)
 	return numero;
 }
 
-/**
- * \brief verifie si une valeur est present dans un tableau 1D d'entier
- * \param array tableau dans lequel il faut chercher la valeur
- * \param h taille du tableau
- * \param valeur valeur a chercher
- * \return false si la valeur est absent
- * \return true si la valeur est presente
- */
-bool inArrayIny(int *array, unsigned int h, int valeur)
-{
-	int i;
-	for (i = 0; i < (int)h; ++i) {
-		if (*(array + i) == valeur) {
-			return true;
-		}
-
-	}
-	return false;
-}
-
 /*!
  * \brief retourne la couleur d'une pièce
  * \param numeroPiece numero de la pièce
@@ -205,14 +185,14 @@ int initPiece(void)
 			c3 = neutre;
 			break;
 		}
-		PIECE[i+30].c1 = c1;
-		PIECE[i+30].c2 = c2;
-		PIECE[i+30].c3 = c3;
-		PIECE[i+30].numeroPiece = (unsigned char)(i+30);
+		PIECE[i + 30].c1 = c1;
+		PIECE[i + 30].c2 = c2;
+		PIECE[i + 30].c3 = c3;
+		PIECE[i + 30].numeroPiece = (unsigned char)(i + 30);
 		PIECE[i + 20].c1 = c1;
 		PIECE[i + 20].c2 = c2;
 		PIECE[i + 20].c3 = c3;
-		PIECE[i + 20].numeroPiece = (unsigned char)(i+20);
+		PIECE[i + 20].numeroPiece = (unsigned char)(i + 20);
 		if (c1 == vert) {
 			c1 = rouge;
 		} else if (c1 == rouge) {
@@ -232,10 +212,10 @@ int initPiece(void)
 		PIECE[i + 10].c2 = c2;
 		PIECE[i + 10].c3 = c3;
 		PIECE[i + 10].numeroPiece = (unsigned char)(i + 10);
-		PIECE[i ].c1 = c1;
-		PIECE[i ].c2 = c2;
-		PIECE[i ].c3 = c3;
-		PIECE[i ].numeroPiece = (unsigned char)(i);
+		PIECE[i].c1 = c1;
+		PIECE[i].c2 = c2;
+		PIECE[i].c3 = c3;
+		PIECE[i].numeroPiece = (unsigned char)(i);
 	}
 	PIECE[0].numeroPiece = 0;
 	return 0;
@@ -283,4 +263,117 @@ int getCasesFromCoup(coup coupJoueur, historiqueCase * tab[3])
 	}
 	return 0;
 
+}
+
+/*!
+ * \brief
+ * \param a
+ * \param b
+ * \return
+ */
+int min(int a, int b)
+{
+	return (a > b) ? b : a;
+}
+
+/*!
+ * \brief retourne le maximum entre a et b
+ * \param a
+ * \param b
+ * \return
+ */
+int max(int a, int b)
+{
+	return (a > b) ? a : b;
+}
+
+/*!
+ * \brief trouve le meilleur zooom pour le cadrage actuelle
+ * \param [out] x pointeur vers l'abscisse du meilleur zoom
+ * \param [out] y pointeur vers l'ordonnée du meilleur zoom
+ * \param [out] zoom pointeur vers le meilleur zoom
+ * \return -1 en cas d'erreur
+ * \return 0 si non
+ */
+int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom)
+{
+	int x_min = 0, x_max = 0, y_min = 0, y_max = 0;
+	int i = 0, j = 0, c = 0;
+	int zoomTmp;
+	bool haut = true, bas = true, gauche = true, droite = true;
+	//tant que les coordonnés du point le plus en bas à droite et celui en haut à gauche n'ont pas été trouvée
+	while ((haut || bas || droite || gauche)
+	       && (c <= ((TAILLEMAX - 1) * (TAILLEMAX - 1)))) {
+		i = c % TAILLEMAX;
+		j = c / TAILLEMAX;
+		if (gauche && vide != getCouleurCase(getCase(i, j))) {
+			y_min = j;
+			gauche = false;
+		}
+		if (bas && vide != getCouleurCase(getCase(j, i))) {
+			x_min = j;
+			bas = false;
+		}
+		if (droite && vide != getCouleurCase(getCase(TAILLEMAX - i - 1,
+							     TAILLEMAX - j -
+							     1))) {
+			y_max = TAILLEMAX - j - 1;
+			droite = false;
+		}
+		if (haut && vide !=
+		    getCouleurCase(getCase
+				   (TAILLEMAX - j - 1, TAILLEMAX - i - 1))) {
+			x_max = TAILLEMAX - j - 1;
+			haut = false;
+		}
+		c += 1;
+	}
+	if (c == ((TAILLEMAX - 1) * (TAILLEMAX - 1))) {
+		return -1;
+	}
+	//on laisse, si possible une marge de 2 carreau
+	x_min = x_min - 2;
+	y_min = y_min - 2;
+	y_max = y_max + 2;
+	x_max = x_max + 2;
+	//mise en place des plancher(0) et des saturation (TAILLEMAX-1) des valeurs
+	x_min = (x_min > 0) ? x_min : 0;
+	y_min = (y_min > 0) ? y_min : 0;
+	y_max = (y_max < TAILLEMAX) ? y_max : TAILLEMAX - 1;
+	x_max = (x_max < TAILLEMAX) ? x_max : TAILLEMAX - 1;
+	//le zoom vaut l'ecart maximum entre les abscisse ou les ordonnée
+	//centrage des pièces
+	if ((x_max - x_min) > (y_max - y_min)) {
+		zoomTmp = (x_max - x_min) + 1;
+		y_min = y_min - ((zoomTmp - (y_max - y_min)) / 2);
+		y_min = (y_min > 0) ? y_min : 0;
+	} else {
+		zoomTmp = (y_max - y_min) + 1;
+		x_min = x_min - ((zoomTmp - (x_max - x_min)) / 2);
+		x_min = (x_min > 0) ? x_min : 0;
+	}
+	*y = (unsigned int)y_min;
+	*x = (unsigned int)x_min;
+	*zoom = (unsigned int)zoomTmp;
+	return 0;
+}
+
+/*!
+ * \brief fonction permettant de gèrer le temp
+ * \param ordre 0 pour reinitialiser le temp stocké
+ * \param n'importe qu'elle nombre pour récuper le temp stocké
+ * \return le temp stocké
+ * \return 0 si il a été reinitialisé
+ */
+int gestionDuree(int ordre)
+{
+	static int temp;
+	if(ordre==0)
+	{
+		temp=(int) time(NULL);
+		return 0;
+	}else
+	{
+		return temp;
+	}
 }

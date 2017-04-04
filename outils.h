@@ -18,6 +18,7 @@
 #include "lib/GfxLib.h"
 #include <time.h>
 
+
 /**
  * \brief taille maximum du tableau
  */
@@ -54,13 +55,13 @@ typedef struct pieces {
 	couleur c1;		/*!< couleur de la case du haut  */
 	couleur c2;		/*!< couleur de la case du milieu */
 	couleur c3;		/*!< couleur de la case  a droite */
-	unsigned char numeroPiece;	/*!< numero de la pièce */
+	unsigned int numeroPiece;	/*!< numero de la pièce */
 } pieces;
 /*!
    \brief structure contenant des informations concernant un étage d'une case
 */
 typedef struct etage {
-	unsigned char numeroPiece;	/*!< numero de la pièce , 42 correspond à une absence de pièces */
+	unsigned int numeroPiece;	/*!< numero de la pièce , 42 correspond à une absence de pièces */
 	couleur couleurEtage;	/*!< couleur de la pieces sur case */
 } etage;
 
@@ -82,7 +83,7 @@ typedef struct historiqueCase {
    \brief structure contenant les informations pour jouer un coup
 */
 typedef struct coup {
-	unsigned char numeroPiece;	/*!< numero de la pièces à jouer */
+	unsigned int numeroPiece;	/*!< numero de la pièces à jouer */
 	unsigned int xCoup;	/*!< abscisse de la case central de la pièces (C2) */
 	unsigned int yCoup;	/*!< ordonnee de la case central de la pièces (C2) */
 	orientation orientationPiece;	/*!< orientation de la pièce */
@@ -174,6 +175,41 @@ int initPiece(void);
  */
 int getCasesFromCoup(coup coupJoueur, historiqueCase * tab[3]);
 
+/*!
+ * \brief
+ * \param a
+ * \param b
+ * \return
+ */
+int min(int a, int b);
+/*!
+ * \brief retourne le maximum entre a et b
+ * \param a
+ * \param b
+ * \return
+ */
+int max(int a, int b);
+
+/*!
+ * \brief trouve le meilleur zooom pour le cadrage actuelle
+ * \param [out] x pointeur vers l'abscisse du meilleur zoom
+ * \param [out] y pointeur vers l'ordonnée du meilleur zoom
+ * \param [out] zoom pointeur vers le meilleur zoom
+ * \return -1 en cas d'erreur
+ * \return 0 si non
+ */
+int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom);
+
+
+/*!
+ * \brief fonction permettant de gèrer le temp
+ * \param ordre 0 pour reinitialiser le temp stocké
+ * \param n'importe qu'elle nombre pour récuper le temp stocké
+ * \return le temp stocké
+ * \return 0 si il a été reinitialisé
+ */
+int gestionDuree(int ordre);
+
 //definition des variables globales
 
 PLATEAU plat;
@@ -183,8 +219,7 @@ ORDREPIECE ordreJoueurs[2];
 /**< tableau contenant l'ordre des pièces de joueurs 1 et 2, ordreJoueur[0]= ordre des pièces du joueur 1
  * ordreJoueur[1]= ordre des pièces du joueur 2*/
 
-/*!
- * \brief tableau contenant les pièces.
- */
 pieces PIECE[42];
+/**< tableau contenant les pièces */
+
 #endif

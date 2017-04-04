@@ -278,22 +278,22 @@ void afficheBordureEntreCases(int numero1, int numero2, float centreX1,
 	 \param[in] nomJ2 : nom du deuxième joueur
 	 \return rien
 */
-void afficheInterface(char nomJ1[15], char nomJ2[15],int joueurActuelle)
+void afficheInterface(char nomJ1[15], char nomJ2[15], int joueurActuelle)
 {
 	pieces pieceJ1 = PIECE[ordreJoueurs[0][ordreJoueurs[0][20]]];
-		/**< piece disponible pour le joueur 1*/
+    /**< piece disponible pour le joueur 1*/
 	pieces pieceJ2 = PIECE[ordreJoueurs[1][ordreJoueurs[1][20]]];
-	  /**< piece disponible pour le joueur 2*/
+    /**< piece disponible pour le joueur 2*/
 	char score[10];
-		/**< variable de recuperation des scores*/
+    /**< variable de recuperation des scores*/
 	char tuiles[10];
-		/**< variable de recuperation des nombres de tuiles*/
+    /**< variable de recuperation des nombres de tuiles*/
 	float taille =
 	    (largeurFenetre() >=
 	     hauteurFenetre()) * largeurFenetre() / 6 + (hauteurFenetre() >
 							 largeurFenetre()) *
 	    hauteurFenetre() / 6;
-		/**< taille des interfaces a afficher*/
+    /**< taille des interfaces a afficher*/
 
 	//Affiche le fond de l'application
 	couleurCourante(78, 61, 40);
@@ -301,9 +301,9 @@ void afficheInterface(char nomJ1[15], char nomJ2[15],int joueurActuelle)
 
 	//Fond interfaces des joueurs
 
-    determineCouleur(rouge, (bool) joueurActuelle);
+	determineCouleur(rouge, (bool) joueurActuelle);
 	rectangle(0, 0, taille, hauteurFenetre());
-    determineCouleur(vert, (bool) ((joueurActuelle + 1) % 2));
+	determineCouleur(vert, (bool) ((joueurActuelle + 1) % 2));
 	rectangle(largeurFenetre(), 0, largeurFenetre() - taille,
 		  hauteurFenetre());
 
@@ -317,12 +317,12 @@ void afficheInterface(char nomJ1[15], char nomJ2[15],int joueurActuelle)
 
 	//Affiche les scores des deux joueurs
 	afficheChaine("Score :", taille / 6, taille / 10, taille / 2);
-	sprintf(score, "%d", calculScore(1));
+	sprintf(score, "%d", calculScore(0));
 	afficheChaine(score, taille / 6, taille / 10, taille / 4);
 
 	afficheChaine("Score : ", taille / 6,
 		      largeurFenetre() - taille * 9 / 10, taille / 2);
-	sprintf(score, "%d", calculScore(2));
+	sprintf(score, "%d", calculScore(1));
 	afficheChaine(score, taille / 6, largeurFenetre() - taille * 9 / 10,
 		      taille / 4);
 
@@ -355,6 +355,7 @@ void afficheInterface(char nomJ1[15], char nomJ2[15],int joueurActuelle)
 		     (int)(y_min + marge),
 		     (int)(largeurFenetre() - x_min - marge),
 		     (int)(y_max - marge), false);
+	afficheDuree(taille);
 }
 
 /*!
@@ -451,76 +452,54 @@ int detecteCase(int *x, int *y, int zoom, unsigned int basX, unsigned int basY)
 	return 0;
 }
 
-/*!
- * \brief trouve le meilleur zooom pour le cadrage actuelle
- * \param [out] x pointeur vers l'abscisse du meilleur zoom
- * \param [out] y pointeur vers l'ordonnée du meilleur zoom
- * \param [out] zoom pointeur vers le meilleur zoom
- * \return -1 en cas d'erreur
- * \return 0 si non
- */
-int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom)
+void changeZoom(unsigned int *x_z, unsigned int *y_z, unsigned int *zoom,
+		bool up)
 {
-	int x_min = 0, x_max = 0, y_min = 0, y_max = 0;
-	int i = 0, j = 0;
-	int zoomTmp;
-	bool haut = true, bas = true, gauche = true, droite = true;
-	//tant que les coordonnés du point le plus en bas à droite et celui en haut à gauche n'ont pas été trouvée
-	while (haut || bas || droite || gauche) {
-		if (gauche && vide != getCouleurCase(getCase(i, j))) {
-			y_min = j;
-			gauche = false;
-		}
-		if (bas && vide != getCouleurCase(getCase(j, i))) {
-			x_min = j;
-			bas = false;
-		}
-		if (droite && vide != getCouleurCase(getCase(TAILLEMAX - i - 1,
-							     TAILLEMAX - j -
-							     1))) {
-			y_max = TAILLEMAX - j - 1;
-			droite = false;
-		}
-		if (haut && vide !=
-		    getCouleurCase(getCase
-				   (TAILLEMAX - j - 1, TAILLEMAX - i - 1))) {
-			x_max = TAILLEMAX - j - 1;
-			haut = false;
-		}
-		i += 1;
-		if (i == TAILLEMAX) {
-			i = 0;
-			j += 1;
-			//si j vaut taille max, la tableau est vide ou il y a eu une erreur
-			if (j == TAILLEMAX) {
-				puts("erreur dans la detection du zoom");
-				return -1;
+	int x_c, y_c;
+	int b = up ? -1 : 1;
+	if ((*zoom > 1 || !up) && (*zoom < TAILLEMAX || up)) {
+		if (detecteCase(&x_c, &y_c, *zoom, *x_z, *y_z) == 1) {
+			if (up) {
+				y_c =
+				    (y_c >
+				     (int)(*y_z + (*zoom) / 2)) ? (*y_z) +
+				    2 : (*y_z);
+				x_c =
+				    (x_c >
+				     (int)(*x_z + (*zoom) / 2)) ? (*x_z) +
+				    2 : (*x_z);
+			} else {
+				y_c =
+				    (y_c >
+				     (int)(*y_z + (*zoom) / 2)) ? (*y_z) -
+				    2 : (*y_z);
+				x_c =
+				    (x_c >
+				     (int)(*x_z + (*zoom) / 2)) ? (*x_z) -
+				    2 : (*x_z);
+
 			}
+			*zoom += b;
+			printf("%d, %d\n", x_c, y_c);
+			*x_z = (unsigned int)x_c;
+			*y_z = (unsigned int)y_c;
 		}
 	}
-	//on laisse, si possible une marge de 2 carreau
-	x_min = x_min - 2;
-	y_min = y_min - 2;
-	y_max = y_max + 2;
-	x_max = x_max + 2;
-	//mise en place des plancher(0) et des saturation (TAILLEMAX-1) des valeurs
-	x_min = (x_min > 0) ? x_min : 0;
-	y_min = (y_min > 0) ? y_min : 0;
-	y_max = (y_max < TAILLEMAX) ? y_max : TAILLEMAX - 1;
-	x_max = (x_max < TAILLEMAX) ? x_max : TAILLEMAX - 1;
-	//le zoom vaut l'ecart maximum entre les abscisse ou les ordonnée
-	//centrage des pièces
-	if ((x_max - x_min) > (y_max - y_min)) {
-		zoomTmp = (x_max - x_min) + 1;
-		y_min = y_min - ((zoomTmp - (y_max - y_min)) / 2);
-		y_min = (y_min > 0) ? y_min : 0;
-	} else {
-		zoomTmp = (y_max - y_min) + 1;
-		x_min = x_min - ((zoomTmp - (x_max - x_min)) / 2);
-		x_min = (x_min > 0) ? x_min : 0;
-	}
-	*y = (unsigned int)y_min;
-	*x = (unsigned int)x_min;
-	*zoom = (unsigned int)zoomTmp;
-	return 0;
 }
+
+void afficheDuree(int taille)
+{
+	int timeStart=gestionDuree(1);
+	char chaine[20];
+	int dure = (int)(time(NULL) - timeStart);
+	int H = dure / 3600;
+	int m = (dure - H * 3600) / 60;
+	int s = (dure - H * 3600 - m * 60);
+	sprintf(chaine, "%.2dh%.2dm%.2ds", H, m, s);
+	epaisseurDeTrait(1);
+	couleurCourante(240, 255, 255);
+	epaisseurDeTrait(1);
+	afficheChaine(chaine, taille / 10, 2 * largeurFenetre() / 3,
+		      hauteurFenetre() - taille / 4);;
+}
+

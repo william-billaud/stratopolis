@@ -221,8 +221,9 @@ int joueCoup(coup coupJoueur)
 		//change la hauteur des case
 		caseCoups[i]->hauteur += 1;
 		//ajoute la numero de pièce a cette hauteur
-		caseCoups[i]->tabEtage[getHauteurCase((caseCoups[i]))].
-		    numeroPiece = coupJoueur.numeroPiece;
+		caseCoups[i]->
+		    tabEtage[getHauteurCase((caseCoups[i]))].numeroPiece =
+		    coupJoueur.numeroPiece;
 	}
 	//modifie les couleurs des cases
 	caseCoups[0]->tabEtage[getHauteurCase((caseCoups[0]))].couleurEtage =
@@ -251,15 +252,17 @@ int dejoueCoup(coup coupAnnulle)
 	int i;
 	//on verifie que rien n'a été posée sur la pièce
 	for (i = 0; i < 3; ++i) {
-		if (coupAnnulle.numeroPiece != getNumeroPiece((caseCoups[i]))) {
+		if ((int)coupAnnulle.numeroPiece !=
+		    getNumeroPiece((caseCoups[i]))) {
 			return -2;
 		}
 	}
 	for (i = 0; i < 3; ++i) {
-		caseCoups[i]->tabEtage[getHauteurCase((caseCoups[i]))].
-		    couleurEtage = vide;
-		caseCoups[i]->tabEtage[getHauteurCase((caseCoups[i]))].
-		    numeroPiece = 41;
+		caseCoups[i]->
+		    tabEtage[getHauteurCase((caseCoups[i]))].couleurEtage =
+		    vide;
+		caseCoups[i]->
+		    tabEtage[getHauteurCase((caseCoups[i]))].numeroPiece = 41;
 		caseCoups[i]->hauteur -= 1;
 	}
 	return 1;
@@ -287,10 +290,10 @@ int calculScore(int joueur)
 	listeBlock *tmp = NULL;
 	listeBlock *tmpB = NULL;
 	caseCalcul *listeCase = NULL;
-	if (joueur == 1) {
-		couleurJoueur = vert;
-	} else if (joueur == 2) {
+	if (joueur == 0) {
 		couleurJoueur = rouge;
+	} else if (joueur == 1) {
+		couleurJoueur = vert;
 	} else {
 		return -1;
 	}
@@ -370,11 +373,10 @@ int calculScore(int joueur)
 						       && tmpB != NULL) {
 							if (estDansBlock
 							    (i, j - 1,
-							     tmpB->
-							     debutBlock)) {
+							     tmpB->debutBlock))
+							{
 								listeCase =
-								    tmpB->
-								    debutBlock;
+								    tmpB->debutBlock;
 							} else {
 								tmpB =
 								    tmpB->next;
@@ -541,5 +543,9 @@ int initPartie(int *joueur)
 	retour += 2 * initOrdrePieces(2);
 	retour += 4 * initPlateau();
 	*joueur = choisisJoueur();
+    gestionDuree(0);
 	return retour;
 }
+
+//fonction ALPHABETA(P, alpha, beta) /* alpha est toujours inférieur à beta */
+

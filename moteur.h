@@ -65,28 +65,6 @@ int calculScore(int joueur);
 */
 bool possedeTuileAdjacente(int x, int y);
 
-/*!
-\brief cherche un coup pour l'ia
-\param[in] joueur : joueur jouer par l'ia
-\param[in] niveauDifficulte : niveau de difficulté de l'ia
-\param[in] pieceDisponible : liste des pièces disponible
-\param[in] nbPieceRestante : nombre de pièces restantes
-\return un coup proposé par l'ia
-*/
-coup coupIA(int joueur, int niveauDifficulte, int *pieceDisponible,
-	    int nbPieceRestante);
-
-/*!
- * \brief algorithme min max
- * \param joueurActuel joueur qui doit jouer
- * \param joueurIA joueur remplacé par l'IA
- * \param ProfondeurActuelle nombre de recursion
- * \param ProfondeurMaximum nom de recursion maximum
- * \param[out] meilleurCoup
- * \return score de la situation
- */
-int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
-	   int ProfondeurMaximum, coup * meilleurCoup);
 
 /*!
  * \brief dejoue un coup
