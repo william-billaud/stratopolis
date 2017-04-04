@@ -16,6 +16,7 @@
 #include <math.h>		// Pour pouvoir utiliser les librairies mathematiques
 #include "lib/ESLib.h"
 #include "lib/GfxLib.h"
+#include "lib/BmpLib.h"
 #include <time.h>
 
 /**

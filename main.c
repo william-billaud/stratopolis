@@ -50,7 +50,7 @@ void gestionEvenement(EvenementGfx evenement)
 		trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
 
 		detecteCase(&x, &y, zoom_d, x_d, y_d);
-		mode = classique;
+		mode = menu;
 		modeEnJeu = enJeu;
 		forceRedimensionnement = false;
 		stopRedimensionnement = false;
@@ -72,6 +72,9 @@ void gestionEvenement(EvenementGfx evenement)
 
 		effaceFenetre(255, 255, 255);
 		switch (mode) {
+		case menu:
+			afficheMenu();
+			break;
 		case classique:
 			afficheInterface("WILLIAM", "THEO", joueurActuelle);
 			afficheGrille(zoom_d, x_d, y_d);
@@ -95,7 +98,6 @@ void gestionEvenement(EvenementGfx evenement)
 			break;
 		case IA:
 			break;
-		case menu:
 		case victoire:
 			break;
 		}
@@ -178,106 +180,164 @@ void gestionEvenement(EvenementGfx evenement)
 		break;
 
 	case BoutonSouris:
-
 		if (etatBoutonSouris() == GaucheAppuye) {
+			switch (mode) {
+			case menu:
 
-			switch (modeEnJeu) {
-			case pieceSelectionnee:
-				detecteCase(&x, &y, zoom_d, x_d, y_d);
-				coupJoueur.orientationPiece = orientationPiece;
-				coupJoueur.yCoup = (unsigned int)y;
-				coupJoueur.xCoup = (unsigned int)x;
-				coupJoueur.numeroPiece = (unsigned char)
-				    ordreJoueurs[joueurActuelle][ordreJoueurs
-								 [joueurActuelle]
-								 [20]];
-				orientationPiece = HD;
+				if (abscisseSouris() >= largeurFenetre() * 2 / 5
+				    && ordonneeSouris() >=
+				    hauteurFenetre() * 3 / 5
+				    && abscisseSouris() <=
+				    largeurFenetre() * 3 / 5
+				    && ordonneeSouris() <=
+				    hauteurFenetre() * 7 / 10) {
+					mode = classique;
+					rafraichisFenetre();
+				}
+				if (abscisseSouris() >= largeurFenetre() * 2 / 5
+				    && ordonneeSouris() >=
+				    hauteurFenetre() * 9 / 20
+				    && abscisseSouris() <=
+				    largeurFenetre() * 3 / 5
+				    && ordonneeSouris() <=
+				    hauteurFenetre() * 11 / 20) {
+					//OPTIONS
+				}
 
-				if (joueCoup(coupJoueur) == 1) {
-					ordreJoueurs[joueurActuelle][20] += 1;
-					joueurActuelle =
-					    (joueurActuelle + 1) % 2;
-					if (ordreJoueurs[1][20] == 20
-					    && ordreJoueurs[0][20] == 20) {
-						if (calculScore(0) >
-						    calculScore(1)) {
-							puts("joueur vert à gagné");
-						} else {
-							puts("joueur rouge à gagné");
+				if (abscisseSouris() >= largeurFenetre() * 2 / 5
+				    && ordonneeSouris() >=
+				    hauteurFenetre() * 3 / 10
+				    && abscisseSouris() <=
+				    largeurFenetre() * 3 / 5
+				    && ordonneeSouris() <=
+				    hauteurFenetre() * 2 / 5) {
+					//AIDE
+				}
+				if (abscisseSouris() >= largeurFenetre() * 2 / 5
+				    && ordonneeSouris() >=
+				    hauteurFenetre() * 3 / 20
+				    && abscisseSouris() <=
+				    largeurFenetre() * 3 / 5
+				    && ordonneeSouris() <=
+				    hauteurFenetre() / 4) {
+
+					termineBoucleEvenements();
+					exit(0);
+				}
+
+				break;
+			case classique:
+				switch (modeEnJeu) {
+				case pieceSelectionnee:
+					detecteCase(&x, &y, zoom_d, x_d, y_d);
+					coupJoueur.orientationPiece =
+					    orientationPiece;
+					coupJoueur.yCoup = (unsigned int)y;
+					coupJoueur.xCoup = (unsigned int)x;
+					coupJoueur.numeroPiece = (unsigned char)
+					    ordreJoueurs[joueurActuelle]
+					    [ordreJoueurs[joueurActuelle]
+					     [20]];
+					orientationPiece = HD;
+					if (joueCoup(coupJoueur) == 1) {
+						ordreJoueurs[joueurActuelle][20]
+						    += 1;
+						joueurActuelle =
+						    (joueurActuelle + 1) % 2;
+						if (ordreJoueurs[1][20] == 20
+						    && ordreJoueurs[0][20] ==
+						    20) {
+							if (calculScore(0) >
+							    calculScore(1)) {
+								puts("joueur vert à gagné");
+							} else {
+								puts("joueur rouge à gagné");
+							}
+							initPartie
+							    (&joueurActuelle);
 						}
-						initPartie(&joueurActuelle);
 					}
+					modeEnJeu = enJeu;
+					break;
+				case enJeu:
+
+					if (joueurActuelle == 0
+					    && abscisseSouris() >=
+					    ((largeurFenetre() >=
+					      hauteurFenetre()) *
+					     largeurFenetre() / 6 +
+					     (hauteurFenetre() >
+					      largeurFenetre()) *
+					     hauteurFenetre() / 6) / 10
+					    && abscisseSouris() <=
+					    ((largeurFenetre() >=
+					      hauteurFenetre()) *
+					     largeurFenetre() / 6 +
+					     (hauteurFenetre() >
+					      largeurFenetre()) *
+					     hauteurFenetre() / 6) * 9 / 10
+					    && ordonneeSouris() >=
+					    (hauteurFenetre() * 2 / 3) -
+					    ((largeurFenetre() >=
+					      hauteurFenetre()) *
+					     largeurFenetre() / 6 +
+					     (hauteurFenetre() >
+					      largeurFenetre()) *
+					     hauteurFenetre() / 6) * 8 / 10
+					    && ordonneeSouris() <=
+					    hauteurFenetre() * 2 / 3) {
+						if (modeEnJeu ==
+						    pieceSelectionnee) {
+							modeEnJeu = enJeu;
+						} else {
+							modeEnJeu =
+							    pieceSelectionnee;
+						}
+					}
+
+					if (joueurActuelle == 1
+					    && abscisseSouris() <=
+					    largeurFenetre() -
+					    ((largeurFenetre() >=
+					      hauteurFenetre()) *
+					     largeurFenetre() / 6 +
+					     (hauteurFenetre() >
+					      largeurFenetre()) *
+					     hauteurFenetre() / 6) / 10
+					    && abscisseSouris() >=
+					    largeurFenetre() -
+					    ((largeurFenetre() >=
+					      hauteurFenetre()) *
+					     largeurFenetre() / 6 +
+					     (hauteurFenetre() >
+					      largeurFenetre()) *
+					     hauteurFenetre() / 6) * 9 / 10
+					    && ordonneeSouris() >=
+					    (hauteurFenetre() * 2 / 3) -
+					    ((largeurFenetre() >=
+					      hauteurFenetre()) *
+					     largeurFenetre() / 6 +
+					     (hauteurFenetre() >
+					      largeurFenetre()) *
+					     hauteurFenetre() / 6) * 8 / 10
+					    && ordonneeSouris() <=
+					    hauteurFenetre() * 2 / 3) {
+						if (modeEnJeu ==
+						    pieceSelectionnee) {
+							modeEnJeu = enJeu;
+						} else {
+							modeEnJeu =
+							    pieceSelectionnee;
+						}
+					}
+
+					break;
+				default:
+					break;
 				}
-				modeEnJeu = enJeu;
+			case IA:
 				break;
-
-			case enJeu:
-
-				if (joueurActuelle == 0
-				    && abscisseSouris() >= ((largeurFenetre() >=
-							     hauteurFenetre()) *
-							    largeurFenetre() /
-							    6 +
-							    (hauteurFenetre() >
-							     largeurFenetre()) *
-							    hauteurFenetre() /
-							    6) / 10
-				    && abscisseSouris() <=
-				    ((largeurFenetre() >=
-				      hauteurFenetre()) * largeurFenetre() / 6 +
-				     (hauteurFenetre() >
-				      largeurFenetre()) * hauteurFenetre() /
-				     6) * 9 / 10
-				    && ordonneeSouris() >=
-				    (hauteurFenetre() * 2 / 3) -
-				    ((largeurFenetre() >=
-				      hauteurFenetre()) * largeurFenetre() / 6 +
-				     (hauteurFenetre() >
-				      largeurFenetre()) * hauteurFenetre() /
-				     6) * 8 / 10
-				    && ordonneeSouris() <=
-				    hauteurFenetre() * 2 / 3) {
-					if (modeEnJeu == pieceSelectionnee) {
-						modeEnJeu = enJeu;
-					} else {
-						modeEnJeu = pieceSelectionnee;
-					}
-				}
-
-				if (joueurActuelle == 1
-				    && abscisseSouris() <=
-				    largeurFenetre() - ((largeurFenetre() >=
-							 hauteurFenetre()) *
-							largeurFenetre() / 6 +
-							(hauteurFenetre() >
-							 largeurFenetre()) *
-							hauteurFenetre() / 6) /
-				    10
-				    && abscisseSouris() >=
-				    largeurFenetre() -
-				    ((largeurFenetre() >=
-				      hauteurFenetre()) * largeurFenetre() / 6 +
-				     (hauteurFenetre() >
-				      largeurFenetre()) * hauteurFenetre() /
-				     6) * 9 / 10
-				    && ordonneeSouris() >=
-				    (hauteurFenetre() * 2 / 3) -
-				    ((largeurFenetre() >=
-				      hauteurFenetre()) * largeurFenetre() / 6 +
-				     (hauteurFenetre() >
-				      largeurFenetre()) * hauteurFenetre() /
-				     6) * 8 / 10
-				    && ordonneeSouris() <=
-				    hauteurFenetre() * 2 / 3) {
-					if (modeEnJeu == pieceSelectionnee) {
-						modeEnJeu = enJeu;
-					} else {
-						modeEnJeu = pieceSelectionnee;
-					}
-				}
-
-				break;
-			default:
+			case victoire:
 				break;
 			}
 

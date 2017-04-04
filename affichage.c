@@ -7,6 +7,79 @@
 
 #include "affichage.h"
 
+/*!
+   \brief Affiche le menu principal (Jouer, Aide, Options, Quitter), et la sélection
+   \return rien
+*/
+void afficheMenu()
+{
+	float tailleBoutonX = largeurFenetre() / 10;
+	float tailleBoutonY = hauteurFenetre() / 20;
+	float centreX = largeurFenetre() / 2;
+	float centreY = hauteurFenetre() / 2;
+	/*DonneesImageRGB *image5 = NULL;
+	   DonneesImageRGB *image6 = NULL;
+	   DonneesImageRGB *image7 = NULL;
+	   DonneesImageRGB *image8 = NULL;
+
+	   image5 = lisBMPRGB("ressources/ISEN.bmp");
+	   image6 = lisBMPRGB("ressources/imp.bmp");
+	   image7 = lisBMPRGB("ressources/cadre.bmp");
+	   image8 = lisBMPRGB("ressources/menu.bmp");
+	 */
+	couleurCourante(100, 100, 100);
+	rectangle(0, 0, largeurFenetre(), hauteurFenetre());
+
+	/*if (image7 != NULL) {
+	   ecrisImage((largeurFenetre() - image7->largeurImage) / 2, 120,
+	   image7->largeurImage, image7->hauteurImage,
+	   image7->donneesRGB);
+	   }
+	   if (image6 != NULL) {
+	   ecrisImage((largeurFenetre() - image6->largeurImage) / 2 - 270,
+	   0, image6->largeurImage, image6->hauteurImage,
+	   image6->donneesRGB);
+	   }
+
+	   if (image5 != NULL) {
+	   ecrisImage((largeurFenetre() - image5->largeurImage) / 2 + 280,
+	   290, image5->largeurImage, image5->hauteurImage,
+	   image5->donneesRGB);
+	   } */
+
+	couleurCourante(255, 0, 0);
+
+	rectangle(centreX - tailleBoutonX, centreY + 2 * tailleBoutonY,
+		  centreX + tailleBoutonX, centreY + 4 * tailleBoutonY);
+	rectangle(centreX - tailleBoutonX, centreY - tailleBoutonY,
+		  centreX + tailleBoutonX, centreY + tailleBoutonY);
+	rectangle(centreX - tailleBoutonX, centreY - 2 * tailleBoutonY,
+		  centreX + tailleBoutonX, centreY - 4 * tailleBoutonY);
+	rectangle(centreX - tailleBoutonX, centreY - 5 * tailleBoutonY,
+		  centreX + tailleBoutonX, centreY - 7 * tailleBoutonY);
+
+	couleurCourante(200, 200, 200);
+	epaisseurDeTrait(4);
+	afficheChaine("JOUER", 24, centreX - tailleChaine("JOUER", 24) / 2,
+		      centreY + 2 * tailleBoutonY + tailleBoutonY * 3 / 5);
+	afficheChaine("OPTION", 24, centreX - tailleChaine("OPTION", 24) / 2,
+		      centreY - tailleBoutonY + tailleBoutonY * 3 / 5);
+	afficheChaine("AIDE", 24, centreX - tailleChaine("AIDE", 24) / 2,
+		      centreY - 4 * tailleBoutonY + tailleBoutonY * 3 / 5);
+	afficheChaine("QUITTER", 24, centreX - tailleChaine("QUITTER", 24) / 2,
+		      centreY - 7 * tailleBoutonY + tailleBoutonY * 3 / 5);
+
+	/*if (image8 != NULL) {
+	   ecrisImage((largeurFenetre() - image8->largeurImage) / 2 - 20,
+	   458, image8->largeurImage, image8->hauteurImage,
+	   image8->donneesRGB);
+	   }
+	   libereDonneesImageRGB(&image5);
+	   libereDonneesImageRGB(&image6);
+	   libereDonneesImageRGB(&image7);
+	   libereDonneesImageRGB(&image8); */
+}
+
 void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY)
 {
 	//Bloque le nombre maximum de cases à afficher
@@ -171,8 +244,7 @@ void afficheCase(couleur couleurCase, int hauteurCase, float minX,
  * \param [in] couleurCase couleur de la case à déterminer
  * \param [in] estGrisee : determine si la couleur doit être grisée (true) ou non (false)
  * \return rien
- */
-void determineCouleur(couleur couleurCase, bool estGrisee)
+ */ void determineCouleur(couleur couleurCase, bool estGrisee)
 {
 	switch (couleurCase) {
 	case neutre:
@@ -238,9 +310,9 @@ void afficheBorduresDeCase(int numC, int numH, int numD, int numB, int numG,
  * \param [in] centreY1 : coordonnee en ordonnee du centre de la première case
  * \param [in] centreX2 : coordonnee en abscisse du centre de la deuxième case
  * \param [in] centreX2 : coordonnee en ordonnee du centre de la deuxième case
-  */
-void afficheBordureEntreCases(int numero1, int numero2, float centreX1,
-			      float centreY1, float centreX2, float centreY2)
+  */ void afficheBordureEntreCases(int numero1, int numero2, float centreX1,
+				   float centreY1, float centreX2,
+				   float centreY2)
 {
 	float minX, minY, maxX, maxY, taille;
 	minX =
@@ -361,8 +433,7 @@ void afficheInterface(char nomJ1[15], char nomJ2[15], int joueurActuelle)
    \brief Appelle les fonction dessinePredictif() et estValideCoup()
    \param[in] coupJoueur : coup à afficher
    \return rien
-*/
-void affichePredictif(coup coupJoueur, int zoom)
+*/ void affichePredictif(coup coupJoueur, int zoom)
 {
 	dessinePredictif(coupJoueur, estValideCoup(coupJoueur), zoom);
 }
@@ -372,8 +443,7 @@ void affichePredictif(coup coupJoueur, int zoom)
    \param[in] coupJoueur : coup à afficher
 	 \param[in] estValide : validité du coup à afficher
    \return
-*/
-void dessinePredictif(coup coupJoueur, bool estValide, int zoom)
+*/ void dessinePredictif(coup coupJoueur, bool estValide, int zoom)
 {
 	float taille =
 	    (float)(2 *

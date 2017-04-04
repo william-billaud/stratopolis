@@ -221,8 +221,9 @@ int joueCoup(coup coupJoueur)
 		//change la hauteur des case
 		caseCoups[i]->hauteur += 1;
 		//ajoute la numero de pièce a cette hauteur
-		caseCoups[i]->tabEtage[getHauteurCase((caseCoups[i]))].
-		    numeroPiece = coupJoueur.numeroPiece;
+		caseCoups[i]->
+		    tabEtage[getHauteurCase((caseCoups[i]))].numeroPiece =
+		    coupJoueur.numeroPiece;
 	}
 	//modifie les couleurs des cases
 	caseCoups[0]->tabEtage[getHauteurCase((caseCoups[0]))].couleurEtage =
@@ -257,10 +258,11 @@ int dejoueCoup(coup coupAnnulle)
 		}
 	}
 	for (i = 0; i < 3; ++i) {
-		caseCoups[i]->tabEtage[getHauteurCase((caseCoups[i]))].
-		    couleurEtage = vide;
-		caseCoups[i]->tabEtage[getHauteurCase((caseCoups[i]))].
-		    numeroPiece = 41;
+		caseCoups[i]->
+		    tabEtage[getHauteurCase((caseCoups[i]))].couleurEtage =
+		    vide;
+		caseCoups[i]->
+		    tabEtage[getHauteurCase((caseCoups[i]))].numeroPiece = 41;
 		caseCoups[i]->hauteur -= 1;
 	}
 	return 1;
@@ -374,8 +376,7 @@ int calculScore(int joueur)
 							     tmpB->debutBlock))
 							{
 								listeCase =
-								    tmpB->
-								    debutBlock;
+								    tmpB->debutBlock;
 							} else {
 								tmpB =
 								    tmpB->next;

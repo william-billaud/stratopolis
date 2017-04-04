@@ -13,15 +13,9 @@
 
 /*!
    \brief Affiche le menu principal (Jouer, Aide, Options, Quitter), et la sélection
-   \param[in] posX : position en abscisse du curseur de la souris
-	 \param[in] posY : position en ordonnée du curseur de la souris
-   \return 0 si le curseur ne survole aucun bouton
-   \return 1 si le curseur survole le bouton Jouer
-   \return 2 si le curseur survole le bouton Aide
-   \return 3 si le curseur survole le bouton Options
-   \return 4 si le curseur survole le bouton Quitter
+   \return rien
 */
-int afficheMenu(int posX, int posY);
+void afficheMenu(void);
 
 /*!
    \brief Affiche les règles du jeu et le mode d’emploi du programme, et la sélection
