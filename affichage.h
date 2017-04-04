@@ -180,4 +180,17 @@ void changeZoom(unsigned int *x_z, unsigned int *y_z, unsigned int *zoom,
  * \brief fonction affichant la durée de la partie (base sur la variable globale timeStart
  */
 void afficheDuree(int taille);
+
+/*!
+ * \brief fonction permettant de savoir si le clic est dans un rectangle
+ * \param xClic abscisse du clic
+ * \param yClic ordonnée du clic
+ * \param xMin abscisse minimum du rectangle
+ * \param yMin abscisse maximum du rectangle
+ * \param largeur largeur du rectangle
+ * \param hauteur hauteur du rectangle
+ * \return true si le clic est dans le rectangle
+ * \return false si le clic n'est pas dans le rectangle
+ */
+bool estDansRectangle(int xClic,int yClic,int xMin,int yMin,int largeur,int hauteur);
 #endif

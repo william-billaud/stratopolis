@@ -49,6 +49,10 @@ void gestionEvenement(EvenementGfx evenement) {
     static coup coupJoueur;
     static orientation orientationPiece;
     static int joueurActuelle;
+    static int niveauDifficulte = 1;
+    static char nomJ1[15]="William";
+    static char nomJ2[15]="Theo";
+    static bool pieceSelectionne=false;
     switch (evenement) {
         case Initialisation:
             modePleinEcran();
@@ -57,7 +61,6 @@ void gestionEvenement(EvenementGfx evenement) {
             trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
             mode = classique;
             activeGestionDeplacementPassifSouris();
-            //timeStart = (unsigned int) time(NULL);
             demandeTemporisation(1000);
             break;
         case Affichage:
@@ -66,25 +69,25 @@ void gestionEvenement(EvenementGfx evenement) {
                 case IA:
                     if (joueurActuelle == 1) {
                         infoThread.estFini = 0;
-                        infoThread.niveauDifficulte = 1;
+                        infoThread.niveauDifficulte = niveauDifficulte;
                         infoThread.joueur = joueurActuelle;
                         if (detacheThread_sur(threadIa, (void *) &infoThread)) {
                             mode = tmpIA;
                         }
-
                     }
                 case classique:
                 case tmpIA:
-                    afficheInterface("WILLIAM", "THEO", joueurActuelle);
+                    afficheInterface(nomJ1,nomJ2,joueurActuelle);
                     afficheGrille(zoom_d, x_d, y_d);
                     detecteCase(&x, &y, zoom_d, x_d, y_d);
-                    coupJoueur.orientationPiece = orientationPiece;
-                    coupJoueur.yCoup = (unsigned int) y;
-                    coupJoueur.xCoup = (unsigned int) x;
-                    coupJoueur.numeroPiece = (unsigned char)
-                            ordreJoueurs[joueurActuelle][ordreJoueurs
-                            [joueurActuelle][20]];
-                    affichePredictif(coupJoueur, zoom_d);
+                    if(pieceSelectionne) {
+                        coupJoueur.orientationPiece = orientationPiece;
+                        coupJoueur.yCoup = (unsigned int) y;
+                        coupJoueur.xCoup = (unsigned int) x;
+                        coupJoueur.numeroPiece = (unsigned char) ordreJoueurs[joueurActuelle][ordreJoueurs
+                        [joueurActuelle][20]];
+                        affichePredictif(coupJoueur, zoom_d);
+                    }
                     break;
                 case menu:
                 case victoire:
@@ -123,15 +126,12 @@ void gestionEvenement(EvenementGfx evenement) {
                             break;
                         case classique:
                         case IA:
+                        case tmpIA:
                             trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
                             break;
                         case victoire:
                             break;
-
-                        case tmpIA:
-                            break;
                     }
-
                     rafraichisFenetre();
                     break;
                 default:
@@ -176,69 +176,86 @@ void gestionEvenement(EvenementGfx evenement) {
             break;
 
         case BoutonSouris:
-            switch (etatBoutonSouris()) {
-                case GaucheAppuye:
-                    if (mode == classique || (mode == IA && joueurActuelle == 0)) {
+            switch (mode) {
+                case classique:
+                case IA:
+                    switch (etatBoutonSouris()) {
+                        case GaucheAppuye:
+                            if (mode == classique || (mode == IA && joueurActuelle == 0)) {
 
-                        detecteCase(&x, &y, zoom_d, x_d, y_d);
-                        coupJoueur.orientationPiece = orientationPiece;
-                        coupJoueur.yCoup = (unsigned int) y;
-                        coupJoueur.xCoup = (unsigned int) x;
-                        coupJoueur.numeroPiece = (unsigned char)
-                                ordreJoueurs[joueurActuelle][ordreJoueurs
-                                [joueurActuelle][20]];
-                        orientationPiece = HD;
-                        if (joueCoup(coupJoueur) == 1) {
-                            ordreJoueurs[joueurActuelle][20] += 1;
-                            joueurActuelle = (joueurActuelle + 1) % 2;
-                            if (ordreJoueurs[1][20] == 20
-                                && ordreJoueurs[0][20] == 20) {
-                                if (calculScore(0) > calculScore(1)) {
-                                    puts("joueur vert à gagné");
-                                } else {
-                                    puts("joueur rouge à gagné");
+                                if(pieceSelectionne && detecteCase(&x, &y, zoom_d, x_d, y_d)==0) {
+                                    coupJoueur.orientationPiece = orientationPiece;
+                                    coupJoueur.yCoup = (unsigned int) y;
+                                    coupJoueur.xCoup = (unsigned int) x;
+                                    coupJoueur.numeroPiece = (unsigned char)
+                                            ordreJoueurs[joueurActuelle][ordreJoueurs
+                                            [joueurActuelle][20]];
+                                    orientationPiece = HD;
+                                    if (joueCoup(coupJoueur) == 1) {
+                                        ordreJoueurs[joueurActuelle][20] += 1;
+                                        joueurActuelle = (joueurActuelle + 1) % 2;
+                                        if (ordreJoueurs[1][20] == 20
+                                            && ordreJoueurs[0][20] == 20) {
+                                            if (calculScore(0) > calculScore(1)) {
+                                                puts("joueur vert à gagné");
+                                            } else {
+                                                puts("joueur rouge à gagné");
+                                            }
+                                            initPartie(&joueurActuelle);
+                                        }
+                                    }
+                                    pieceSelectionne = false;
+                                }else if(detecteCase(&x, &y, zoom_d, x_d, y_d)==joueurActuelle+1)
+                                {
+                                    pieceSelectionne=true;
                                 }
-                                initPartie(&joueurActuelle);
                             }
-                        }
-                    }
-                    break;
-                case ScrollUp:
-                    if (toucheCtrlAppuyee()) {
-                        changeZoom(&x_d, &y_d, &zoom_d, true);
-                        printf("nouveau zoom : %d, %d :  %d \n", x_d,
-                               y_d, zoom_d);
-                    } else {
-                        if (orientationPiece == HD) {
-                            orientationPiece = HG;
-                        } else {
-                            orientationPiece -= 1;
-                        }
-                    }
-                    break;
-                case ScrollDown:
-                    if (toucheCtrlAppuyee()) {
-                        changeZoom(&x_d, &y_d, &zoom_d, false);
-                        printf("nouveau zoom : %d, %d %d \n", x_d, y_d,
-                               zoom_d);
-                    } else {
-                        if (orientationPiece == HG) {
-                            orientationPiece = HD;
-                        } else {
-                            orientationPiece += 1;
-                        }
-                    }
+                            break;
+                        case ScrollUp:
+                            if (toucheCtrlAppuyee()) {
+                                changeZoom(&x_d, &y_d, &zoom_d, true);
+                                printf("nouveau zoom : %d, %d :  %d \n", x_d,
+                                       y_d, zoom_d);
+                            } else {
+                                if (orientationPiece == HD) {
+                                    orientationPiece = HG;
+                                } else {
+                                    orientationPiece -= 1;
+                                }
+                            }
+                            break;
+                        case ScrollDown:
+                            if (toucheCtrlAppuyee()) {
+                                changeZoom(&x_d, &y_d, &zoom_d, false);
+                                printf("nouveau zoom : %d, %d %d \n", x_d, y_d,
+                                       zoom_d);
+                            } else {
+                                if (orientationPiece == HG) {
+                                    orientationPiece = HD;
+                                } else {
+                                    orientationPiece += 1;
+                                }
+                            }
 
+                            break;
+                        case TmpScroll:
+                            break;
+                        case GaucheRelache:
+                            break;
+                        case DroiteAppuye:
+                            break;
+                        case DroiteRelache:
+                            break;
+                    }
                     break;
-                case TmpScroll:
+                case menu:
                     break;
-                case GaucheRelache:
+                case victoire:
                     break;
-                case DroiteAppuye:
-                    break;
-                case DroiteRelache:
+                case tmpIA:
                     break;
             }
+
             rafraichisFenetre();
             break;
 
@@ -252,7 +269,6 @@ void gestionEvenement(EvenementGfx evenement) {
             break;
         case Temporisation:
             if (mode == tmpIA) {
-
                 if (infoThread.estFini != 0) {
                     if (infoThread.estFini == 1) {
                         if (joueCoup(infoThread.coupIA) == 1) {
@@ -261,17 +277,17 @@ void gestionEvenement(EvenementGfx evenement) {
                             if (ordreJoueurs[1][20] == 20
                                 && ordreJoueurs[0][20] == 20) {
                                 if (calculScore(0) > calculScore(1)) {
-                                    puts("joueur vert à gagné");
+                                    mode = victoire;
                                 } else {
-                                    puts("joueur rouge à gagné");
+                                    mode = victoire;
                                 }
                                 initPartie(&joueurActuelle);
                             }
                         }
                     } else {
-                        puts("couille dans le paté");
+                        mode = menu;
                     }
-                    mode=IA;
+                    mode = IA;
                 }
             }
             rafraichisFenetre();
