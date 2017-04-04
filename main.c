@@ -65,7 +65,7 @@ void gestionEvenement(EvenementGfx evenement) {
             modePleinEcran();
             initPartie(&joueurActuelle);
             trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
-            mode = IA;
+            mode = menu;
             activeGestionDeplacementPassifSouris();
             demandeTemporisation(1000);
             break;
@@ -206,7 +206,7 @@ void gestionEvenement(EvenementGfx evenement) {
                                             }
                                             pieceSelectionne = false;
                                         } else if (detecteCase(&x, &y, zoom_d, x_d, y_d) == joueurActuelle + 1) {
-                                            pieceSelectionne = true;
+                                            pieceSelectionne = !pieceSelectionne;
                                         }
                                     }
                                     break;
@@ -255,6 +255,23 @@ void gestionEvenement(EvenementGfx evenement) {
                             }
                             break;
                         case menu:
+                            switch (detecteMenuPrincipal())
+                            {
+                                case 1:
+                                    mode=classique;
+                                    break;
+                                case 2:
+                                    //option
+                                    break;
+                                case 3:
+                                    //aide
+                                    break;
+                                case 4:
+                                    termineBoucleEvenements();
+                                    exit(0);
+                                default:break;
+                            }
+
                             break;
                         case tmpIA:
                             break;

@@ -632,3 +632,33 @@ bool estDansRectangle(int xClic,int yClic,int xMin,int yMin,int xMax,int yMax)
     }
     return false;
 }
+
+/*!
+ * \brief detecte la zone de clic du menu principale
+ * \return 1 : jouer
+ * \return 2 :option
+ * \return 3 : Aide
+ * \return 4 : leave;
+ */
+int detecteMenuPrincipal(void)
+{
+    int abs=abscisseSouris();
+    int ord = ordonneeSouris();
+    if (estDansRectangle(abs,ord,largeurFenetre() * 2 / 5,hauteurFenetre() * 3 / 5,largeurFenetre() * 3 / 5,hauteurFenetre() * 7 / 10))
+    {
+        return 1;
+    }
+    if(estDansRectangle(abs,ord,largeurFenetre() * 2 / 5,hauteurFenetre() * 9 / 20,largeurFenetre() * 3 / 5,hauteurFenetre() * 11 / 20))
+    {
+        return 2;
+    }
+    if(estDansRectangle(abs,ord,largeurFenetre() * 2 / 5,hauteurFenetre() * 3 / 10,largeurFenetre() * 3 / 5,hauteurFenetre() * 2 / 5))
+    {
+        return 3;
+    }
+    if(estDansRectangle(abs,ord,largeurFenetre() * 2 / 5,hauteurFenetre() * 3 / 20,largeurFenetre() * 3 / 5,hauteurFenetre() / 4))
+    {
+        return 4;
+    }
+    return 0;
+}

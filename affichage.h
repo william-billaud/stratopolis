@@ -187,4 +187,13 @@ void afficheDuree(int taille);
  * \return false si le clic n'est pas dans le rectangle
  */
 bool estDansRectangle(int xClic,int yClic,int xMin,int yMin,int largeur,int hauteur);
+
+/*!
+ * \brief detecte la zone de clic du menu principale
+ * \return 1 : jouer
+ * \return 2 :option
+ * \return 3 : Aide
+ * \return 4 : leave;
+ */
+int detecteMenuPrincipal(void);
 #endif
