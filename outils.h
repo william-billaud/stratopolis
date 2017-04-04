@@ -200,6 +200,16 @@ int max(int a, int b);
  */
 int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom);
 
+
+/*!
+ * \brief fonction permettant de gèrer le temp
+ * \param ordre 0 pour reinitialiser le temp stocké
+ * \param n'importe qu'elle nombre pour récuper le temp stocké
+ * \return le temp stocké
+ * \return 0 si il a été reinitialisé
+ */
+int gestionDuree(int ordre);
+
 //definition des variables globales
 
 PLATEAU plat;

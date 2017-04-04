@@ -357,3 +357,23 @@ int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom)
 	*zoom = (unsigned int)zoomTmp;
 	return 0;
 }
+
+/*!
+ * \brief fonction permettant de gèrer le temp
+ * \param ordre 0 pour reinitialiser le temp stocké
+ * \param n'importe qu'elle nombre pour récuper le temp stocké
+ * \return le temp stocké
+ * \return 0 si il a été reinitialisé
+ */
+int gestionDuree(int ordre)
+{
+	static int temp;
+	if(ordre==0)
+	{
+		temp=(int) time(NULL);
+		return 0;
+	}else
+	{
+		return temp;
+	}
+}

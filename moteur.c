@@ -543,6 +543,7 @@ int initPartie(int *joueur)
 	retour += 2 * initOrdrePieces(2);
 	retour += 4 * initPlateau();
 	*joueur = choisisJoueur();
+    gestionDuree(0);
 	return retour;
 }
 
