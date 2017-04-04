@@ -106,26 +106,6 @@ int getNumeroPiece(historiqueCase * c)
 	return numero;
 }
 
-/**
- * \brief verifie si une valeur est present dans un tableau 1D d'entier
- * \param array tableau dans lequel il faut chercher la valeur
- * \param h taille du tableau
- * \param valeur valeur a chercher
- * \return false si la valeur est absent
- * \return true si la valeur est presente
- */
-bool inArrayIny(int *array, unsigned int h, int valeur)
-{
-	int i;
-	for (i = 0; i < (int)h; ++i) {
-		if (*(array + i) == valeur) {
-			return true;
-		}
-
-	}
-	return false;
-}
-
 /*!
  * \brief retourne la couleur d'une pièce
  * \param numeroPiece numero de la pièce
@@ -376,4 +356,24 @@ int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom)
 	*x = (unsigned int)x_min;
 	*zoom = (unsigned int)zoomTmp;
 	return 0;
+}
+
+/*!
+ * \brief fonction permettant de gèrer le temp
+ * \param ordre 0 pour reinitialiser le temp stocké
+ * \param n'importe qu'elle nombre pour récuper le temp stocké
+ * \return le temp stocké
+ * \return 0 si il a été reinitialisé
+ */
+int gestionDuree(int ordre)
+{
+	static int temp;
+	if(ordre==0)
+	{
+		temp=(int) time(NULL);
+		return 0;
+	}else
+	{
+		return temp;
+	}
 }

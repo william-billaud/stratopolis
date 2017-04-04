@@ -170,4 +170,8 @@ void determineCouleur(couleur couleurCase, bool estGrisee);
 
 void changeZoom(unsigned int *x_z, unsigned int *y_z, unsigned int *zoom,
 		bool up);
+/*!
+ * \brief fonction affichant la durée de la partie (base sur la variable globale timeStart
+ */
+void afficheDuree(int taille);
 #endif
