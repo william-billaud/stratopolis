@@ -43,5 +43,13 @@ coup coupIA(int joueur, int niveauDifficulte);
 int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
            int ProfondeurMaximum, int alpha, int beta, int tourActuelle);
 
+/*!
+* \brief fonction à lancer dans un thread parrallèle pour trouver le coup de l'ia
+* \param args pointeur vers une structure de type (infoIa)
+* \return
+*
+* la fonction modifie l'etat de l'entire estFinie de la structure pointe en entrée, elle prend la statut 1 si tout est OK et 2 sinon, l'etat de base est le 0
+* elle modifie la variable coupIA de la structure pas le meilleur coup trouvé
+*/
 void *threadIa(void *args);
 #endif //PROJET_IA_H

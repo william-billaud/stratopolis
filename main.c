@@ -55,9 +55,9 @@ void gestionEvenement(EvenementGfx evenement) {
             initPartie(&joueurActuelle);
             joueurActuelle = 0;
             trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
-            mode = classique;
+            mode = IA;
             activeGestionDeplacementPassifSouris();
-            timeStart = (unsigned int) time(NULL);
+            //timeStart = (unsigned int) time(NULL);
             demandeTemporisation(1000);
             break;
         case Affichage:
@@ -113,8 +113,6 @@ void gestionEvenement(EvenementGfx evenement) {
                 case 'R':
                 case 'r':
                     // On force un rafraichissement
-                    printf("dure partie %d \n",
-                           (int) (time(NULL) - timeStart));
                     rafraichisFenetre();
                     break;
 

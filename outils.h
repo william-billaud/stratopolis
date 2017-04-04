@@ -212,5 +212,4 @@ ORDREPIECE ordreJoueurs[2];
 pieces PIECE[42];
 /**< tableau contenant les pièces */
 
-unsigned int timeStart; /**< variable contenant le time stamp su debut de la partie*/
 #endif

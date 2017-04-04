@@ -489,6 +489,13 @@ void changeZoom(unsigned int *x_z, unsigned int *y_z, unsigned int *zoom,
 
 void afficheDuree(int taille)
 {
+	static int timeStart;
+	static bool i =true;
+	if(i)
+	{
+		timeStart=(int)(time(NULL));
+		i=false;
+	}
 	char chaine[20];
 	int dure = (int)(time(NULL) - timeStart);
 	int H = dure / 3600;

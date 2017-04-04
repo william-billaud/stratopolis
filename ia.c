@@ -171,17 +171,22 @@ int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
     }            // finsi
 }                //fin
 
+/*!
+* \brief fonction à lancer dans un thread parrallèle pour trouver le coup de l'ia
+* \param args pointeur vers une structure de type (infoIa)
+* \return
+*
+* la fonction modifie l'etat de l'entire estFinie de la structure pointe en entrée, elle prend la statut 1 si tout est OK et 2 sinon, l'etat de base est le 0
+* elle modifie la variable coupIA de la structure pas le meilleur coup trouvé
+*/
 void *threadIa(void *args)
 {
     infoIa* i= (infoIa*) args;
     i->coupIA=coupIA(i->joueur,i->niveauDifficulte);
-    puts("coup trouve");
     if(i->coupIA.numeroPiece==42)
     {
-        printf("numero piec : %d, X : %d; Y : %d orientation : %d \n",i->coupIA.numeroPiece,i->coupIA.xCoup,i->coupIA.yCoup,i->coupIA.orientationPiece);
         i->estFini=2;
     } else{
-        printf("numero piec : %d, X : %d; Y : %d orientation : %d \n",i->coupIA.numeroPiece,i->coupIA.xCoup,i->coupIA.yCoup,i->coupIA.orientationPiece);
         i->estFini=1;
     }
     pthread_exit(NULL);
