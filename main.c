@@ -33,9 +33,10 @@ int main(int argc, char **argv) {
 void gestionEvenement(EvenementGfx evenement) {
     static bool pleinEcran = true;    // Pour savoir si on est en mode plein ecran ou pas
     static infoIa infoThread;
+    static int debutHint;
     static enum {
-        menu, classique, IA, victoire, tmpIA
-    } mode;
+        menu, classique, IA, victoire, tmpIA,hint
+    } mode,suivant;
     //position du zoom par defaut
     static unsigned int x_d = 80, y_d = 80;
     static unsigned int zoom_d = 20;
@@ -43,6 +44,8 @@ void gestionEvenement(EvenementGfx evenement) {
     int x, y;
     //variable utilisé pour stocker les coup du joueur
     static coup coupJoueur;
+    //coup conseillé
+    static coup coupHint;
     //variable utlilisé pour stocker l'orientation de la piece
     static orientation orientationPiece;
     //variable utilisé pour stocker le joueur actuelle
@@ -59,6 +62,7 @@ void gestionEvenement(EvenementGfx evenement) {
         case Initialisation:
             modePleinEcran();
             mode = menu;
+            suivant=classique;
             activeGestionDeplacementPassifSouris();
             demandeTemporisation(30);
             break;
@@ -75,6 +79,7 @@ void gestionEvenement(EvenementGfx evenement) {
                         }
                     }
                 case classique:
+                case hint:
                 case tmpIA:
                     afficheInterface(nomJ1, nomJ2, joueurActuelle);
                     afficheGrille(zoom_d, x_d, y_d);
@@ -86,6 +91,14 @@ void gestionEvenement(EvenementGfx evenement) {
                         coupJoueur.numeroPiece = (unsigned char) ordreJoueurs[joueurActuelle][ordreJoueurs
                         [joueurActuelle][20]];
                         affichePredictif(coupJoueur, zoom_d);
+                    }
+                    //affiche l'indice
+                    if(suivant==hint)
+                    {
+                        //donne un effet de clignotement
+                        if(time(NULL)%2 ==0) {
+                            afficheIndice(coupHint, zoom_d, x_d, y_d);
+                        }
                     }
                     break;
                 case menu:
@@ -128,6 +141,7 @@ void gestionEvenement(EvenementGfx evenement) {
                             break;
                         case classique:
                         case IA:
+                        case hint:
                         case tmpIA:
                             trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
                             break;
@@ -145,6 +159,7 @@ void gestionEvenement(EvenementGfx evenement) {
             switch (mode) {
                 case IA:
                 case tmpIA:
+                case hint:
                 case classique:
                     switch (toucheClavier()) {
                         case ToucheFlecheDroite:
@@ -177,6 +192,7 @@ void gestionEvenement(EvenementGfx evenement) {
         case BoutonSouris:
             switch (mode) {
                 case classique:
+                case hint:
                 case IA:
                 case tmpIA:
                     switch (etatBoutonSouris()) {
@@ -201,6 +217,7 @@ void gestionEvenement(EvenementGfx evenement) {
                                         }
                                     }
                                     pieceSelectionne = false;
+                                    suivant=menu;
                                 } else if (zoneDetecte == joueurActuelle + 1) {
                                     pieceSelectionne = !pieceSelectionne;
                                 }
@@ -210,11 +227,18 @@ void gestionEvenement(EvenementGfx evenement) {
 
                             } else if (zoneDetecte==4)
                             {
-
+                                infoThread.estFini = 0;
+                                infoThread.niveauDifficulte = 0;
+                                infoThread.joueur = joueurActuelle;
+                                if (detacheThread_sur(threadIa, (void *) &infoThread)) {
+                                    suivant=mode;
+                                    mode=hint;
+                                }
                             } else if(zoneDetecte==5)
                             {
                                 mode=menu;
                             }
+
                             break;
                         case ScrollUp:
                             if (toucheCtrlAppuyee()) {
@@ -265,7 +289,7 @@ void gestionEvenement(EvenementGfx evenement) {
                         case 1:
                             initPartie(&joueurActuelle);
                             trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
-                            mode = IA;
+                            mode = suivant;
                             break;
                         case 2:
                             //option
@@ -291,9 +315,9 @@ void gestionEvenement(EvenementGfx evenement) {
                 case classique:
                 case IA:
                 case victoire:
-                    rafraichisFenetre();
-                    break;
+                case hint:
                 case tmpIA:
+                    rafraichisFenetre();
                     break;
             }
             break;
@@ -317,6 +341,25 @@ void gestionEvenement(EvenementGfx evenement) {
                         joueurActuelle = calculScore(0) > calculScore(1) ? 0 : 1;
                         mode = victoire;
                     }
+                }
+            }
+            if(mode==hint) {
+                if (infoThread.estFini != 0) {
+                    if (infoThread.estFini == 1) {
+                        coupHint = infoThread.coupIA;
+                        mode=suivant;
+                        suivant=hint;
+                        debutHint= (int) time(NULL);
+                    } else {
+                        mode = menu;
+                    }
+                }
+            }
+            if(suivant==hint)
+            {
+                //l'indice ne s'affiche que 5 secondes
+                if((time(NULL)-5)>debutHint) {
+                    suivant = menu;
                 }
             }
             rafraichisFenetre();

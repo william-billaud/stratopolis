@@ -781,3 +781,64 @@ void rectangleVide(float xCoin1, float yCoin1, float xCoin2, float yCoin2, float
     ligne(xCoin2,yCoin2,xCoin2,yCoin1);
 
 }
+/*!
+ * \brief trace l'indice
+ * \param coupJoueur structure contenant les information concernant l'indice
+ * \param zoom taille du zoom
+ * \param x abcisse du zoom
+ * \param y ordonnée du zoom
+ */
+void afficheIndice(coup coupJoueur,int zoom,int x,int y)
+{
+
+    if (zoom < 1) {
+        zoom = 1;
+    }
+    if (zoom >= TAILLEMAX) {
+        zoom = TAILLEMAX - 1;
+    }
+    if (x + zoom >= TAILLEMAX) {
+        x = TAILLEMAX - 1 - zoom;
+    }
+    if (y + zoom >= TAILLEMAX) {
+        y = TAILLEMAX - 1 - zoom;
+    }
+    float largeur = largeurFenetre();
+    float hauteur = hauteurFenetre();
+    float ecart = (((largeur <= hauteur) * largeur
+                    + (largeur > hauteur) * hauteur) / 2.5f);
+    float taille_case = 2 * ecart / zoom;
+
+    float minX, minY, maxX, maxY;
+    if (coupJoueur.orientationPiece == BD) {
+        minX = largeur / 2 - ecart + (coupJoueur.xCoup - x) * taille_case;
+        minY = hauteur / 2 - ecart + (coupJoueur.yCoup - y-1) * taille_case;
+        maxX = largeur / 2 - ecart + (coupJoueur.xCoup - x +
+                                      2) * taille_case;
+        maxY =hauteur / 2 - ecart + (coupJoueur.yCoup -y +
+                                     1) * taille_case;
+    } else if (coupJoueur.orientationPiece == BG) {
+        minX = largeur / 2 - ecart + (coupJoueur.xCoup - x-1) * taille_case;
+        minY = hauteur / 2 - ecart + (coupJoueur.yCoup - y-1) * taille_case;
+        maxX = largeur / 2 - ecart + (coupJoueur.xCoup - x +
+                                      1) * taille_case;
+        maxY =hauteur / 2 - ecart + (coupJoueur.yCoup -y +
+                                     +1) * taille_case;
+    } else if (coupJoueur.orientationPiece == HG) {
+        minX = largeur / 2 - ecart + (coupJoueur.xCoup - x-1) * taille_case;
+        minY = hauteur / 2 - ecart + (coupJoueur.yCoup - y) * taille_case;
+        maxX = largeur / 2 - ecart + (coupJoueur.xCoup - x +
+                                      1) * taille_case;
+        maxY =hauteur / 2 - ecart + (coupJoueur.yCoup -y +
+                                     +2) * taille_case;
+    } else {
+        minX = largeur / 2 - ecart + (coupJoueur.xCoup - x) * taille_case;
+        minY = hauteur / 2 - ecart + (coupJoueur.yCoup - y) * taille_case;
+        maxX = largeur / 2 - ecart + (coupJoueur.xCoup - x +
+                                      2) * taille_case;
+        maxY =hauteur / 2 - ecart + (coupJoueur.yCoup -y +
+                                     +2) * taille_case;
+    }
+    affichePiece(coupJoueur.numeroPiece, coupJoueur.orientationPiece, (int) minX, (int) minY, (int) maxX, (int) maxY, false);
+
+}
