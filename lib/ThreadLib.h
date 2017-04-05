@@ -1,4 +1,12 @@
 /* Veuillez reporter tout commentaire a ghislain.oudinet@isen.fr */
+/*!
+   \file ThreadLib.h
+   \brief fichier utile pour le lancement de thread en parallele
+   \author Ghislain Oudinet
+   \date 26/04/07.
+
+   Sous Linux : linker avec -lpthread
+*/
 
 /*
  *  ThreadLib.h
