@@ -266,10 +266,10 @@ int getCasesFromCoup(coup coupJoueur, historiqueCase * tab[3])
 }
 
 /*!
- * \brief
+ * \brief calcul le minimum entre deux valeurs
  * \param a
  * \param b
- * \return
+ * \return minimum entre a et b
  */
 int min(int a, int b)
 {

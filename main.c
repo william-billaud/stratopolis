@@ -13,12 +13,6 @@
 /// hauteur par defaut d'une image correspondant a nos critères
 #define HauteurFenetre 600
 
-/*!
- * \brief
- * \param evenement
- */
-void gestionEvenement(EvenementGfx evenement);
-
 /**
  * \brief fonction main
  * \param argc nombre d'argument
@@ -33,8 +27,8 @@ int main(int argc, char **argv) {
 }
 
 /*!
- * \brief
- * \param evenement
+ * \brief Fonction de gestion des evenements graphiques, a definir par l'utilisateur
+ * \param evenement evement de la gfx à gérer
  */
 void gestionEvenement(EvenementGfx evenement) {
     static bool pleinEcran = true;    // Pour savoir si on est en mode plein ecran ou pas

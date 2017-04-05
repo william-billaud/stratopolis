@@ -12,13 +12,16 @@
 #include "moteur.h"
 #include <pthread.h>
 #include "lib/ThreadLib.h"
-
+/*!
+ * \brief structure utilisé pour la recherche d'un coup par l'ia sur un thread parallèle
+ */
 typedef struct infoIa{
-    int estFini;
-    int joueur;
-    int niveauDifficulte;
-    coup coupIA;
+    int estFini /*!< entier pour connaitre l'etat de la recherche, 0 : en cour; 1 : succès; 2 : echec*/;
+    int joueur /*!< joueur dont le coup doit etres trouve*/;
+    int niveauDifficulte/*!< niveau de difficulte ( nombre de recusion)*/;
+    coup coupIA /*!< coup d'ia retourne par la fonction  */;
 }infoIa;
+
 /*!
 \brief cherche un coup pour l'ia
 \param[in] joueur : joueur jouer par l'ia

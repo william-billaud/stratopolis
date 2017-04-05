@@ -14,7 +14,6 @@
 #include <stdio.h>
 #include <stdlib.h>		// Pour pouvoir utiliser void exit(int)
 #include <math.h>		// Pour pouvoir utiliser les librairies mathematiques
-#include "lib/ESLib.h"
 #include "lib/GfxLib.h"
 #include "lib/BmpLib.h"
 #include <time.h>
@@ -44,7 +43,7 @@ typedef enum {
 	HD /*!< pièce orientée avec un coté vers la haut, et l'autre vers la droite */ ,
 	BD /*!< pièce orientée avec un coté vers le bas, et l'autre vers la droite */ ,
 	BG /*!< pièce orientée avec un coté vers la gauche, et l'autre vers le bas */ ,
-	HG			/*!< pièce orientée avec un coté vers la gauche, et l'autre vers le haut */
+	HG /*!< pièce orientée avec un coté vers la gauche, et l'autre vers le haut */
 } orientation;
 
 /*!
@@ -140,17 +139,6 @@ int setCaseAZero(historiqueCase * c);
  */
 int getNumeroPiece(historiqueCase * c);
 
-/**
- * \brief verifie si une valeur est present dans un tableau 1D d'entier
- * \param array tableau dans lequel il faut chercher la valeur
- * \param h taille du tableau
- * \param valeur valeur a chercher
- * \return false si la valeur est absent
- * \return true si la valeur est presente
- * \warning si le tableau n'a pas été initialisé entièrement, la valeur peut etres présente dans la partie non initialisée
- * \warning si h est trop grand, il y a un risque de core dumped
- */
-bool inArrayIny(int *array, unsigned int h, int valeur);
 
 /*!
  * \brief retourne la couleur d'une pièce
