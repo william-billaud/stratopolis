@@ -46,15 +46,24 @@ void afficheMenu()
 	   290, image5->largeurImage, image5->hauteurImage,
 	   image5->donneesRGB);
 	   } */
-
-	couleurCourante(255, 0, 0);
-
+    int abs=abscisseSouris();
+    int ord = ordonneeSouris();
+    estDansRectangle(abs, ord, (int) (centreX - tailleBoutonX), (int) (centreY + 2 * tailleBoutonY),
+                     (int) (centreX + tailleBoutonX), (int) (centreY + 4 * tailleBoutonY)) ? couleurCourante(231, 62, 1) : couleurCourante(255, 0, 0);
 	rectangle(centreX - tailleBoutonX, centreY + 2 * tailleBoutonY,
 		  centreX + tailleBoutonX, centreY + 4 * tailleBoutonY);
+    estDansRectangle(abs, ord, (int) (centreX - tailleBoutonX), (int) (centreY - tailleBoutonY),
+                     (int) (centreX + tailleBoutonX), (int) (centreY + tailleBoutonY)) ? couleurCourante(231, 62, 1) : couleurCourante(255, 0, 0);
 	rectangle(centreX - tailleBoutonX, centreY - tailleBoutonY,
 		  centreX + tailleBoutonX, centreY + tailleBoutonY);
+
+    estDansRectangle(abs, ord, (int) (centreX - tailleBoutonX), (int) (centreY - 2 * tailleBoutonY),
+                     (int) (centreX + tailleBoutonX), (int) (centreY - 4 * tailleBoutonY)) ? couleurCourante(231, 62, 1) : couleurCourante(255, 0, 0);
 	rectangle(centreX - tailleBoutonX, centreY - 2 * tailleBoutonY,
 		  centreX + tailleBoutonX, centreY - 4 * tailleBoutonY);
+
+    estDansRectangle(abs, ord, (int) (centreX - tailleBoutonX), (int) (centreY - 5 * tailleBoutonY),
+                     (int) (centreX + tailleBoutonX), (int) (centreY - 7 * tailleBoutonY)) ? couleurCourante(231, 62, 1) : couleurCourante(255, 0, 0);
 	rectangle(centreX - tailleBoutonX, centreY - 5 * tailleBoutonY,
 		  centreX + tailleBoutonX, centreY - 7 * tailleBoutonY);
 
