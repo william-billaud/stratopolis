@@ -54,6 +54,7 @@ void gestionEvenement(EvenementGfx evenement) {
     static char nomJ2[15] = "Theo";
     //permet de savoir si une pièce est selectionné
     static bool pieceSelectionne = false;
+    int zoneDetecte;
     switch (evenement) {
         case Initialisation:
             modePleinEcran();
@@ -95,225 +96,233 @@ void gestionEvenement(EvenementGfx evenement) {
                     break;
 
 
-
             }
             break;
-                case Clavier:
-                    switch (caractereClavier()) {
-                        case 'Q':
-                        case 'q':
-                            termineBoucleEvenements();
-                            exit(0);
-                        case 'F':
-                        case 'f':
-                            pleinEcran = !pleinEcran;    // Changement de mode plein ecran
-                            if (pleinEcran)
-                                modePleinEcran();
-                            else
-                                redimensionneFenetre(LargeurFenetre,
-                                                     HauteurFenetre);
-                            rafraichisFenetre();
+        case Clavier:
+            switch (caractereClavier()) {
+                case 'Q':
+                case 'q':
+                    termineBoucleEvenements();
+                    exit(0);
+                case 'F':
+                case 'f':
+                    pleinEcran = !pleinEcran;    // Changement de mode plein ecran
+                    if (pleinEcran)
+                        modePleinEcran();
+                    else
+                        redimensionneFenetre(LargeurFenetre,
+                                             HauteurFenetre);
+                    rafraichisFenetre();
+                    break;
+
+                case 'R':
+                case 'r':
+                    // On force un rafraichissement
+                    rafraichisFenetre();
+                    break;
+
+                case 'Z':
+                case 'z':
+                    switch (mode) {
+                        case menu:
+                            break;
+                        case classique:
+                        case IA:
+                        case tmpIA:
+                            trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
+                            break;
+                        case victoire:
+                            break;
+                    }
+                    rafraichisFenetre();
+                    break;
+                default:
+                    break;
+            }
+            break;
+
+        case ClavierSpecial:
+            switch (mode) {
+                case IA:
+                case tmpIA:
+                case classique:
+                    switch (toucheClavier()) {
+                        case ToucheFlecheDroite:
+                        case ToucheFlecheBas:
+                            orientationPiece = (orientationPiece + 1) % 4;
                             break;
 
-                        case 'R':
-                        case 'r':
-                            // On force un rafraichissement
-                            rafraichisFenetre();
-                            break;
-
-                        case 'Z':
-                        case 'z':
-                            switch (mode) {
-                                case menu:
-                                    break;
-                                case classique:
-                                case IA:
-                                case tmpIA:
-                                    trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
-                                    break;
-                                case victoire:
-                                    break;
+                        case ToucheFlecheGauche:
+                        case ToucheFlecheHaut:
+                            if (orientationPiece == HD) {
+                                orientationPiece = HG;
+                            } else {
+                                //(x+3)%4 =(x-1)%4 mais evite le problème des negatifs
+                                orientationPiece = (orientationPiece + 3) % 4;
                             }
-                            rafraichisFenetre();
                             break;
+
                         default:
                             break;
                     }
                     break;
-
-                case ClavierSpecial:
-                    switch (mode) {
-                        case IA:
-                        case tmpIA:
-                        case classique:
-                            switch (toucheClavier()) {
-                                case ToucheFlecheDroite:
-                                case ToucheFlecheBas:
-                                    orientationPiece = (orientationPiece + 1) % 4;
-                                    break;
-
-                                case ToucheFlecheGauche:
-                                case ToucheFlecheHaut:
-                                    if (orientationPiece == HD) {
-                                        orientationPiece = HG;
-                                    } else {
-                                        //(x+3)%4 =(x-1)%4 mais evite le problème des negatifs
-                                        orientationPiece = (orientationPiece + 3) % 4;
-                                    }
-                                    break;
-
-                                default:
-                                    break;
-                            }
-                            break;
-                        case menu:
-                            break;
-                        case victoire:
-                            break;
-                    }
-                    rafraichisFenetre();
+                case menu:
                     break;
-
-                case BoutonSouris:
-                    switch (mode) {
-                        case classique:
-                        case IA:
-                            switch (etatBoutonSouris()) {
-                                case GaucheAppuye:
-                                    if (mode == classique || (mode == IA && joueurActuelle == 0)) {
-                                        if (pieceSelectionne && detecteCase(&x, &y, zoom_d, x_d, y_d) == 0) {
-                                            coupJoueur.orientationPiece = orientationPiece;
-                                            coupJoueur.yCoup = (unsigned int) y;
-                                            coupJoueur.xCoup = (unsigned int) x;
-                                            coupJoueur.numeroPiece = (unsigned char)
-                                                    ordreJoueurs[joueurActuelle][ordreJoueurs
-                                                    [joueurActuelle][20]];
-                                            orientationPiece = HD;
-                                            if (joueCoup(coupJoueur) == 1) {
-                                                ordreJoueurs[joueurActuelle][20] += 1;
-                                                joueurActuelle = (joueurActuelle + 1) % 2;
-                                                if (ordreJoueurs[1][20] == 20
-                                                    && ordreJoueurs[0][20] == 20) {
-                                                    joueurActuelle = calculScore(0) > calculScore(1) ? 0 : 1;
-                                                    mode = victoire;
-                                                }
-                                            }
-                                            pieceSelectionne = false;
-                                        } else if (detecteCase(&x, &y, zoom_d, x_d, y_d) == joueurActuelle + 1) {
-                                            pieceSelectionne = !pieceSelectionne;
-                                        }
-                                    }
-                                    break;
-                                case ScrollUp:
-                                    if (toucheCtrlAppuyee()) {
-                                        changeZoom(&x_d, &y_d, &zoom_d, true);
-                                    } else if (pieceSelectionne) {
-                                        orientationPiece = (orientationPiece + 1) % 4;
-                                    }
-                                    break;
-                                case ScrollDown:
-                                    if (toucheCtrlAppuyee()) {
-                                        changeZoom(&x_d, &y_d, &zoom_d, false);
-                                    } else if (pieceSelectionne) {
-                                        orientationPiece = (orientationPiece - 1) % 4;
-                                    }
-
-                                    break;
-                                case TmpScroll:
-                                    break;
-                                case GaucheRelache:
-                                    break;
-                                case DroiteAppuye:
-                                    break;
-                                case DroiteRelache:
-                                    break;
-                            }
-                            break;
-                        case victoire:
-                            switch (etatBoutonSouris()) {
-
-                                case GaucheAppuye:
-                                case DroiteAppuye:
-                                    mode = menu;
-                                    break;
-                                case GaucheRelache:
-                                    break;
-                                case DroiteRelache:
-                                    break;
-                                case ScrollUp:
-                                    break;
-                                case ScrollDown:
-                                    break;
-                                case TmpScroll:
-                                    break;
-                            }
-                            break;
-                        case menu:
-                            switch (detecteMenuPrincipal())
-                            {
-                                case 1:
-                                    initPartie(&joueurActuelle);
-                                    trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
-                                    mode=IA;
-                                    break;
-                                case 2:
-                                    //option
-                                    break;
-                                case 3:
-                                    //aide
-                                    break;
-                                case 4:
-                                    termineBoucleEvenements();
-                                    exit(0);
-                                default:break;
-                            }
-
-                            break;
-                        case tmpIA:
-                            break;
-                    }
-
-                    rafraichisFenetre();
-                    break;
-                case Souris:
-                    switch (mode)
-                    {
-
-                        case menu:
-                        case classique:
-                        case IA:
-                        case victoire:
-                            rafraichisFenetre();
-                            break;
-                        case tmpIA:break;
-                    }
-                    break;
-                case Inactivite:
-                    break;
-                case Temporisation:
-                    if (mode == tmpIA) {
-                        if (infoThread.estFini != 0) {
-                            if (infoThread.estFini == 1) {
-                                if (joueCoup(infoThread.coupIA) == 1) {
-                                    ordreJoueurs[joueurActuelle][20] += 1;
-                                    joueurActuelle = (joueurActuelle + 1) % 2;
-                                }
-                            } else {
-                                mode = menu;
-                            }
-                            trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
-                            mode = IA;
-                            if (ordreJoueurs[1][20] == 20
-                                && ordreJoueurs[0][20] == 20) {
-                                joueurActuelle = calculScore(0) > calculScore(1) ? 0 : 1;
-                                mode = victoire;
-                            }
-                        }
-                    }
-                    rafraichisFenetre();
-                    break;
-                case Redimensionnement:
-                    rafraichisFenetre();
+                case victoire:
                     break;
             }
+            rafraichisFenetre();
+            break;
+
+        case BoutonSouris:
+            switch (mode) {
+                case classique:
+                case IA:
+                case tmpIA:
+                    switch (etatBoutonSouris()) {
+                        case GaucheAppuye:
+                            zoneDetecte = detecteCase(&x, &y, zoom_d, x_d, y_d);
+                            if (mode == classique || (mode == IA && joueurActuelle == 0)) {
+                                if (pieceSelectionne && zoneDetecte == 0) {
+                                    coupJoueur.orientationPiece = orientationPiece;
+                                    coupJoueur.yCoup = (unsigned int) y;
+                                    coupJoueur.xCoup = (unsigned int) x;
+                                    coupJoueur.numeroPiece = (unsigned char)
+                                            ordreJoueurs[joueurActuelle][ordreJoueurs
+                                            [joueurActuelle][20]];
+                                    orientationPiece = HD;
+                                    if (joueCoup(coupJoueur) == 1) {
+                                        ordreJoueurs[joueurActuelle][20] += 1;
+                                        joueurActuelle = (joueurActuelle + 1) % 2;
+                                        if (ordreJoueurs[1][20] == 20
+                                            && ordreJoueurs[0][20] == 20) {
+                                            joueurActuelle = calculScore(0) > calculScore(1) ? 0 : 1;
+                                            mode = victoire;
+                                        }
+                                    }
+                                    pieceSelectionne = false;
+                                } else if (zoneDetecte == joueurActuelle + 1) {
+                                    pieceSelectionne = !pieceSelectionne;
+                                }
+                            }
+                            if(zoneDetecte==3)
+                            {
+
+                            } else if (zoneDetecte==4)
+                            {
+
+                            } else if(zoneDetecte==5)
+                            {
+                                mode=menu;
+                            }
+                            break;
+                        case ScrollUp:
+                            if (toucheCtrlAppuyee()) {
+                                changeZoom(&x_d, &y_d, &zoom_d, true);
+                            } else if (pieceSelectionne) {
+                                orientationPiece = (orientationPiece + 1) % 4;
+                            }
+                            break;
+                        case ScrollDown:
+                            if (toucheCtrlAppuyee()) {
+                                changeZoom(&x_d, &y_d, &zoom_d, false);
+                            } else if (pieceSelectionne) {
+                                orientationPiece = (orientationPiece - 1) % 4;
+                            }
+
+                            break;
+                        case TmpScroll:
+                            break;
+                        case GaucheRelache:
+                            break;
+                        case DroiteAppuye:
+                            break;
+                        case DroiteRelache:
+                            break;
+                    }
+                    break;
+                case victoire:
+                    switch (etatBoutonSouris()) {
+
+                        case GaucheAppuye:
+                        case DroiteAppuye:
+                            mode = menu;
+                            break;
+                        case GaucheRelache:
+                            break;
+                        case DroiteRelache:
+                            break;
+                        case ScrollUp:
+                            break;
+                        case ScrollDown:
+                            break;
+                        case TmpScroll:
+                            break;
+                    }
+                    break;
+                case menu:
+                    switch (detecteMenuPrincipal()) {
+                        case 1:
+                            initPartie(&joueurActuelle);
+                            trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
+                            mode = IA;
+                            break;
+                        case 2:
+                            //option
+                            break;
+                        case 3:
+                            //aide
+                            break;
+                        case 4:
+                            termineBoucleEvenements();
+                            exit(0);
+                        default:
+                            break;
+                    }
+                    break;
+            }
+
+            rafraichisFenetre();
+            break;
+        case Souris:
+            switch (mode) {
+
+                case menu:
+                case classique:
+                case IA:
+                case victoire:
+                    rafraichisFenetre();
+                    break;
+                case tmpIA:
+                    break;
+            }
+            break;
+        case Inactivite:
+            break;
+        case Temporisation:
+            if (mode == tmpIA) {
+                if (infoThread.estFini != 0) {
+                    if (infoThread.estFini == 1) {
+                        if (joueCoup(infoThread.coupIA) == 1) {
+                            ordreJoueurs[joueurActuelle][20] += 1;
+                            joueurActuelle = (joueurActuelle + 1) % 2;
+                        }
+                    } else {
+                        mode = menu;
+                    }
+                    trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
+                    mode = IA;
+                    if (ordreJoueurs[1][20] == 20
+                        && ordreJoueurs[0][20] == 20) {
+                        joueurActuelle = calculScore(0) > calculScore(1) ? 0 : 1;
+                        mode = victoire;
+                    }
+                }
+            }
+            rafraichisFenetre();
+            break;
+        case Redimensionnement:
+            rafraichisFenetre();
+            break;
     }
+}

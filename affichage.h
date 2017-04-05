@@ -18,11 +18,11 @@
 void afficheMenu(void);
 
 /*!
-   \brief Affiche les règles du jeu et le mode d’emploi du programme, et la sélection
-   \param[in] posX : position en abscisse du curseur de la souris
-	 \param[in] posY : position en ordonnée du curseur de la souris
-   \return 0 si le curseur ne survole aucun bouton
-   \return 1 si le curseur survole le bouton Retour
+    \brief Affiche les règles du jeu et le mode d’emploi du programme, et la sélection
+    \param[in] posX : position en abscisse du curseur de la souris
+    \param[in] posY : position en ordonnée du curseur de la souris
+    \return 0 si le curseur ne survole aucun bouton
+    \return 1 si le curseur survole le bouton Retour
 */
 int afficheAide(int posX, int posY);
 
@@ -141,23 +141,18 @@ void afficheScore(int scoreJ1, int scoreJ2);
 */
 void pause(void);
 
-/*!
-  \brief Fonction de trace de cercle
-  \param[in] centreX : coordonnée en abscisse du centre du cercle
-  \param[in] centreY : coordonnée en ordonnée du centre du cercle
-  \param[in] rayon : rayon du cercle
-  \return rien
-*/
-void cercle(float centreX, float centreY, float rayon);
-
 /**
- * \brief donne les coordonée dans le plateau des coordonnée de la soursi
- * \param [out]x abscisse de la casse ou la souris est
- * \param [out]y ordonnée de la casse ou la souris est
- * \param [in] zoom zoom de la grille
- * \return 1 si l'utilisateur a clique dans la grille
- * \return 0 si l'utilisateur à clique en dehors de la grille
- */
+* \brief donne les coordonée dans le plateau des coordonnée de la soursi
+* \param [out]x abscisse de la casse ou la souris est
+* \param [out]y ordonnée de la casse ou la souris est
+* \param [in] zoom zoom de la grille
+* \return 0 si l'utilisateur a clique dans la grille
+* \return 1 si l'utilisateur à clique dans la zone de selection du joueur 1
+* \return 2 si l'utilisateur à clique dans la zone de selection du joueur 3
+* \return 3 si l'utilisateur clic dans la zone du bouton Pause
+* \return 4 si l'utilisateur clic dans la zone du bouton Aide
+* \return 5 si l'utilisateur clic dans la zone du bouton Quitter
+*/
 int detecteCase(int *x, int *y, int zoom, unsigned int basX, unsigned int basY);
 
 /*!
@@ -168,10 +163,18 @@ int detecteCase(int *x, int *y, int zoom, unsigned int basX, unsigned int basY);
  */
 void determineCouleur(couleur couleurCase, bool estGrisee);
 
+/*!
+ * \brief chnage le zoom de la grille
+ * \param x_z[out] nouveau x minimum du zoom
+ * \param y_z [out] nouveau y minimum du zoom
+ * \param zoom [out] nouveau zoom
+ * \param up true si c'est un zoom, false si c'est un dezoom
+ */
 void changeZoom(unsigned int *x_z, unsigned int *y_z, unsigned int *zoom,
 		bool up);
 /*!
- * \brief fonction affichant la durée de la partie (base sur la variable globale timeStart
+ * \brief affiche la durée de la partie depuis le debut de la partie
+ * \param taille des interfaces à afficher
  */
 void afficheDuree(int taille);
 
@@ -196,4 +199,19 @@ bool estDansRectangle(int xClic,int yClic,int xMin,int yMin,int largeur,int haut
  * \return 4 : leave;
  */
 int detecteMenuPrincipal(void);
+
+/*!
+ * \brief affiche le menu en jeu
+ */
+void afficheMenuEnjeu(void);
+
+/*!
+ * \brief trace un rectangle vide
+ * \param xCoin1 abscisse du premier coin
+ * \param yCoin1 ordonnée du premier coin
+ * \param xCoin2 abscisse du second coin
+ * \param yCoin2 ordonnée du second coin
+ * \param taille epaisseur du trait
+ */
+void rectangleVide(float xCoin1, float yCoin1, float xCoin2, float yCoin2, float taille);
 #endif
