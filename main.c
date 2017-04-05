@@ -54,7 +54,7 @@ void gestionEvenement(EvenementGfx evenement) {
     //variable utilisé pour stocker le joueur actuelle
     static int joueurActuelle;
     //variable utilisé pour stocker le niveau de difficulté
-    static int niveauDifficulte = 1;
+    static int niveauDifficulte = 3;
     //nom des joueurs
     static char nomJ1[15] = "William";
     static char nomJ2[15] = "Theo";
@@ -258,7 +258,7 @@ void gestionEvenement(EvenementGfx evenement) {
                             switch (detecteMenuPrincipal())
                             {
                                 case 1:
-                                    mode=classique;
+                                    mode=IA;
                                     break;
                                 case 2:
                                     //option
