@@ -9,6 +9,13 @@
 #include "affichage.h"
 #include "ia.h"
 
+/*!
+ * \brief Fonction de gestion des evenements graphiques, a definir par l'utilisateur
+ * \param evenement evement de la gfx à gérer
+ */
+void gestionEvenement(EvenementGfx evenement);
+
+/// largeur par defaut d'une image correspondant a nos critères
 #define LargeurFenetre 800
 /// hauteur par defaut d'une image correspondant a nos critères
 #define HauteurFenetre 600

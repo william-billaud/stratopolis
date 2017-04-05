@@ -26,7 +26,6 @@ typedef struct infoIa{
 \brief cherche un coup pour l'ia
 \param[in] joueur : joueur jouer par l'ia
 \param[in] niveauDifficulte : niveau de difficulté de l'ia
-\param[in] nbPieceJoue : nombre de pièces deja
 \return un coup proposé par l'ia
 */
 coup coupIA(int joueur, int niveauDifficulte);
@@ -43,6 +42,7 @@ coup coupIA(int joueur, int niveauDifficulte);
  * \param tourActuelle numero du tour actuelle (= nombre de pièces posées depuis le début de la partie
  * \return score de la situation
  */
+
 int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
            int ProfondeurMaximum, int alpha, int beta, int tourActuelle);
 

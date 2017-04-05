@@ -318,7 +318,7 @@ void afficheBorduresDeCase(int numC, int numH, int numD, int numB, int numG,
  * \param [in] centreX1 : coordonnee en abscisse du centre de la première case
  * \param [in] centreY1 : coordonnee en ordonnee du centre de la première case
  * \param [in] centreX2 : coordonnee en abscisse du centre de la deuxième case
- * \param [in] centreX2 : coordonnee en ordonnee du centre de la deuxième case
+ * \param [in] centreY2 : coordonnee en ordonnee du centre de la deuxième case
   */
 void afficheBordureEntreCases(int numero1, int numero2, float centreX1,
                               float centreY1, float centreX2, float centreY2) {
@@ -356,6 +356,7 @@ void afficheBordureEntreCases(int numero1, int numero2, float centreX1,
     \brief Affiche l’interface de jeu
     \param[in] nomJ1 : nom du premier joueur
     \param[in] nomJ2 : nom du deuxième joueur
+    \param[in] joueurActuelle : joueur dont c'est le tour
     \return rien
 */
 void afficheInterface(char nomJ1[15], char nomJ2[15], int joueurActuelle) {
@@ -443,6 +444,7 @@ void afficheInterface(char nomJ1[15], char nomJ2[15], int joueurActuelle) {
 /*!
    \brief Appelle les fonction dessinePredictif() et estValideCoup()
    \param[in] coupJoueur : coup à afficher
+   \param[in] zoom de la grille
    \return rien
 */
 void affichePredictif(coup coupJoueur, int zoom) {
@@ -453,6 +455,7 @@ void affichePredictif(coup coupJoueur, int zoom) {
     \brief Affiche le prédictif de placement de la pièce
     \param[in] coupJoueur : coup à afficher
     \param[in] estValide : validité du coup à afficher
+    \param[in] zoom zoom de la grille
     \return
 */
 void dessinePredictif(coup coupJoueur, bool estValide, int zoom) {
@@ -490,9 +493,11 @@ void dessinePredictif(coup coupJoueur, bool estValide, int zoom) {
 
 /**
  * \brief donne les coordonée dans le plateau des coordonnée de la soursi
- * \param [out]x abscisse de la casse ou la souris est
- * \param [out]y ordonnée de la casse ou la souris est
- * \param [in] zoom zoom de la grille
+ * \param[out] x abscisse de la casse ou la souris est
+ * \param[out] y ordonnée de la casse ou la souris est
+ * \param[in] zoom zoom de la grille
+ * \param[in] basX plus petite abscisse affichée
+ * \param[in] basY plus petite ordonnée affichée
  * \return 0 si l'utilisateur a clique dans la grille
  * \return 1 si l'utilisateur à clique dans la zone de selection du joueur 1
  * \return 2 si l'utilisateur à clique dans la zone de selection du joueur 3
@@ -574,9 +579,9 @@ int detecteCase(int *x, int *y, int zoom, unsigned int basX, unsigned int basY) 
 
 /*!
  * \brief chnage le zoom de la grille
- * \param x_z[out] nouveau x minimum du zoom
- * \param y_z [out] nouveau y minimum du zoom
- * \param zoom [out] nouveau zoom
+ * \param [out] x_z nouveau x minimum du zoom
+ * \param [out] y_z nouveau y minimum du zoom
+ * \param [out] zoom nouveau zoom
  * \param up true si c'est un zoom, false si c'est un dezoom
  */
 void changeZoom(unsigned int *x_z, unsigned int *y_z, unsigned int *zoom,
@@ -631,14 +636,15 @@ void afficheDuree(int taille) {
     afficheChaine(chaine, taille / 10, 2 * largeurFenetre() / 3,
                   hauteurFenetre() - taille / 4);
 }
+
 /*!
  * \brief fonction permettant de savoir si le clic est dans un rectangle
  * \param xClic abscisse du clic
  * \param yClic ordonnée du clic
  * \param xMin abscisse minimum du rectangle
- * \param yMin abscisse maximum du rectangle
- * \param largeur largeur du rectangle
- * \param hauteur hauteur du rectangle
+ * \param yMin ordonnée minimum du rectangle
+ * \param xMax abscisse maximum du rectangle
+ * \param yMax ordonnee maximum du rectangle
  * \return true si le clic est dans le rectangle
  * \return false si le clic n'est pas dans le rectangle
  */

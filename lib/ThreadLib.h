@@ -23,45 +23,95 @@
 
 #include <stdbool.h>
 
-// Cree et lance un nouveau thread en lancant fonction sur data
-// Renvoie faux si la creation du thread a echoue
+
+/*!
+ * \brief Cree et lance un nouveau thread en lancant fonction sur data
+ * \param fonction fonction à lancer
+ * \param data paramètre de la fonction
+ * \return false si la création du thread echour, true sinon
+ */
 bool detacheThread_sur(void*(*fonction)(void *data), void *data);
 
 
-
-typedef void *ptrVerrou; // Le type de verrou que nous allons utiliser
-// Cree un verrou
+/*!
+ * \brief Le type de verrou que nous allons utiliser
+ */
+typedef void *ptrVerrou;
+/*!
+ * \brief Cree un verrou
+ * \return pointeurVers le verrou crée
+ */
 ptrVerrou creeVerrou(void);
-// Ferme le verrou (s'approprie le verrou)
-// Renvoie faux si la demande n'a pas ete satisfaite
+
+/*!
+ * \brief Ferme le verrou (s'approprie le verrou)
+ * \param pVerrou
+ * \return false si la demande n'a pas ete satisfaite
+ */
 bool fermeVerrou(ptrVerrou pVerrou);
-// Ouvre le verrou (libere le verrou)
-// Renvoie faux si l'ouverture n'a pu se faire
+
+/*!
+ * \brief Ouvre le verrou (libere le verrou
+ * \param pVerrou
+ * \return false si l'ouverture n'a pu se fair
+ */
 bool ouvreVerrou(ptrVerrou pVerrou);
-// Detruit le verrou
+/*!
+ * \brief Detruit le verrou
+ * \param pVerrou
+ */
 void detruitVerrou(ptrVerrou pVerrou);
 
 #ifndef _WIN32
 // La bibliotheque propose les verrous conditionnels,  sous systeme de type POSIX pour gerer le parallelisme
-typedef struct VerrouConditionnel *ptrVerrouConditionnel; // Le type de verrou conditionnel que nous allons utiliser
-// Cree un verrou conditionnel
+/*!
+ * \brief Le type de verrou conditionnel que nous allons utiliser
+ */
+typedef struct VerrouConditionnel *ptrVerrouConditionnel;
+/*!
+ * \brief Cree un verrou conditionnel
+ * \return pointeur vers le verrou conditionnel
+ */
 ptrVerrouConditionnel creeVerrouConditionnel(void);
-// Ferme le verrou conditionnel (s'approprie le verrou)
-// Renvoie faux si la demande n'a pas ete satisfaite
+
+/*!
+ * \brief Ferme le verrou conditionnel (s'approprie le verrou)
+ * \param pVerrouConditionnel
+ * \return false si la demande n'a pas ete satisfaite
+ */
 bool fermeVerrouConditionnel(ptrVerrouConditionnel pVerrouConditionnel);
-// Attente sur le verrou conditionnel
-// Renvoie faux si la demande n'a pas ete satisfaite
+
+/*!
+ * \brief Attente sur le verrou conditionnel
+ * \param pVerrouConditionnel
+ * \return false si la demande n'a pas ete satisfaite
+ */
 bool attendVerrouConditionnel(ptrVerrouConditionnel pVerrouConditionnel);
-// Envoie un signal sur le verrou conditionnel
-// Renvoie faux si la demande n'a pas ete satisfaite
+
+/*!
+ * \brief Envoie un signal sur le verrou conditionnel
+ * \param pVerrouConditionnel
+ * \return false si la demande n'a pas ete satisfaite
+ */
 bool signalSurVerrouConditionnel(ptrVerrouConditionnel pVerrouConditionnel);
-// Envoie un signal a tous les threads en attente sur le verrou conditionnel
-// Renvoie faux si la demande n'a pas ete satisfaite
+
+/*!
+ * \brief Envoie un signal a tous les threads en attente sur le verrou conditionnel
+ * \param pVerrouConditionnel
+ * \return false si la demande n'a pas ete satisfait
+ */
 bool signalUniverselSurVerrouConditionnel(ptrVerrouConditionnel pVerrouConditionnel);
-// Ouvre le verrou conditionnel (libere le verrou)
-// Renvoie faux si l'ouverture n'a pu se faire
+
+/*!
+ * \brief Ouvre le verrou conditionnel (libere le verrou)
+ * \param pVerrouConditionnel
+ * \return false si l'ouverture n'a pu se faire
+ */
 bool ouvreVerrouConditionnel(ptrVerrouConditionnel pVerrouConditionnel);
-// Detruit le verrou conditionnel
+/*!
+ * \brief Detruit le verrou conditionnel
+ * \param pVerrouConditionnel
+ */
 void detruitVerrouConditionnel(ptrVerrouConditionnel pVerrouConditionnel);
 #endif
 
