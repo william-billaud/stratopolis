@@ -54,7 +54,7 @@ void gestionEvenement(EvenementGfx evenement) {
     //variable utilisé pour stocker le joueur actuelle
     static int joueurActuelle;
     //variable utilisé pour stocker le niveau de difficulté
-    static int niveauDifficulte = 3;
+    static int niveauDifficulte = 20;
     //nom des joueurs
     static char nomJ1[15] = "William";
     static char nomJ2[15] = "Theo";
@@ -63,11 +63,9 @@ void gestionEvenement(EvenementGfx evenement) {
     switch (evenement) {
         case Initialisation:
             modePleinEcran();
-            initPartie(&joueurActuelle);
-            trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
             mode = menu;
             activeGestionDeplacementPassifSouris();
-            demandeTemporisation(1000);
+            demandeTemporisation(30);
             break;
         case Affichage:
             effaceFenetre(255, 255, 255);
@@ -105,6 +103,7 @@ void gestionEvenement(EvenementGfx evenement) {
 
 
             }
+            break;
                 case Clavier:
                     switch (caractereClavier()) {
                         case 'Q':
@@ -119,6 +118,7 @@ void gestionEvenement(EvenementGfx evenement) {
                             else
                                 redimensionneFenetre(LargeurFenetre,
                                                      HauteurFenetre);
+                            rafraichisFenetre();
                             break;
 
                         case 'R':
@@ -258,6 +258,8 @@ void gestionEvenement(EvenementGfx evenement) {
                             switch (detecteMenuPrincipal())
                             {
                                 case 1:
+                                    initPartie(&joueurActuelle);
+                                    trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
                                     mode=IA;
                                     break;
                                 case 2:
@@ -280,10 +282,19 @@ void gestionEvenement(EvenementGfx evenement) {
                     rafraichisFenetre();
                     break;
                 case Souris:
-                    rafraichisFenetre();
+                    switch (mode)
+                    {
+
+                        case menu:
+                        case classique:
+                        case IA:
+                        case victoire:
+                            rafraichisFenetre();
+                            break;
+                        case tmpIA:break;
+                    }
                     break;
                 case Inactivite:
-                    rafraichisFenetre();
                     break;
                 case Temporisation:
                     if (mode == tmpIA) {
@@ -292,17 +303,17 @@ void gestionEvenement(EvenementGfx evenement) {
                                 if (joueCoup(infoThread.coupIA) == 1) {
                                     ordreJoueurs[joueurActuelle][20] += 1;
                                     joueurActuelle = (joueurActuelle + 1) % 2;
-                                    if (ordreJoueurs[1][20] == 20
-                                        && ordreJoueurs[0][20] == 20) {
-                                        joueurActuelle = calculScore(0) > calculScore(1) ? 0 : 1;
-                                        mode = victoire;
-                                    }
                                 }
                             } else {
                                 mode = menu;
                             }
                             trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
                             mode = IA;
+                            if (ordreJoueurs[1][20] == 20
+                                && ordreJoueurs[0][20] == 20) {
+                                joueurActuelle = calculScore(0) > calculScore(1) ? 0 : 1;
+                                mode = victoire;
+                            }
                         }
                     }
                     rafraichisFenetre();

@@ -544,7 +544,6 @@ int detecteCase(int *x, int *y, int zoom, unsigned int basX, unsigned int basY) 
     if(estDansRectangle(abs,ord,largeurFenetre() - x_min, y_min, largeurFenetre() - x_max,
                         y_max))
     {
-        puts("here");
         return 2;
     }
     *x = -1;

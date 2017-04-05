@@ -328,6 +328,7 @@ int calculScore(int joueur)
 							     (getCase(i, j)));
 					match = 1;
 				} else {
+					printf("I : %d J :%d \n",i,j);
 					puts("erreur dans la calcul du score A");
 				}
 
