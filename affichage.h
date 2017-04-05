@@ -214,4 +214,13 @@ void afficheMenuEnjeu(void);
  * \param taille epaisseur du trait
  */
 void rectangleVide(float xCoin1, float yCoin1, float xCoin2, float yCoin2, float taille);
+
+/*!
+ * \brief trace l'indice
+ * \param coupJoueur structure contenant les information concernant l'indice
+ * \param zoom taille du zoom
+ * \param x abcisse du zoom
+ * \param y ordonnée du zoom
+ */
+void afficheIndice(coup coupJoueur,int zoom,int x,int y);
 #endif
