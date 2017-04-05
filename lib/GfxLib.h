@@ -1,3 +1,13 @@
+/*!
+   \file GfxLib.h
+   \brief fichier contenant les prototypes des fonctions utiles pour la bibliotheque graphique gfxlib
+   \author ghislain.oudinet@yncrea.fr
+   \date 16/09/2016
+
+   Partie publique elaboree
+   Cette partie est relative a toutes les informations utiles pour
+   personnaliser et mieux controler l'environnement graphique de base
+*/
 // Veuillez reporter tout commentaire a ghislain.oudinet@yncrea.fr
 
 
@@ -104,60 +114,123 @@ typedef struct
 	} Texture2D;
 
 
-// Pour initialiser la partie graphie de la bibliotheque
+/*!
+ * \brief Pour initialiser la partie graphie de la bibliotheque
+ * \param argc nombre d'arguments de argv
+ * \param argv tableau d'arguments
+ */
 void initialiseGfx(int argc, char **argv);
 
-/* Prepare une fenetre en specifiant son nom, sa largeur et sa hauteur.
+/*!
+ * \brief prepare une fenetre
+ * \param nom nom de la fenetre
+ * \param largeur largeur de la fenetre
+ * \param hauteur hauteur de la fenetre
+ *
+ * Prepare une fenetre en specifiant son nom, sa largeur et sa hauteur.
    La fenetre presente un repere orthonorme classique (premier quadrant),
-   de largeur pixels sur hauteur pixels */
+   de largeur pixels sur hauteur pixels
+ */
 void prepareFenetreGraphique(const char *nom, int largeur, int hauteur);
-/* Lance la boucle de gestion des evenements */
+
+
+/*!
+ * \brief Lance la boucle de gestion des evenements
+ */
 void lanceBoucleEvenements(void);
-/* Termine le programme proprement */
+/*!
+ * \brief Termine le programme proprement
+ */
 void termineBoucleEvenements(void);
 
 
-/* Fonction de gestion des evenements graphiques, a definir par l'utilisateur */
+/*!
+ * \brief Fonction de gestion des evenements graphiques, a definir par l'utilisateur
+ * \param evenement evement de la gfx à gérer
+ */
 extern void gestionEvenement(EvenementGfx evenement);
 
 
 
-/* Demande la mise a jour du contenu graphique de la fenetre, en lancant un message d'affichage */
+/*!
+ * \brief Demande la mise a jour du contenu graphique de la fenetre, en lancant un message d'affichage
+ */
 void rafraichisFenetre(void);
 
-/* Efface la fenetre avec la couleur donnee
-	Les composantes rouge, vert et bleu s'etendent de 0 a 255 inclus */
+/*!
+ * \brief Efface la fenetre avec la couleur donnee
+ * \param rouge composante rouge (entre  0 et 255)
+ * \param vert composante vert (entre  0 et 255)
+ * \param bleu composante bleu (entre  0 et 255)
+ */
 void effaceFenetre(int rouge, int vert, int bleu);
 
-/* Selectionne la couleur courante de dessin
-	Les composantes rouge, vert et bleu s'etendent de 0 a 255 inclus */
+/*!
+ * \brief Selectionne la couleur courante de dessin
+ * \param rouge composante rouge (entre  0 et 255)
+ * \param vert composante vert (entre  0 et 255)
+ * \param bleu composante bleu (entre  0 et 255)
+ */
 void couleurCourante(int rouge, int vert, int bleu);
 
-/* Definit l'epaisseur de trait EN PIXELS DE LA FENETRE servant a afficher les points et les lignes */
+/*!
+ * \brief Definit l'epaisseur de trait EN PIXELS DE LA FENETRE servant a afficher les points et les lignes
+ * \param epaisseur en pixel
+ */
 void epaisseurDeTrait(float epaisseur);
 
-/* Dessine un point de couleur courante aux coordonnees donnees */
+/*!
+ * \brief Dessine un point de couleur courante aux coordonnees donnees
+ * \param abscisse
+ * \param ordonnée
+ */
 void point(float x, float y);
 
-/* Dessine une ligne de couleur courante aux coordonnees donnees */
+/*!
+ * \brief  Dessine une ligne de couleur courante aux coordonnees donnees *
+ * \param xDepart abscisse de depart
+ * \param yDepart ordonné de depart
+ * \param xArrivee abscisse d'arrivée
+ * \param yArrivee ordonnée d'arrivée
+ */
 void ligne(float xDepart, float yDepart, float xArrivee, float yArrivee);
 
 // Dessine un triangle de couleur courante aux coordonnees donnees
 void triangle(float xCoin1, float yCoin1, float xCoin2, float yCoin2, float xCoin3, float yCoin3);
 
-/* Dessine un rectangle de couleur courante aux coordonnees donnees */
+/*!
+ * \brief Dessine un rectangle de couleur courante aux coordonnees donnees
+ * \param xCoin1 abscisse du premier coin
+ * \param yCoin1 ordonnée du premier coin
+ * \param xCoin2 abscisse du second coin
+ * \param yCoin2 ordonnée du second coin
+ */
 void rectangle(float xCoin1, float yCoin1, float xCoin2, float yCoin2);
 
-/* Affiche une chaine de caracteres de taille donnee a la position specifiee */
+/*!
+ * \brief Affiche une chaine de caracteres de taille donnee a la position specifiee
+ * \param chaine chaine à afficher
+ * \param taille taille de la chaine
+ * \param x abscisse du point de depart de la chaine
+ * \param y ordonnée du point de depart de la chaine
+ */
 void afficheChaine(const char *chaine, float taille, float x, float y);
 
-/* Renvoie l'espace occupe par la chaine de caracteres de taille donnee */
+/*!
+ * \brief Renvoie l'espace occupe par la chaine de caracteres de taille donnee
+ * \param chaine taille de la chaine que nous voulons afficher
+ * \param taille taille de l'affichage voulu
+ * \return
+ */
 float tailleChaine(const char *chaine, float taille);
 
 /* Envoie un message Affichage apres la duree specifiee */
 void demandeRedessinDans_ms(int millisecondes);
 
-// Demarre l'envoi periodique de messages Temporisation
+/*!
+ * \brief Demarre l'envoi periodique de messages Temporisation
+ * \param millisecondesEntreAppels nombre de millisecondes entre chaque appel
+ */
 void demandeTemporisation(int millisecondesEntreAppels);
 
 
@@ -185,38 +258,78 @@ void libereTexture(Texture2D **texture);
 #endif
 
 
-/* Renvoie l'abscisse de souris correspondant au dernier evenement Clavier, Souris ou BoutonSouris */
+/*!
+ * \brief Renvoie l'abscisse de souris correspondant au dernier evenement Clavier, Souris ou BoutonSouris
+ * \return abscisse de la souris
+ */
 int abscisseSouris(void);
-/* Renvoie l'ordonnee de souris correspondant au dernier evenement Clavier, Souris ou BoutonSouris */
+
+/*!
+ * \brief  Renvoie l'ordonnee de souris correspondant au dernier evenement Clavier, Souris ou BoutonSouris
+ * \return ordonnee de la souris
+ */
 int ordonneeSouris(void);
-/* Renvoie le dernier etat de bouton souris traite par l'evenement BoutonSouris */
+
+/*!
+ * \brief Renvoie le dernier etat de bouton souris traite par l'evenement BoutonSouris
+ * \return dernier etat du bouton souris
+ */
 EtatBoutonSouris etatBoutonSouris(void);
-/* Renvoie le dernier caractere clavier traite par l'evenement Clavier */
+
+/*!
+ * \brief Renvoie le dernier caractere clavier traite par l'evenement Clavier
+ * \return le dernier caractère traité par l'evenement clavier
+ */
 char caractereClavier(void);
 /* Renvoie la derniere touche speciale du clavier traitee par l'evenement ClavierSpecial */
 int toucheClavier(void);
 
 /* Indique l'etat de la touche Shift lors du dernier evenement Clavier */
 bool toucheShiftAppuyee(void);
-/* Indique l'etat de la touche Ctrl lors du dernier evenement Clavier */
+
+/*!
+ * \brief Indique l'etat de la touche Ctrl lors du dernier evenement Clavier
+ * \return true si la touche ctrl était appuye lors du dernier appelle d'un evenement
+ * \return false si la touche ctrl n'était pas appuye lors du dernier appelle d'un evenement
+ */
 bool toucheCtrlAppuyee(void);
 /* Indique l'etat de la touche Alt lors du dernier evenement Clavier */
 bool toucheAltAppuyee(void);
 
 
-// Renvoie la largeur actuelle de la fenetre
+/*!
+ * \brief Renvoie la largeur actuelle de la fenetre
+ * \return largeur actuelle de la fenetre
+ */
 int largeurFenetre(void);
-// Renvoie la hauteur actuelle de la fenetre
+
+/*!
+ * \brief Renvoie la hauteur actuelle de la fenetre
+ * \return hauteur actuelle de la fentre
+ */
 int hauteurFenetre(void);
-// Demande au systeme de redimensionner la fenetre
+
+/*!
+ * \brief Demande au systeme de redimensionner la fenetre
+ * \param largeur nouvelle largeur demandé
+ * \param hauteur nouvelle hauteur demandé
+ */
 void redimensionneFenetre(int largeur, int hauteur);
-// Demande au systeme de passer la fenetre en plein ecran
+
+/*!
+ * \brief Demande au systeme de passer la fenetre en plein ecran
+ */
 void modePleinEcran(void);
+
+
+
 // Affiche un message d'erreur de maniere standard pour l'OS
 void messageDErreur(const char *message);
 
 
-/* Active la gestion du deplacement passif de la souris */
+/*!
+ * \brief Active la gestion du deplacement passif de la souris
+ */
 void activeGestionDeplacementPassifSouris(void);
 
 

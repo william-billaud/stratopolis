@@ -83,8 +83,6 @@ int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
     //si P est une feuille alors
     //cad : plus de pièce à jouer ou profondeur atteinte.
     int val;
-    static int compteur = 0;
-    compteur += 1;
     //tableau simplifiant le parcours des rotations possibles
     orientation or[4] = {HD, HG, BD, BG};
     unsigned int l;
@@ -95,8 +93,6 @@ int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
     unsigned int zoom;
     coup cp;
     if (ProfondeurActuelle == ProfondeurMaximum || tourActuelle == 40) {
-        //retourner la valeur de P
-        printf("Nb recursion environ : %d \n", compteur);
         return calculScore(joueurIA) - calculScore((joueurIA + 1) % 2);
     } else {
         //on reduit le champ des possibilté

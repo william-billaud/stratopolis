@@ -46,15 +46,24 @@ void afficheMenu()
 	   290, image5->largeurImage, image5->hauteurImage,
 	   image5->donneesRGB);
 	   } */
-
-	couleurCourante(255, 0, 0);
-
+    int abs=abscisseSouris();
+    int ord = ordonneeSouris();
+    estDansRectangle(abs, ord, (int) (centreX - tailleBoutonX), (int) (centreY + 2 * tailleBoutonY),
+                     (int) (centreX + tailleBoutonX), (int) (centreY + 4 * tailleBoutonY)) ? couleurCourante(231, 62, 1) : couleurCourante(255, 0, 0);
 	rectangle(centreX - tailleBoutonX, centreY + 2 * tailleBoutonY,
 		  centreX + tailleBoutonX, centreY + 4 * tailleBoutonY);
+    estDansRectangle(abs, ord, (int) (centreX - tailleBoutonX), (int) (centreY - tailleBoutonY),
+                     (int) (centreX + tailleBoutonX), (int) (centreY + tailleBoutonY)) ? couleurCourante(231, 62, 1) : couleurCourante(255, 0, 0);
 	rectangle(centreX - tailleBoutonX, centreY - tailleBoutonY,
 		  centreX + tailleBoutonX, centreY + tailleBoutonY);
+
+    estDansRectangle(abs, ord, (int) (centreX - tailleBoutonX), (int) (centreY - 2 * tailleBoutonY),
+                     (int) (centreX + tailleBoutonX), (int) (centreY - 4 * tailleBoutonY)) ? couleurCourante(231, 62, 1) : couleurCourante(255, 0, 0);
 	rectangle(centreX - tailleBoutonX, centreY - 2 * tailleBoutonY,
 		  centreX + tailleBoutonX, centreY - 4 * tailleBoutonY);
+
+    estDansRectangle(abs, ord, (int) (centreX - tailleBoutonX), (int) (centreY - 5 * tailleBoutonY),
+                     (int) (centreX + tailleBoutonX), (int) (centreY - 7 * tailleBoutonY)) ? couleurCourante(231, 62, 1) : couleurCourante(255, 0, 0);
 	rectangle(centreX - tailleBoutonX, centreY - 5 * tailleBoutonY,
 		  centreX + tailleBoutonX, centreY - 7 * tailleBoutonY);
 
@@ -344,10 +353,10 @@ void afficheBordureEntreCases(int numero1, int numero2, float centreX1,
 }
 
 /*!
-   \brief Affiche l’interface de jeu
-   \param[in] nomJ1 : nom du premier joueur
-	 \param[in] nomJ2 : nom du deuxième joueur
-	 \return rien
+    \brief Affiche l’interface de jeu
+    \param[in] nomJ1 : nom du premier joueur
+    \param[in] nomJ2 : nom du deuxième joueur
+    \return rien
 */
 void afficheInterface(char nomJ1[15], char nomJ2[15], int joueurActuelle) {
     pieces pieceJ1;
@@ -367,8 +376,6 @@ void afficheInterface(char nomJ1[15], char nomJ2[15], int joueurActuelle) {
         /**< piece disponible pour le joueur 2*/
     }
 
-    char score[10];
-    /**< variable de recuperation des scores*/
     char tuiles[10];
     /**< variable de recuperation des nombres de tuiles*/
     float taille =
@@ -398,17 +405,7 @@ void afficheInterface(char nomJ1[15], char nomJ2[15], int joueurActuelle) {
     afficheChaine(nomJ2, taille / 6, largeurFenetre() - taille * 9 / 10,
                   hauteurFenetre() - taille / 4);
 
-    //Affiche les scores des deux joueurs
-    afficheChaine("Score :", taille / 6, taille / 10, taille / 2);
-    sprintf(score, "%d", calculScore(0));
-    afficheChaine(score, taille / 6, taille / 10, taille / 4);
-
-    afficheChaine("Score : ", taille / 6,
-                  largeurFenetre() - taille * 9 / 10, taille / 2);
-    sprintf(score, "%d", calculScore(1));
-    afficheChaine(score, taille / 6, largeurFenetre() - taille * 9 / 10,
-                  taille / 4);
-
+    afficheScore(calculScore(0),calculScore(1));
     //Affiche les tuiles restantes des deux joueurs
     afficheChaine("Tuiles :", taille / 6, taille / 10, taille);
     sprintf(tuiles, "%d", 20 - ordreJoueurs[0][20]);
@@ -439,6 +436,8 @@ void afficheInterface(char nomJ1[15], char nomJ2[15], int joueurActuelle) {
                  (int) (largeurFenetre() - x_min - marge),
                  (int) (y_max - marge), false);
     afficheDuree((int) taille);
+
+    afficheMenuEnjeu();
 }
 
 /*!
@@ -451,10 +450,10 @@ void affichePredictif(coup coupJoueur, int zoom) {
 }
 
 /*!
-   \brief Affiche le prédictif de placement de la pièce
-   \param[in] coupJoueur : coup à afficher
-	 \param[in] estValide : validité du coup à afficher
-   \return
+    \brief Affiche le prédictif de placement de la pièce
+    \param[in] coupJoueur : coup à afficher
+    \param[in] estValide : validité du coup à afficher
+    \return
 */
 void dessinePredictif(coup coupJoueur, bool estValide, int zoom) {
     float taille =
@@ -494,8 +493,12 @@ void dessinePredictif(coup coupJoueur, bool estValide, int zoom) {
  * \param [out]x abscisse de la casse ou la souris est
  * \param [out]y ordonnée de la casse ou la souris est
  * \param [in] zoom zoom de la grille
- * \return 1 si l'utilisateur a clique dans la grille
- * \return 0 si l'utilisateur à clique en dehors de la grille
+ * \return 0 si l'utilisateur a clique dans la grille
+ * \return 1 si l'utilisateur à clique dans la zone de selection du joueur 1
+ * \return 2 si l'utilisateur à clique dans la zone de selection du joueur 3
+ * \return 3 si l'utilisateur clic dans la zone du bouton Pause
+ * \return 4 si l'utilisateur clic dans la zone du bouton Aide
+ * \return 5 si l'utilisateur clic dans la zone du bouton Quitter
  */
 int detecteCase(int *x, int *y, int zoom, unsigned int basX, unsigned int basY) {
 
@@ -523,13 +526,17 @@ int detecteCase(int *x, int *y, int zoom, unsigned int basX, unsigned int basY) 
                                                         hauteurFenetre() / 6;
     int abs = abscisseSouris();
     int ord = ordonneeSouris();
-    //on regarde si l'utilisateur a cliqué dans la grille
-    if (abs > (largeur / 2 - ecart) && abs < (largeur / 2 + ecart)
-        && ord < (hauteur / 2 + ecart) && ord > (hauteur / 2 - ecart)) {
-        float taille_case = 2 * ecart / zoom;
-        *x = (int) (((abs + ecart - largeur / 2) / taille_case) + basX);
-        *y = (int) (((ord + ecart - hauteur / 2) / taille_case) + basY);
-        return 0;
+    if(x!=NULL && y!=NULL) {
+        //on regarde si l'utilisateur a cliqué dans la grille
+        if (abs > (largeur / 2 - ecart) && abs < (largeur / 2 + ecart)
+            && ord < (hauteur / 2 + ecart) && ord > (hauteur / 2 - ecart)) {
+            float taille_case = 2 * ecart / zoom;
+            *x = (int) (((abs + ecart - largeur / 2) / taille_case) + basX);
+            *y = (int) (((ord + ecart - hauteur / 2) / taille_case) + basY);
+            return 0;
+        }
+        *x = -1;
+        *y = -1;
     }
     int x_min = (int) (taille / 10);
     int x_max = (int) (taille * 9 / 10);
@@ -544,14 +551,34 @@ int detecteCase(int *x, int *y, int zoom, unsigned int basX, unsigned int basY) 
     if(estDansRectangle(abs,ord,largeurFenetre() - x_min, y_min, largeurFenetre() - x_max,
                         y_max))
     {
-        puts("here");
         return 2;
     }
-    *x = -1;
-    *y = -1;
+    if(estDansRectangle(abs, ord, (int) (largeurFenetre() - 2.6f * taille), 0,
+                        (int) (largeurFenetre() - 2.05f * taille),
+                        (int) (2 * taille / 8)))
+    {
+        return 3;
+    }
+    if(estDansRectangle(abs, ord, (int) (largeurFenetre() - 2.05f * taille), 0,
+                        (int) (largeurFenetre() - 1.65f * taille), (int) (2 * taille / 8)))
+    {
+        return 4;
+    }
+    if(estDansRectangle(abs, ord, (int) (largeurFenetre() - 1.65f * taille), 0, (int) (largeurFenetre() - taille),
+                        (int) (2 * taille / 8)))
+    {
+        return 5;
+    }
     return 0;
 }
 
+/*!
+ * \brief chnage le zoom de la grille
+ * \param x_z[out] nouveau x minimum du zoom
+ * \param y_z [out] nouveau y minimum du zoom
+ * \param zoom [out] nouveau zoom
+ * \param up true si c'est un zoom, false si c'est un dezoom
+ */
 void changeZoom(unsigned int *x_z, unsigned int *y_z, unsigned int *zoom,
                 bool up) {
     int x_c, y_c;
@@ -586,6 +613,10 @@ void changeZoom(unsigned int *x_z, unsigned int *y_z, unsigned int *zoom,
     }
 }
 
+/*!
+ * \brief affiche la durée de la partie depuis le debut de la partie
+ * \param taille des interfaces à afficher
+ */
 void afficheDuree(int taille) {
     int timeStart = gestionDuree(1);
     char chaine[20];
@@ -661,4 +692,153 @@ int detecteMenuPrincipal(void)
         return 4;
     }
     return 0;
+}
+
+/**
+ * \brief Affiche le score
+ * \param [in] scoreJ1 : score du premier joueur
+ * \param [in] scoreJ2 : score du deuxième joueur
+ */
+void afficheScore(int scoreJ1, int scoreJ2){
+
+    couleurCourante(240, 255, 255);
+    float taille =
+            (largeurFenetre() >=
+             hauteurFenetre()) * largeurFenetre() / 6 + (hauteurFenetre() >
+                                                         largeurFenetre()) *
+                                                        hauteurFenetre() / 6;
+    char score[10];
+    /**< variable de recuperation des scores*/
+
+    afficheChaine("Score :", taille / 6, taille / 10, taille / 2);
+    sprintf(score, "%d", scoreJ1);
+    afficheChaine(score, taille / 6, taille / 10, taille / 4);
+
+    afficheChaine("Score : ", taille / 6,
+                  largeurFenetre() - taille * 9 / 10, taille / 2);
+    sprintf(score, "%d", scoreJ2);
+    afficheChaine(score, taille / 6, largeurFenetre() - taille * 9 / 10,
+                  taille / 4);
+
+}
+
+/*!
+ * \brief affiche le menu en jeu
+ */
+void afficheMenuEnjeu(void)
+{
+
+    float taille =
+            (largeurFenetre() >=
+             hauteurFenetre()) * largeurFenetre() / 6 + (hauteurFenetre() >
+                                                         largeurFenetre()) *
+                                                        hauteurFenetre() / 6;
+    //affiche le rectangle noir de fond
+    couleurCourante(0,0,0);
+    rectangle(largeurFenetre()-2.6f*taille,0,largeurFenetre()-taille,2*taille/8);
+    //change la couleur du fond si une zone est survolé
+    couleurCourante(63, 34, 4);
+    switch (detecteCase(NULL,NULL,0,0,0))
+    {
+        case 3:
+            rectangle(largeurFenetre() - 2.6f * taille, 0,
+                      largeurFenetre() - 2.05f * taille,2 * taille / 8);
+            break;
+        case 4:
+            rectangle(largeurFenetre() - 2.05f * taille, 0,
+                      largeurFenetre() - 1.65f * taille,2 * taille / 8);
+            break;
+        case 5:
+            rectangle(largeurFenetre()-1.65f*taille,0,largeurFenetre()-taille,2*taille/8);
+            break;
+        default:break;
+    }
+    //affiche les rectangles autour des zones
+    couleurCourante(240, 255, 255);
+    rectangleVide(largeurFenetre()-2.6f*taille,0,largeurFenetre()-2.05f*taille,2*taille/8,1);
+    rectangleVide(largeurFenetre()-2.05f*taille,0,largeurFenetre()-1.65f*taille,2*taille/8,1);
+    rectangleVide(largeurFenetre()-1.65f*taille,0,largeurFenetre()-taille,2*taille/8,1);
+
+    //affiche le texte
+    afficheChaine("QUITTER",taille/8,largeurFenetre()-1.6f*taille,taille/20);
+    afficheChaine("AIDE",taille/8,largeurFenetre()-2*taille,taille/20);
+    afficheChaine("PAUSE",taille/8,largeurFenetre()-2.55f*taille,taille/20);
+}
+/*!
+ * \brief trace un rectangle vide
+ * \param xCoin1 abscisse du premier coin
+ * \param yCoin1 ordonnée du premier coin
+ * \param xCoin2 abscisse du second coin
+ * \param yCoin2 ordonnée du second coin
+ * \param taille epaisseur du trait
+ */
+void rectangleVide(float xCoin1, float yCoin1, float xCoin2, float yCoin2, float taille)
+{
+    epaisseurDeTrait(taille);
+    ligne(xCoin1,yCoin1,xCoin1,yCoin2);
+    ligne(xCoin1,yCoin1,xCoin2,yCoin1);
+    ligne(xCoin2,yCoin2,xCoin1,yCoin2);
+    ligne(xCoin2,yCoin2,xCoin2,yCoin1);
+
+}
+/*!
+ * \brief trace l'indice
+ * \param coupJoueur structure contenant les information concernant l'indice
+ * \param zoom taille du zoom
+ * \param x abcisse du zoom
+ * \param y ordonnée du zoom
+ */
+void afficheIndice(coup coupJoueur,int zoom,int x,int y)
+{
+
+    if (zoom < 1) {
+        zoom = 1;
+    }
+    if (zoom >= TAILLEMAX) {
+        zoom = TAILLEMAX - 1;
+    }
+    if (x + zoom >= TAILLEMAX) {
+        x = TAILLEMAX - 1 - zoom;
+    }
+    if (y + zoom >= TAILLEMAX) {
+        y = TAILLEMAX - 1 - zoom;
+    }
+    float largeur = largeurFenetre();
+    float hauteur = hauteurFenetre();
+    float ecart = (((largeur <= hauteur) * largeur
+                    + (largeur > hauteur) * hauteur) / 2.5f);
+    float taille_case = 2 * ecart / zoom;
+
+    float minX, minY, maxX, maxY;
+    if (coupJoueur.orientationPiece == BD) {
+        minX = largeur / 2 - ecart + (coupJoueur.xCoup - x) * taille_case;
+        minY = hauteur / 2 - ecart + (coupJoueur.yCoup - y-1) * taille_case;
+        maxX = largeur / 2 - ecart + (coupJoueur.xCoup - x +
+                                      2) * taille_case;
+        maxY =hauteur / 2 - ecart + (coupJoueur.yCoup -y +
+                                     1) * taille_case;
+    } else if (coupJoueur.orientationPiece == BG) {
+        minX = largeur / 2 - ecart + (coupJoueur.xCoup - x-1) * taille_case;
+        minY = hauteur / 2 - ecart + (coupJoueur.yCoup - y-1) * taille_case;
+        maxX = largeur / 2 - ecart + (coupJoueur.xCoup - x +
+                                      1) * taille_case;
+        maxY =hauteur / 2 - ecart + (coupJoueur.yCoup -y +
+                                     +1) * taille_case;
+    } else if (coupJoueur.orientationPiece == HG) {
+        minX = largeur / 2 - ecart + (coupJoueur.xCoup - x-1) * taille_case;
+        minY = hauteur / 2 - ecart + (coupJoueur.yCoup - y) * taille_case;
+        maxX = largeur / 2 - ecart + (coupJoueur.xCoup - x +
+                                      1) * taille_case;
+        maxY =hauteur / 2 - ecart + (coupJoueur.yCoup -y +
+                                     +2) * taille_case;
+    } else {
+        minX = largeur / 2 - ecart + (coupJoueur.xCoup - x) * taille_case;
+        minY = hauteur / 2 - ecart + (coupJoueur.yCoup - y) * taille_case;
+        maxX = largeur / 2 - ecart + (coupJoueur.xCoup - x +
+                                      2) * taille_case;
+        maxY =hauteur / 2 - ecart + (coupJoueur.yCoup -y +
+                                     +2) * taille_case;
+    }
+    affichePiece(coupJoueur.numeroPiece, coupJoueur.orientationPiece, (int) minX, (int) minY, (int) maxX, (int) maxY, false);
+
 }

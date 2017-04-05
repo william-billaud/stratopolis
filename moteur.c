@@ -242,7 +242,6 @@ int joueCoup(coup coupJoueur)
  * \return 1 si tout c'est bien passé
  * \return -1 si le coup n'as pas pu etres annullé
 */
-
 int dejoueCoup(coup coupAnnulle)
 {
 	historiqueCase *caseCoups[3];
@@ -328,6 +327,7 @@ int calculScore(int joueur)
 							     (getCase(i, j)));
 					match = 1;
 				} else {
+					printf("I : %d J :%d \n",i,j);
 					puts("erreur dans la calcul du score A");
 				}
 
@@ -546,6 +546,3 @@ int initPartie(int *joueur)
     gestionDuree(0);
 	return retour;
 }
-
-//fonction ALPHABETA(P, alpha, beta) /* alpha est toujours inférieur à beta */
-
