@@ -47,8 +47,7 @@ coup coupIA(int joueur, int niveauDifficulte) {
                 cp.orientationPiece = or[i_o];
                 cp.xCoup = i;
                 cp.yCoup = j;
-                if (estValideCoup(cp)) {
-                    joueCoup(cp);
+                if (joueCoup(cp)==1) {
                     res =
                             minMax((joueur + 1) % 2, joueur, 0,
                                    profondeurMax, 32767, 0,
@@ -108,8 +107,7 @@ int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
                         cp.orientationPiece = or[i_o];
                         cp.xCoup = i;
                         cp.yCoup = j;
-                        if (estValideCoup(cp)) {
-                            joueCoup(cp);
+                        if (joueCoup(cp)==1) {
                             //Val = Min(Val, ALPHABETA(Pi, alpha, beta))
                             val =
                                     min(val,
