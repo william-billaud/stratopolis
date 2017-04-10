@@ -786,7 +786,11 @@ void rectangleVide(float xCoin1, float yCoin1, float xCoin2, float yCoin2, float
  * \param x abcisse du zoom
  * \param y ordonnée du zoom
  */
-void afficheIndice(coup coupJoueur, int zoom, int x, int y) {
+void afficheIndice(coup coupJoueur, int zoom, int x, int y)
+{
+        if(time(NULL)%2 ==0) {
+            return;
+        }
 
     if (zoom < 1) {
         zoom = 1;
