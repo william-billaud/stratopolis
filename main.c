@@ -42,7 +42,7 @@ void gestionEvenement(EvenementGfx evenement) {
     static infoIa infoThread;
     static int debutHint;
     static enum {
-        menu, classique, IA, victoire, tmpIA, hint
+        menu, classique, IA, victoire, tmpIA, hint, chgmtNom
     } mode, suivant;
     //position du zoom par defaut
     static unsigned int x_d = 80, y_d = 80;
@@ -56,11 +56,11 @@ void gestionEvenement(EvenementGfx evenement) {
     //variable utlilisé pour stocker l'orientation de la piece
     static orientation orientationPiece;
     //variable utilisé pour stocker le joueur actuelle
-    static int joueurActuelle;
+    static int joueurActuelle=1;
     //variable utilisé pour stocker le niveau de difficulté
     static int niveauDifficulte = 20;
     //nom des joueurs
-    static char nomJ1[15] = "William";
+    static char nomJ1[15] = "WilliambBILLAU";
     static char nomJ2[15] = "Theo";
     //permet de savoir si une pièce est selectionné
     static bool pieceSelectionne = false;
@@ -68,7 +68,7 @@ void gestionEvenement(EvenementGfx evenement) {
     switch (evenement) {
         case Initialisation:
             modePleinEcran();
-            mode = menu;
+            mode = chgmtNom;
             suivant = classique;
             activeGestionDeplacementPassifSouris();
             demandeTemporisation(30);
@@ -111,51 +111,62 @@ void gestionEvenement(EvenementGfx evenement) {
                 case victoire:
                     afficheChaine("PARTIE FINI ", 10, largeurFenetre() / 3, hauteurFenetre() / 2);
                     break;
+                case chgmtNom:
+                    afficheChangemntNom(nomJ1, nomJ2, joueurActuelle);
+                    //TODO
+                    break;
 
 
             }
             break;
         case Clavier:
-            switch (caractereClavier()) {
-                case 'Q':
-                case 'q':
-                    termineBoucleEvenements();
-                    exit(0);
-                case 'F':
-                case 'f':
-                    pleinEcran = !pleinEcran;    // Changement de mode plein ecran
-                    if (pleinEcran)
-                        modePleinEcran();
-                    else
-                        redimensionneFenetre(LargeurFenetre,
-                                             HauteurFenetre);
-                    rafraichisFenetre();
-                    break;
+            if (mode == chgmtNom && !toucheCtrlAppuyee()) {
+                changeNom(nomJ1,nomJ2,joueurActuelle);
+            } else {
+                switch (caractereClavier()) {
+                    case 'Q':
+                    case 'q':
+                        //ctrl +Q
+                    case 17:
+                        termineBoucleEvenements();
+                        exit(0);
+                    case 'F':
+                    case 'f':
+                        pleinEcran = !pleinEcran;    // Changement de mode plein ecran
+                        if (pleinEcran)
+                            modePleinEcran();
+                        else
+                            redimensionneFenetre(LargeurFenetre,
+                                                 HauteurFenetre);
+                        rafraichisFenetre();
+                        break;
 
-                case 'R':
-                case 'r':
-                    // On force un rafraichissement
-                    rafraichisFenetre();
-                    break;
+                    case 'R':
+                    case 'r':
+                        // On force un rafraichissement
+                        rafraichisFenetre();
+                        break;
 
-                case 'Z':
-                case 'z':
-                    switch (mode) {
-                        case menu:
-                            break;
-                        case classique:
-                        case IA:
-                        case hint:
-                        case tmpIA:
-                            trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
-                            break;
-                        case victoire:
-                            break;
-                    }
-                    rafraichisFenetre();
-                    break;
-                default:
-                    break;
+                    case 'Z':
+                    case 'z':
+                        switch (mode) {
+
+                            case classique:
+                            case IA:
+                            case hint:
+                            case tmpIA:
+                                trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
+                                break;
+                            case victoire:
+                            case menu:
+                            case chgmtNom:
+                                break;
+                        }
+                        rafraichisFenetre();
+                        break;
+                    default:
+                        break;
+                }
             }
             break;
 
@@ -186,6 +197,9 @@ void gestionEvenement(EvenementGfx evenement) {
                     }
                     break;
                 case menu:
+                    break;
+                case chgmtNom:
+                    // TODO
                     break;
                 case victoire:
                     break;
@@ -305,6 +319,9 @@ void gestionEvenement(EvenementGfx evenement) {
                             break;
                     }
                     break;
+                case chgmtNom:
+                    // TODO
+                    break;
             }
 
             rafraichisFenetre();
@@ -313,6 +330,7 @@ void gestionEvenement(EvenementGfx evenement) {
             switch (mode) {
 
                 case menu:
+                case chgmtNom:
                 case classique:
                 case IA:
                 case victoire:

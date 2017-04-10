@@ -829,3 +829,72 @@ void afficheIndice(coup coupJoueur, int zoom, int x, int y)
     affichePiece(coupJoueur.numeroPiece, coupJoueur.orientationPiece, (int) minX, (int) minY, (int) maxX, (int) maxY, false);
 
 }
+/*!
+ * \brief affiche l'écran pour changer le nom des joueur
+ * \param nomJ1 nom du joueur 1
+ * \param nomJ2 nom du joueur 2
+ * \param joueurActuelle joueur dont le nom est en train d'etres modifié
+ */
+void afficheChangemntNom(char nomJ1[15], char nomJ2[15],int joueurActuel)
+{
+    effaceFenetre(0,0,0);
+    int h=hauteurFenetre();
+    int l=largeurFenetre();
+    int taille1=min(l,h)/6;
+    int taille2=min(l,h)/6;
+    couleurCourante(240, 255, 255);
+    rectangleVide(l/10,h/8,9*l/10,3*h/8,10);
+    rectangleVide(l/10,5*h/8,9*l/10,7*h/8,10);
+    char J1[15];
+    char J2[15];
+    char tiret[2]="_";
+    strcpy(J1,nomJ1);
+    strcpy(J2,nomJ2);
+    if(joueurActuel==0 &&strlen(nomJ1)<14)
+    {
+        sprintf(J1,"%s%s",nomJ1,tiret);
+    }else if(joueurActuel==1&&strlen(nomJ2)<14)
+    {
+        sprintf(J2,"%s%s",nomJ2,tiret);
+    }
+    while(tailleChaine(J1,taille1)>8*l/10) {
+        taille1=taille1-5;
+    }
+    while(tailleChaine(J2,taille2)>8*l/10) {
+        taille2=taille2-5;
+    }
+    afficheChaine(J2,taille2,l/9,5.5f*h/8);
+    afficheChaine(J1, taille1, l / 9, 1.5f * h / 8);
+
+}
+/*!
+ * \brief change le nom du joueur actuel en fonction du dernier caractère clavier
+ * \param nomJ1
+ * \param nomJ2
+ * \param joueurActuel
+ */
+void changeNom(char nomJ1[15], char nomJ2[15],int joueurActuel)
+{
+
+    char caractere=caractereClavier();
+    char c[1]={caractere};
+    if(caractere>31 && caractere<127) {
+
+        if (joueurActuel == 0 && strlen(nomJ1) < 14) {
+            strcat(nomJ1, c);
+        } else if (joueurActuel == 1 && strlen(nomJ2) < 14) {
+            strcat(nomJ2, c);
+        }
+    }
+    if(caractere==8 || caractere==13)
+    {
+        if(joueurActuel==0)
+        {
+            nomJ1[strlen(nomJ1)-1]= (char)0;
+        }else if( joueurActuel==1)
+        {
+            nomJ2[strlen(nomJ2)-1]= (char) 0;
+        }
+    }
+
+}

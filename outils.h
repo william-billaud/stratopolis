@@ -17,6 +17,7 @@
 #include "lib/GfxLib.h"
 #include "lib/BmpLib.h"
 #include <time.h>
+#include <string.h>
 
 
 /**
