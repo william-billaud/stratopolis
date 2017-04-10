@@ -11,24 +11,24 @@
 #ifndef H_MOTEUR
 #define H_MOTEUR
 
+
 /*!
  * \brief structure contenant les information pour crée une liste de case adjacente
  */
 typedef struct caseCalcul {
-	int x /**<\var abscisse de la case*/ ;
-	int y /**<\var ordonnée de la case*/ ;
-	int hauteur /**<\var hauteur de la case*/ ;
+	int x /**< abscisse de la case*/ ;
+	int y /**< ordonnée de la case*/ ;
+	int hauteur /**< hauteur de la case*/ ;
 	struct caseCalcul *next
-    /**<\var pointeur vers une autre case appartenant au meme block*/ ;
+    /**< pointeur vers une autre case appartenant au meme block*/ ;
 } caseCalcul;
 
 /*!
  * \brief structure servant a crées une liste des block de cases differents
  */
 typedef struct listeBlock {
-	caseCalcul *debutBlock
-    /**<\var debut du block de case de la meme couleurs adjacent*/ ;
-	struct listeBlock *next /**<\var pointeur vers le block suivant */ ;
+	caseCalcul *debutBlock /**< debut du block de case de la meme couleurs adjacent*/ ;
+	struct listeBlock *next /**< pointeur vers le block suivant */ ;
 } listeBlock;
 
 /*!

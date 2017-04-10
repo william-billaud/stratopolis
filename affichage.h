@@ -27,35 +27,29 @@ void afficheMenu(void);
 int afficheAide(int posX, int posY);
 
 /*!
-   \brief Affiche le menu de sélection des options, et la sélection
-   \param[in] posX : position en abscisse du curseur de la souris
-	 \param[in] posY : position en ordonnée du curseur de la souris
-   \return 0 si le curseur ne survole aucun bouton
-   \return 1 si le curseur survole le bouton Retour
+    \brief Affiche le menu de sélection des options, et la sélection
+    \param[in] posX : position en abscisse du curseur de la souris
+    \param[in] posY : position en ordonnée du curseur de la souris
+    \return 0 si le curseur ne survole aucun bouton
+    \return 1 si le curseur survole le bouton Retour
 */
 int afficheOption(int posX, int posY);
 
-/*!
-   \brief Affiche un conseil pour un coup
-   \param[in] conseil : coup à afficher
-   \return rien
-*/
-void afficheConseil(coup conseil);
 
 /*!
    \brief Appelle les fonction dessinePredictif() et estValideCoup()
    \param[in] coupJoueur : coup à afficher
-	 \param[in] zoom : niveau de zoom du plateau de jeu
+   \param[in] zoom de la grille
    \return rien
 */
 void affichePredictif(coup coupJoueur, int zoom);
 
 /*!
-   \brief Affiche le prédictif de placement de la pièce
-   \param[in] coupJoueur : coup à afficher
-	 \param[in] estValide : validité du coup à afficher
-	 \param[in] zoom : niveau de zoom du plateau de jeu
-	 \return
+    \brief Affiche le prédictif de placement de la pièce
+    \param[in] coupJoueur : coup à afficher
+    \param[in] estValide : validité du coup à afficher
+    \param[in] zoom zoom de la grille
+    \return
 */
 void dessinePredictif(coup coupJoueur, bool estValide, int zoom);
 
@@ -123,7 +117,7 @@ void afficheBorduresDeCase(int numC, int numH, int numD, int numB, int numG,
  * \param [in] centreX1 : coordonnee en abscisse du centre de la première case
  * \param [in] centreY1 : coordonnee en ordonnee du centre de la première case
  * \param [in] centreX2 : coordonnee en abscisse du centre de la deuxième case
- * \param [in] centreX2 : coordonnee en ordonnee du centre de la deuxième case
+ * \param [in] centreY2 : coordonnee en ordonnee du centre de la deuxième case
   */
 void afficheBordureEntreCases(int numero1, int numero2, float centreX1,
 			      float centreY1, float centreX2, float centreY2);
@@ -142,17 +136,19 @@ void afficheScore(int scoreJ1, int scoreJ2);
 void pause(void);
 
 /**
-* \brief donne les coordonée dans le plateau des coordonnée de la soursi
-* \param [out]x abscisse de la casse ou la souris est
-* \param [out]y ordonnée de la casse ou la souris est
-* \param [in] zoom zoom de la grille
-* \return 0 si l'utilisateur a clique dans la grille
-* \return 1 si l'utilisateur à clique dans la zone de selection du joueur 1
-* \return 2 si l'utilisateur à clique dans la zone de selection du joueur 3
-* \return 3 si l'utilisateur clic dans la zone du bouton Pause
-* \return 4 si l'utilisateur clic dans la zone du bouton Aide
-* \return 5 si l'utilisateur clic dans la zone du bouton Quitter
-*/
+ * \brief donne les coordonée dans le plateau des coordonnée de la soursi
+ * \param[out] x abscisse de la casse ou la souris est
+ * \param[out] y ordonnée de la casse ou la souris est
+ * \param[in] zoom zoom de la grille
+ * \param[in] basX plus petite abscisse affichée
+ * \param[in] basY plus petite ordonnée affichée
+ * \return 0 si l'utilisateur a clique dans la grille
+ * \return 1 si l'utilisateur à clique dans la zone de selection du joueur 1
+ * \return 2 si l'utilisateur à clique dans la zone de selection du joueur 3
+ * \return 3 si l'utilisateur clic dans la zone du bouton Pause
+ * \return 4 si l'utilisateur clic dans la zone du bouton Aide
+ * \return 5 si l'utilisateur clic dans la zone du bouton Quitter
+ */
 int detecteCase(int *x, int *y, int zoom, unsigned int basX, unsigned int basY);
 
 /*!
@@ -165,9 +161,9 @@ void determineCouleur(couleur couleurCase, bool estGrisee);
 
 /*!
  * \brief chnage le zoom de la grille
- * \param x_z[out] nouveau x minimum du zoom
- * \param y_z [out] nouveau y minimum du zoom
- * \param zoom [out] nouveau zoom
+ * \param [out] x_z nouveau x minimum du zoom
+ * \param [out] y_z nouveau y minimum du zoom
+ * \param [out] zoom nouveau zoom
  * \param up true si c'est un zoom, false si c'est un dezoom
  */
 void changeZoom(unsigned int *x_z, unsigned int *y_z, unsigned int *zoom,
@@ -183,9 +179,9 @@ void afficheDuree(int taille);
  * \param xClic abscisse du clic
  * \param yClic ordonnée du clic
  * \param xMin abscisse minimum du rectangle
- * \param yMin abscisse maximum du rectangle
- * \param largeur largeur du rectangle
- * \param hauteur hauteur du rectangle
+ * \param yMin ordonnée minimum du rectangle
+ * \param xMax abscisse maximum du rectangle
+ * \param yMax ordonnee maximum du rectangle
  * \return true si le clic est dans le rectangle
  * \return false si le clic n'est pas dans le rectangle
  */
