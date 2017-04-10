@@ -9,6 +9,13 @@
 #include "affichage.h"
 #include "ia.h"
 
+/*!
+ * \brief Fonction de gestion des evenements graphiques, a definir par l'utilisateur
+ * \param evenement evement de la gfx à gérer
+ */
+void gestionEvenement(EvenementGfx evenement);
+
+/// largeur par defaut d'une image correspondant a nos critères
 #define LargeurFenetre 800
 /// hauteur par defaut d'une image correspondant a nos critères
 #define HauteurFenetre 600
@@ -35,8 +42,8 @@ void gestionEvenement(EvenementGfx evenement) {
     static infoIa infoThread;
     static int debutHint;
     static enum {
-        menu, classique, IA, victoire, tmpIA,hint
-    } mode,suivant;
+        menu, classique, IA, victoire, tmpIA, hint
+    } mode, suivant;
     //position du zoom par defaut
     static unsigned int x_d = 80, y_d = 80;
     static unsigned int zoom_d = 20;
@@ -62,7 +69,7 @@ void gestionEvenement(EvenementGfx evenement) {
         case Initialisation:
             modePleinEcran();
             mode = menu;
-            suivant=classique;
+            suivant = classique;
             activeGestionDeplacementPassifSouris();
             demandeTemporisation(30);
             break;
@@ -93,12 +100,9 @@ void gestionEvenement(EvenementGfx evenement) {
                         affichePredictif(coupJoueur, zoom_d);
                     }
                     //affiche l'indice
-                    if(suivant==hint)
-                    {
-                        //donne un effet de clignotement
-                        if(time(NULL)%2 ==0) {
-                            afficheIndice(coupHint, zoom_d, x_d, y_d);
-                        }
+                    if (suivant == hint) {
+                        //affiche l'indice
+                        afficheIndice(coupHint, zoom_d, x_d, y_d);
                     }
                     break;
                 case menu:
@@ -217,26 +221,23 @@ void gestionEvenement(EvenementGfx evenement) {
                                         }
                                     }
                                     pieceSelectionne = false;
-                                    suivant=menu;
+                                    suivant = menu;
                                 } else if (zoneDetecte == joueurActuelle + 1) {
                                     pieceSelectionne = !pieceSelectionne;
                                 }
                             }
-                            if(zoneDetecte==3)
-                            {
+                            if (zoneDetecte == 3) {
 
-                            } else if (zoneDetecte==4)
-                            {
+                            } else if (zoneDetecte == 4) {
                                 infoThread.estFini = 0;
                                 infoThread.niveauDifficulte = 0;
                                 infoThread.joueur = joueurActuelle;
                                 if (detacheThread_sur(threadIa, (void *) &infoThread)) {
-                                    suivant=mode;
-                                    mode=hint;
+                                    suivant = mode;
+                                    mode = hint;
                                 }
-                            } else if(zoneDetecte==5)
-                            {
-                                mode=menu;
+                            } else if (zoneDetecte == 5) {
+                                mode = menu;
                             }
 
                             break;
@@ -343,22 +344,21 @@ void gestionEvenement(EvenementGfx evenement) {
                     }
                 }
             }
-            if(mode==hint) {
+            if (mode == hint) {
                 if (infoThread.estFini != 0) {
                     if (infoThread.estFini == 1) {
                         coupHint = infoThread.coupIA;
-                        mode=suivant;
-                        suivant=hint;
-                        debutHint= (int) time(NULL);
+                        mode = suivant;
+                        suivant = hint;
+                        debutHint = (int) time(NULL);
                     } else {
                         mode = menu;
                     }
                 }
             }
-            if(suivant==hint)
-            {
+            if (suivant == hint) {
                 //l'indice ne s'affiche que 5 secondes
-                if((time(NULL)-5)>debutHint) {
+                if ((time(NULL) - 5) > debutHint) {
                     suivant = menu;
                 }
             }

@@ -4,7 +4,6 @@
    \author Billaud William
    \author Hipault Theo
    \date 04/04/2017
-
 */
 
 #include "ia.h"
@@ -13,7 +12,6 @@
 \brief cherche un coup pour l'ia
 \param[in] joueur : joueur jouer par l'ia
 \param[in] niveauDifficulte : niveau de difficulté de l'ia
-\param[in] nbPieceJoue : nombre de pièces deja
 \return un coup proposé par l'ia
 */
 coup coupIA(int joueur, int niveauDifficulte) {
@@ -49,8 +47,7 @@ coup coupIA(int joueur, int niveauDifficulte) {
                 cp.orientationPiece = or[i_o];
                 cp.xCoup = i;
                 cp.yCoup = j;
-                if (estValideCoup(cp)) {
-                    joueCoup(cp);
+                if (joueCoup(cp)==1) {
                     res =
                             minMax((joueur + 1) % 2, joueur, 0,
                                    profondeurMax, 32767, 0,
@@ -110,8 +107,7 @@ int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
                         cp.orientationPiece = or[i_o];
                         cp.xCoup = i;
                         cp.yCoup = j;
-                        if (estValideCoup(cp)) {
-                            joueCoup(cp);
+                        if (joueCoup(cp)==1) {
                             //Val = Min(Val, ALPHABETA(Pi, alpha, beta))
                             val =
                                     min(val,

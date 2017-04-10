@@ -92,25 +92,40 @@
    Cette partie est relative a toutes les informations utiles pour
    mettre en place simplement un environnement graphique portable */
 
-
+/*!
+ * \brief liste des evementGfxlib
+ */
 typedef enum {Inactivite, Affichage, Clavier, ClavierSpecial, Souris, BoutonSouris, Initialisation, Redimensionnement, Temporisation}
 	EvenementGfx;
-//le scroll genere deux appelle de fonctionBoutonSouris, tmpScroll evite de doublé les scrolls
+/*!
+ * \brief liste des état possible des boutons de la souris
+ *
+ * le scroll genere deux appelle de fonctionBoutonSouris, tmpScroll evite de doublé les scrolls
+ */
 typedef enum {GaucheAppuye, GaucheRelache, DroiteAppuye, DroiteRelache,ScrollUp,ScrollDown,TmpScroll}
 	EtatBoutonSouris;
+/*!
+ * \brief idk
+ */
 typedef enum {SuiteDePoints, SuiteDeLignes, SuiteDeTriangles, SuiteDeRectangles, BandeDeTriangles, BandeDeRectangles}
 	PrimitiveGfxLib;
+/*!
+ * \brief liste des touches speciales
+ */
 typedef enum {ToucheF1 = 1, ToucheF2, ToucheF3, ToucheF4, ToucheF5, ToucheF6, ToucheF7, ToucheF8, ToucheF9, ToucheF10, ToucheF11, ToucheF12,
 	ToucheFlecheHaut, ToucheFlecheBas, ToucheFlecheGauche, ToucheFlecheDroite, ToucheNonGeree} TouchesSpeciales;
 
+/*!
+ * \brief structure pour manipuler des texture
+ */
 typedef struct
 	{
-		int largeur; // Largeur des donnees
-		int hauteur; // Hauteur des donnees
-		float proportionX;
-		float proportionY;
-		int *donnees; // Les donnees de la texture
-		unsigned int numero; // L'identifiant OpenGL de la texture
+		int largeur; /*!< Largeur des donnees*/
+		int hauteur; /*!< Hauteur des donnees*/
+		float proportionX /**< idk*/;
+		float proportionY;/**< idk*/
+		int *donnees; /*!< Les donnees de la texture*/
+		unsigned int numero; /*!< L'identifiant OpenGL de la texture*/
 	} Texture2D;
 
 
@@ -181,8 +196,8 @@ void epaisseurDeTrait(float epaisseur);
 
 /*!
  * \brief Dessine un point de couleur courante aux coordonnees donnees
- * \param abscisse
- * \param ordonnée
+ * \param x abscisse
+ * \param y ordonnée
  */
 void point(float x, float y);
 
@@ -195,7 +210,15 @@ void point(float x, float y);
  */
 void ligne(float xDepart, float yDepart, float xArrivee, float yArrivee);
 
-// Dessine un triangle de couleur courante aux coordonnees donnees
+/*!
+ * \brief Dessine un triangle de couleur courante aux coordonnees donnees
+ * \param xCoin1 abscisse coin1
+ * \param yCoin1 ordonnée coin 1
+ * \param xCoin2 abscisse coin 2
+ * \param yCoin2 ordonnée coin 2
+ * \param xCoin3 abscisse coin 3
+ * \param yCoin3 ordonnée coin 3
+ */
 void triangle(float xCoin1, float yCoin1, float xCoin2, float yCoin2, float xCoin3, float yCoin3);
 
 /*!
@@ -224,7 +247,10 @@ void afficheChaine(const char *chaine, float taille, float x, float y);
  */
 float tailleChaine(const char *chaine, float taille);
 
-/* Envoie un message Affichage apres la duree specifiee */
+/*!
+ * \brief Envoie un message Affichage apres la duree specifiee
+ * \param millisecondes durée avant l'envoie du nouveau message d'affichage
+ */
 void demandeRedessinDans_ms(int millisecondes);
 
 /*!
@@ -234,26 +260,73 @@ void demandeRedessinDans_ms(int millisecondes);
 void demandeTemporisation(int millisecondesEntreAppels);
 
 
-/* Lis une portion de la fenetre, couvrant largeur*hauteur et demarrant en (x, y)
-Les donnees lues sont sauvees comme une succession de valeurs B, V, R de type
-unsigned char */
+/*!
+ * \brief lis une image
+ * \param x
+ * \param y
+ * \param largeur
+ * \param hauteur
+ * \param donnees
+ *
+ * Lis une portion de la fenetre, couvrant largeur*hauteur et demarrant en (x, y)
+ * Les donnees lues sont sauvees comme une succession de valeurs B, V, R de type
+ * unsigned cha
+ */
 void lisImage(int x, int y, int largeur, int hauteur, unsigned char *donnees);
 
-// Ecris dans la fenetre une image BVR couvrant largeur*hauteur et demarrant en (x, y) */
+/*!
+ * \brief ecris un iamge
+ * \param x absisse de debut de l'image
+ * \param y ordonné du debut de l'imahe
+ * \param largeur largeur de l'image
+ * \param hauteur hauteur de l'image
+ * \param donnees
+ */
 void ecrisImage(int x, int y, int largeur, int hauteur, const unsigned char *donnees);
 
 #ifndef _WIN32
-// Ecris une image couvrant largeur*hauteur, demarrant en (x, y) et faite de
-// pixels ARVB (stockes dans des int little endian) dans la fenetre */
+
+/*!
+ * \brief ecris une image
+ * \param x absisse de debut de l'image
+ * \param y ordonné du debut de l'imahe
+ * \param largeur largeur de l'image
+ * \param hauteur hauteur de l'image
+ * \param donneesARVB
+ *
+ * Ecris une image couvrant largeur*hauteur, demarrant en (x, y) et faite de
+ * pixels ARVB (stockes dans des int little endian) dans la fenetre
+ */
 void ecrisImageARVB(int x, int y, int largeur, int hauteur, const int *donneesARVB);
 
-// Cree une texture reutilisable de largeur et hauteur donnees, faite de pixels ABVR little endian
+/*!
+ * \brief Cree une texture reutilisable de largeur et hauteur donnees, faite de pixels ABVR little endian
+ * \param largeur
+ * \param hauteur
+ * \param pixelsABVR
+ * \return
+ */
 Texture2D *creeTexture2D(int largeur, int hauteur, const int *pixelsABVR);
-// Permet de modifier les pixels de la texture prealablement definie, en donnant un nouveau tableau de pixels ABVR little endian
+
+/*!
+ * \brief Permet de modifier les pixels de la texture prealablement definie, en donnant un nouveau tableau de pixels ABVR little endian
+ * \param texture
+ * \param pixelsABVR
+ */
 void modifieTexture2D(const Texture2D *texture, const int *pixelsABVR);
-// Affiche la texture passee en parametre aux coordonnees fournies
+
+/*!
+ * \brief Affiche la texture passee en parametre aux coordonnees fournies
+ * \param x abscisse
+ * \param y ordonnée
+ * \param texture texture à afficher
+ */
 void rectangleSelonTexture(float x, float y, const Texture2D *texture);
-// Libere les ressources associees a la gestion de la texture
+
+/*!
+ * \brief Libere les ressources associees a la gestion de la texture
+ * \param texture texures à libérers
+ */
 void libereTexture(Texture2D **texture);
 #endif
 
@@ -281,10 +354,17 @@ EtatBoutonSouris etatBoutonSouris(void);
  * \return le dernier caractère traité par l'evenement clavier
  */
 char caractereClavier(void);
-/* Renvoie la derniere touche speciale du clavier traitee par l'evenement ClavierSpecial */
+/*!
+ * \brief renvoie la derniere touche speciale du clavier traitee par l'evenement ClavierSpecial
+ * \return la derniere touche speciale du clavier traitee par l'evenement ClavierSpecial
+ */
 int toucheClavier(void);
 
-/* Indique l'etat de la touche Shift lors du dernier evenement Clavier */
+/*!
+ * \brief Indique l'etat de la touche shift lors du dernier evenement Clavier
+ * \return true si la touche shift était appuye lors du dernier appelle d'un evenement
+ * \return false si la touche shift n'était pas appuye lors du dernier appelle d'un evenement
+ */
 bool toucheShiftAppuyee(void);
 
 /*!
@@ -293,7 +373,11 @@ bool toucheShiftAppuyee(void);
  * \return false si la touche ctrl n'était pas appuye lors du dernier appelle d'un evenement
  */
 bool toucheCtrlAppuyee(void);
-/* Indique l'etat de la touche Alt lors du dernier evenement Clavier */
+/*!
+ * \brief Indique l'etat de la touche Alt lors du dernier evenement Clavier
+ * \return true si la touche alt était appuye lors du dernier appelle d'un evenement
+ * \return false si la touche alt n'était pas appuye lors du dernier appelle d'un evenement
+ */
 bool toucheAltAppuyee(void);
 
 
@@ -323,7 +407,10 @@ void modePleinEcran(void);
 
 
 
-// Affiche un message d'erreur de maniere standard pour l'OS
+/*!
+ * \brief Affiche un message d'erreur de maniere standard pour l'OS
+ * \param message message à afficher
+ */
 void messageDErreur(const char *message);
 
 
