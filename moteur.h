@@ -156,4 +156,10 @@ void concateneCaseCalcul(listeBlock * block, caseCalcul * listeA,
  */
 int initPartie(int *joueur);
 
+/*!
+ * \brief trouve un coup aleatoire pour le joueur
+ * \param joueur
+ * \return un coup aleatoire valide
+ */
+coup coupAleatoire(int joueur);
 #endif

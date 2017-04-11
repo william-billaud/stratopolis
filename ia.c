@@ -20,7 +20,7 @@ coup coupIA(int joueur, int niveauDifficulte) {
     coup meilleurCp;
     int max = -32000;
     int res;
-    //les differents indexw
+    //les differents index
     unsigned int i;
     unsigned int j;
     int i_o;
