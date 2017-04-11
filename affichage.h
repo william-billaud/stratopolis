@@ -233,7 +233,16 @@ void afficheChangemntNom(char nomJ1[15], char nomJ2[15],int joueurActuel);
  * \brief change le nom du joueur actuel en fonction du dernier caractère clavier
  * \param nomJ1 nom du joueur 1
  * \param nomJ2 nom du joueur 2
- * \param joueurActuelle joueur dont le nom est en train d'etres modifié
+ * \param joueurActuel joueur dont le nom est en train d'etres modifié
+ * \return joueurActuel
  */
 int changeNom(char nomJ1[15], char nomJ2[15],int joueurActuel);
+
+/*!
+ * \brief affiche les temps restant des joueurs
+ * \param joueurActuel
+ *
+ * le joueur dont ce n'est pas le tour voit son temp restant mis à zero
+ */
+void afficheTempRestant(int joueurActuel);
 #endif
