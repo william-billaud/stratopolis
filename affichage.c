@@ -364,6 +364,7 @@ void afficheBordureEntreCases(int numero1, int numero2, float centreX1,
 void afficheInterface(char nomJ1[15], char nomJ2[15], int joueurActuelle) {
     pieces pieceJ1;
     pieces pieceJ2;
+    float tailleC;
     if (ordreJoueurs[0][20] < 0 || ordreJoueurs[0][20] > 19) {
         pieceJ1.numeroPiece = 42;
 
@@ -403,9 +404,20 @@ void afficheInterface(char nomJ1[15], char nomJ2[15], int joueurActuelle) {
     //Affiche les noms des deux joueurs
     couleurCourante(240, 255, 255);
     epaisseurDeTrait(1);
-    afficheChaine(nomJ1, taille / 6, taille / 10,
+    //regle la taille d'affichage des noms
+    tailleC=taille/6;
+    while (tailleChaine(nomJ1,tailleC)>0.9*taille)
+    {
+        tailleC=tailleC-2;
+    }
+    afficheChaine(nomJ1, tailleC, taille / 10,
                   hauteurFenetre() - taille / 4);
-    afficheChaine(nomJ2, taille / 6, largeurFenetre() - taille * 9 / 10,
+    tailleC=taille/6;
+    while (tailleChaine(nomJ2,tailleC)>0.9*taille)
+    {
+        tailleC=tailleC-2;
+    }
+    afficheChaine(nomJ2, tailleC, largeurFenetre() - taille * 9 / 10,
                   hauteurFenetre() - taille / 4);
 
     afficheScore(calculScore(0), calculScore(1));
@@ -838,6 +850,7 @@ void afficheIndice(coup coupJoueur, int zoom, int x, int y)
 void afficheChangemntNom(char nomJ1[15], char nomJ2[15],int joueurActuel)
 {
     effaceFenetre(0,0,0);
+    epaisseurDeTrait(1);
     int h=hauteurFenetre();
     int l=largeurFenetre();
     int taille1=min(l,h)/6;
@@ -863,8 +876,8 @@ void afficheChangemntNom(char nomJ1[15], char nomJ2[15],int joueurActuel)
     while(tailleChaine(J2,taille2)>8*l/10) {
         taille2=taille2-5;
     }
-    afficheChaine(J2,taille2,l/9,5.5f*h/8);
-    afficheChaine(J1, taille1, l / 9, 1.5f * h / 8);
+    afficheChaine(J1,taille1,l/9,5.5f*h/8);
+    afficheChaine(J2, taille2, l / 9, 1.5f * h / 8);
 
 }
 /*!
@@ -873,7 +886,7 @@ void afficheChangemntNom(char nomJ1[15], char nomJ2[15],int joueurActuel)
  * \param nomJ2
  * \param joueurActuel
  */
-void changeNom(char nomJ1[15], char nomJ2[15],int joueurActuel)
+int changeNom(char nomJ1[15], char nomJ2[15],int joueurActuel)
 {
 
     char caractere=caractereClavier();
@@ -886,7 +899,7 @@ void changeNom(char nomJ1[15], char nomJ2[15],int joueurActuel)
             strcat(nomJ2, c);
         }
     }
-    if(caractere==8 || caractere==13)
+    if(caractere==8 )
     {
         if(joueurActuel==0)
         {
@@ -895,6 +908,9 @@ void changeNom(char nomJ1[15], char nomJ2[15],int joueurActuel)
         {
             nomJ2[strlen(nomJ2)-1]= (char) 0;
         }
+    } else if(caractere==13)
+    {
+        joueurActuel=joueurActuel+1;
     }
-
+    return  joueurActuel;
 }

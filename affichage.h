@@ -235,5 +235,5 @@ void afficheChangemntNom(char nomJ1[15], char nomJ2[15],int joueurActuel);
  * \param nomJ2 nom du joueur 2
  * \param joueurActuelle joueur dont le nom est en train d'etres modifié
  */
-void changeNom(char nomJ1[15], char nomJ2[15],int joueurActuel);
+int changeNom(char nomJ1[15], char nomJ2[15],int joueurActuel);
 #endif

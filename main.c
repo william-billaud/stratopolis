@@ -56,11 +56,11 @@ void gestionEvenement(EvenementGfx evenement) {
     //variable utlilisé pour stocker l'orientation de la piece
     static orientation orientationPiece;
     //variable utilisé pour stocker le joueur actuelle
-    static int joueurActuelle=1;
+    static int joueurActuelle=0;
     //variable utilisé pour stocker le niveau de difficulté
     static int niveauDifficulte = 20;
     //nom des joueurs
-    static char nomJ1[15] = "WilliambBILLAU";
+    static char nomJ1[15] = "William";
     static char nomJ2[15] = "Theo";
     //permet de savoir si une pièce est selectionné
     static bool pieceSelectionne = false;
@@ -121,7 +121,12 @@ void gestionEvenement(EvenementGfx evenement) {
             break;
         case Clavier:
             if (mode == chgmtNom && !toucheCtrlAppuyee()) {
-                changeNom(nomJ1,nomJ2,joueurActuelle);
+                joueurActuelle=changeNom(nomJ1,nomJ2,joueurActuelle);
+                if(joueurActuelle>1)
+                {
+                    joueurActuelle=1;
+                    mode=menu;
+                }
             } else {
                 switch (caractereClavier()) {
                     case 'Q':
