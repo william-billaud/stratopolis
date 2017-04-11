@@ -219,4 +219,21 @@ void rectangleVide(float xCoin1, float yCoin1, float xCoin2, float yCoin2, float
  * \param y ordonnée du zoom
  */
 void afficheIndice(coup coupJoueur,int zoom,int x,int y);
+
+/*!
+ * \brief affiche l'écran pour changer le nom des joueur
+ * \param nomJ1 nom du joueur 1
+ * \param nomJ2 nom du joueur 2
+ * \param joueurActuelle joueur dont le nom est en train d'etres modifié
+ */
+void afficheChangemntNom(char nomJ1[15], char nomJ2[15],int joueurActuel);
+
+
+/*!
+ * \brief change le nom du joueur actuel en fonction du dernier caractère clavier
+ * \param nomJ1 nom du joueur 1
+ * \param nomJ2 nom du joueur 2
+ * \param joueurActuelle joueur dont le nom est en train d'etres modifié
+ */
+int changeNom(char nomJ1[15], char nomJ2[15],int joueurActuel);
 #endif
