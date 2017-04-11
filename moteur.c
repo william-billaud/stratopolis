@@ -544,5 +544,52 @@ int initPartie(int *joueur)
 	retour += 4 * initPlateau();
 	*joueur = choisisJoueur();
     gestionDuree(0);
+	gestionDuree(2);
+	gestionDuree(4);
 	return retour;
+}
+
+/*!
+ * \brief trouve un coup aleatoire pour le joueur
+ * \param joueur
+ * \return un coup aleatoire valide
+ */
+coup coupAleatoire(int joueur)
+{
+	coup cp;
+	orientation or[4] = {HD, HG, BD, BG};
+	unsigned int i;
+	unsigned int j;
+	unsigned int i_r,j_r;
+	int i_o;
+	//variables necessaire pour reduire le nombre de possibilité à tester
+	unsigned int zoom;
+	unsigned int l;
+	unsigned int h;
+	cp.numeroPiece = 42;
+	cp.yCoup = 0;
+	cp.xCoup = 0;
+	cp.orientationPiece = HD;
+	//on reduit le champ des possibilté
+	if (trouveMeilleurZoom(&l, &h, &zoom) == -1) {
+		return cp;
+	}
+	cp.numeroPiece = (unsigned int) ordreJoueurs[joueur][ordreJoueurs[joueur][20]];
+	srand((unsigned int) time(NULL));
+	i_r= (unsigned int) (rand() % TAILLEMAX);
+	j_r= (unsigned int) (rand() % TAILLEMAX);
+	for (i = l; i < l + zoom; ++i) {
+		for (j = h; j < h + zoom; ++j) {
+			for (i_o = 0; i_o < 4; ++i_o) {
+				cp.orientationPiece = or[i_o];
+				cp.xCoup =l+(i+i_r)%zoom;
+				cp.yCoup = j+(j+j_r)%zoom;
+				if(estValideCoup(cp))
+				{
+					return cp;
+				}
+			}
+		}
+	}
+	return cp;
 }

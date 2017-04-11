@@ -366,13 +366,13 @@ int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom)
  */
 int gestionDuree(int ordre)
 {
-	static int temp;
-	if(ordre==0)
+	static int temp[3];
+	if(ordre%2==0)
 	{
-		temp=(int) time(NULL);
+		temp[ordre/2]=(int) time(NULL);
 		return 0;
 	}else
 	{
-		return temp;
+		return (int) (time(NULL))-temp[ordre/2];
 	}
 }
