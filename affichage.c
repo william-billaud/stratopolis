@@ -16,35 +16,26 @@ void afficheMenu() {
     float tailleBoutonY = hauteurFenetre() / 20;
     float centreX = largeurFenetre() / 2;
     float centreY = hauteurFenetre() / 2;
-    /*DonneesImageRGB *image5 = NULL;
-       DonneesImageRGB *image6 = NULL;
-       DonneesImageRGB *image7 = NULL;
-       DonneesImageRGB *image8 = NULL;
 
-       image5 = lisBMPRGB("ressources/ISEN.bmp");
-       image6 = lisBMPRGB("ressources/imp.bmp");
-       image7 = lisBMPRGB("ressources/cadre.bmp");
-       image8 = lisBMPRGB("ressources/menu.bmp");
-     */
-    couleurCourante(100, 100, 100);
-    rectangle(0, 0, largeurFenetre(), hauteurFenetre());
+		DonneesImageRGB *img_boite = NULL;
+		DonneesImageRGB *img_plateau = NULL;
+		DonneesImageRGB *img_logo = NULL;
 
-    /*if (image7 != NULL) {
-       ecrisImage((largeurFenetre() - image7->largeurImage) / 2, 120,
-       image7->largeurImage, image7->hauteurImage,
-       image7->donneesRGB);
-       }
-       if (image6 != NULL) {
-       ecrisImage((largeurFenetre() - image6->largeurImage) / 2 - 270,
-       0, image6->largeurImage, image6->hauteurImage,
-       image6->donneesRGB);
-       }
+		img_boite = lisBMPRGB("ressources/boite.bmp");
+		img_plateau = lisBMPRGB("ressources/plateau.bmp");
+		img_logo = lisBMPRGB("ressources/logo.bmp");
 
-       if (image5 != NULL) {
-       ecrisImage((largeurFenetre() - image5->largeurImage) / 2 + 280,
-       290, image5->largeurImage, image5->hauteurImage,
-       image5->donneesRGB);
-       } */
+		if (img_logo != NULL && img_plateau != NULL && img_boite != NULL)
+		{
+			if(largeurFenetre() >= 650 && hauteurFenetre() >=400)
+			{
+				ecrisImage(centreX - tailleBoutonX - img_plateau->largeurImage, 0, img_plateau->largeurImage, img_plateau->hauteurImage, img_plateau->donneesRGB);
+				ecrisImage(centreX + tailleBoutonX + 5, hauteurFenetre()-img_boite->hauteurImage, img_boite->largeurImage, img_boite->hauteurImage, img_boite->donneesRGB);
+
+			}
+			ecrisImage(centreX-(img_logo->largeurImage/2),(hauteurFenetre()-img_logo->hauteurImage)/1.07, img_logo->largeurImage, img_logo->hauteurImage, img_logo->donneesRGB);
+		}
+
     int abs = abscisseSouris();
     int ord = ordonneeSouris();
     estDansRectangle(abs, ord, (int) (centreX - tailleBoutonX), (int) (centreY + 2 * tailleBoutonY),
@@ -81,15 +72,9 @@ void afficheMenu() {
     afficheChaine("QUITTER", 24, centreX - tailleChaine("QUITTER", 24) / 2,
                   centreY - 7 * tailleBoutonY + tailleBoutonY * 3 / 5);
 
-    /*if (image8 != NULL) {
-       ecrisImage((largeurFenetre() - image8->largeurImage) / 2 - 20,
-       458, image8->largeurImage, image8->hauteurImage,
-       image8->donneesRGB);
-       }
-       libereDonneesImageRGB(&image5);
-       libereDonneesImageRGB(&image6);
-       libereDonneesImageRGB(&image7);
-       libereDonneesImageRGB(&image8); */
+		libereDonneesImageRGB(&img_logo);
+		libereDonneesImageRGB(&img_plateau);
+		libereDonneesImageRGB(&img_boite);
 }
 
 void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY) {
