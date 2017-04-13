@@ -382,6 +382,7 @@ void gestionEvenement(EvenementGfx evenement) {
                         niveauDifficulte = 1 + (niveauDifficulte)%5;
                         break;
                       case 4:
+                          joueurActuelle=0;
                         mode = chgmtNom;
                         break;
                       case 5:
