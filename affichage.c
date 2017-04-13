@@ -12,61 +12,47 @@
    \return rien
 */
 void afficheMenu() {
+
     float tailleBoutonX = largeurFenetre() / 10;
     float tailleBoutonY = hauteurFenetre() / 20;
     float centreX = largeurFenetre() / 2;
     float centreY = hauteurFenetre() / 2;
-    /*DonneesImageRGB *image5 = NULL;
-       DonneesImageRGB *image6 = NULL;
-       DonneesImageRGB *image7 = NULL;
-       DonneesImageRGB *image8 = NULL;
 
-       image5 = lisBMPRGB("ressources/ISEN.bmp");
-       image6 = lisBMPRGB("ressources/imp.bmp");
-       image7 = lisBMPRGB("ressources/cadre.bmp");
-       image8 = lisBMPRGB("ressources/menu.bmp");
-     */
-    couleurCourante(100, 100, 100);
-    rectangle(0, 0, largeurFenetre(), hauteurFenetre());
+    static DonneesImageRGB *img_boite = NULL;
+    static DonneesImageRGB *img_plateau = NULL;
+    static DonneesImageRGB *img_logo = NULL;
+    if (img_boite == NULL) {
+        img_boite = lisBMPRGB("./ressources/boite.bmp");
+    }
+    if (img_plateau == NULL) {
+        img_plateau = lisBMPRGB("./ressources/plateau.bmp");
+    }
+    if (img_logo == NULL) {
+        img_logo = lisBMPRGB("./ressources/logo.bmp");
+    }
+    if (img_logo != NULL && img_plateau != NULL && img_boite != NULL) {
+        if (largeurFenetre() >= 650 && hauteurFenetre() >= 400) {
+            ecrisImage((int) (centreX - tailleBoutonX - img_plateau->largeurImage), 0, img_plateau->largeurImage,
+                       img_plateau->hauteurImage, img_plateau->donneesRGB);
+            ecrisImage((int) (centreX + tailleBoutonX + 5), hauteurFenetre() - img_boite->hauteurImage,
+                       img_boite->largeurImage, img_boite->hauteurImage, img_boite->donneesRGB);
 
-    /*if (image7 != NULL) {
-       ecrisImage((largeurFenetre() - image7->largeurImage) / 2, 120,
-       image7->largeurImage, image7->hauteurImage,
-       image7->donneesRGB);
-       }
-       if (image6 != NULL) {
-       ecrisImage((largeurFenetre() - image6->largeurImage) / 2 - 270,
-       0, image6->largeurImage, image6->hauteurImage,
-       image6->donneesRGB);
-       }
+        }
+        ecrisImage((int) (centreX - (img_logo->largeurImage / 2)),
+                   (int) ((hauteurFenetre() - img_logo->hauteurImage) / 1.07), img_logo->largeurImage,
+                   img_logo->hauteurImage, img_logo->donneesRGB);
+    }
 
-       if (image5 != NULL) {
-       ecrisImage((largeurFenetre() - image5->largeurImage) / 2 + 280,
-       290, image5->largeurImage, image5->hauteurImage,
-       image5->donneesRGB);
-       } */
-    int abs = abscisseSouris();
-    int ord = ordonneeSouris();
-    estDansRectangle(abs, ord, (int) (centreX - tailleBoutonX), (int) (centreY + 2 * tailleBoutonY),
-                     (int) (centreX + tailleBoutonX), (int) (centreY + 4 * tailleBoutonY)) ? couleurCourante(231, 62, 1)
-                                                                                           : couleurCourante(255, 0, 0);
+    (detecteMenuPrincipal() == 1) ? couleurCourante(231, 62, 1) : couleurCourante(255, 0, 0);
     rectangle(centreX - tailleBoutonX, centreY + 2 * tailleBoutonY,
               centreX + tailleBoutonX, centreY + 4 * tailleBoutonY);
-    estDansRectangle(abs, ord, (int) (centreX - tailleBoutonX), (int) (centreY - tailleBoutonY),
-                     (int) (centreX + tailleBoutonX), (int) (centreY + tailleBoutonY)) ? couleurCourante(231, 62, 1)
-                                                                                       : couleurCourante(255, 0, 0);
+    (detecteMenuPrincipal() == 2) ? couleurCourante(231, 62, 1) : couleurCourante(255, 0, 0);
     rectangle(centreX - tailleBoutonX, centreY - tailleBoutonY,
               centreX + tailleBoutonX, centreY + tailleBoutonY);
-
-    estDansRectangle(abs, ord, (int) (centreX - tailleBoutonX), (int) (centreY - 2 * tailleBoutonY),
-                     (int) (centreX + tailleBoutonX), (int) (centreY - 4 * tailleBoutonY)) ? couleurCourante(231, 62, 1)
-                                                                                           : couleurCourante(255, 0, 0);
+    (detecteMenuPrincipal() == 3) ? couleurCourante(231, 62, 1) : couleurCourante(255, 0, 0);
     rectangle(centreX - tailleBoutonX, centreY - 2 * tailleBoutonY,
               centreX + tailleBoutonX, centreY - 4 * tailleBoutonY);
-
-    estDansRectangle(abs, ord, (int) (centreX - tailleBoutonX), (int) (centreY - 5 * tailleBoutonY),
-                     (int) (centreX + tailleBoutonX), (int) (centreY - 7 * tailleBoutonY)) ? couleurCourante(231, 62, 1)
-                                                                                           : couleurCourante(255, 0, 0);
+    (detecteMenuPrincipal() == 4) ? couleurCourante(231, 62, 1) : couleurCourante(255, 0, 0);
     rectangle(centreX - tailleBoutonX, centreY - 5 * tailleBoutonY,
               centreX + tailleBoutonX, centreY - 7 * tailleBoutonY);
 
@@ -74,22 +60,111 @@ void afficheMenu() {
     epaisseurDeTrait(4);
     afficheChaine("JOUER", 24, centreX - tailleChaine("JOUER", 24) / 2,
                   centreY + 2 * tailleBoutonY + tailleBoutonY * 3 / 5);
-    afficheChaine("OPTION", 24, centreX - tailleChaine("OPTION", 24) / 2,
+    afficheChaine("OPTIONS", 24, centreX - tailleChaine("OPTION", 24) / 2,
                   centreY - tailleBoutonY + tailleBoutonY * 3 / 5);
     afficheChaine("AIDE", 24, centreX - tailleChaine("AIDE", 24) / 2,
                   centreY - 4 * tailleBoutonY + tailleBoutonY * 3 / 5);
     afficheChaine("QUITTER", 24, centreX - tailleChaine("QUITTER", 24) / 2,
                   centreY - 7 * tailleBoutonY + tailleBoutonY * 3 / 5);
+}
 
-    /*if (image8 != NULL) {
-       ecrisImage((largeurFenetre() - image8->largeurImage) / 2 - 20,
-       458, image8->largeurImage, image8->hauteurImage,
-       image8->donneesRGB);
-       }
-       libereDonneesImageRGB(&image5);
-       libereDonneesImageRGB(&image6);
-       libereDonneesImageRGB(&image7);
-       libereDonneesImageRGB(&image8); */
+/*!
+    \brief Affiche le menu de sélection des options, et la sélection
+    \return rien
+*/
+void afficheOption(bool limiteTemp, unsigned int dureeLimite, int niveauDifficulte, int modeSuivant) {
+    float tailleBoutonX = largeurFenetre() / 6;
+    float tailleBoutonY = hauteurFenetre() / 20;
+    float centreX = largeurFenetre() / 2;
+    float centreY = hauteurFenetre() / 2;
+
+    char limite[15];
+    char difficulte[15];
+    char modeOption[20];
+
+    effaceFenetre(0, 0, 0);
+
+    (detecteMenuOption() == 1) ? couleurCourante(231, 62, 1) : couleurCourante(255, 0, 0);
+    rectangle(centreX / 2 - tailleBoutonX, centreY + 2 * tailleBoutonY,
+              centreX / 2 + tailleBoutonX, centreY + 4 * tailleBoutonY);
+
+    (detecteMenuOption() == 3) ? couleurCourante(231, 62, 1) : couleurCourante(255, 0, 0);
+    if (modeSuivant == 1) {
+        couleurCourante(125, 125, 125);
+    }
+    rectangle(centreX / 2 - tailleBoutonX, centreY - 3 * tailleBoutonY,
+              centreX / 2 + tailleBoutonX, centreY - 5 * tailleBoutonY);
+
+    (detecteMenuOption() == 2) ? couleurCourante(231, 62, 1) : couleurCourante(255, 0, 0);
+    if (modeSuivant == 2) {
+        couleurCourante(125, 125, 125);
+    }
+    rectangle(3 * centreX / 2 - tailleBoutonX, centreY + 2 * tailleBoutonY,
+              3 * centreX / 2 + tailleBoutonX, centreY + 4 * tailleBoutonY);
+
+    (detecteMenuOption() == 4) ? couleurCourante(231, 62, 1) : couleurCourante(255, 0, 0);
+    rectangle(3 * centreX / 2 - tailleBoutonX, centreY - 3 * tailleBoutonY,
+              3 * centreX / 2 + tailleBoutonX, centreY - 5 * tailleBoutonY);
+
+    (detecteMenuOption() == 5) ? couleurCourante(231, 62, 1) : couleurCourante(255, 0, 0);
+    rectangle(0, 0, tailleBoutonX, 2 * tailleBoutonY);
+
+    couleurCourante(200, 200, 200);
+    epaisseurDeTrait(3);
+    afficheChaine("OPTIONS", 50, centreX - tailleChaine("OPTIONS", 50) / 2, hauteurFenetre() - 3 * tailleBoutonY);
+    afficheChaine("Mode de jeu", 24, centreX / 2 - tailleChaine("Mode de jeu", 24) / 2,
+                  centreY + 5 * tailleBoutonY);
+    afficheChaine("Difficulte IA", 24, centreX / 2 - tailleChaine("Difficulte IA", 24) / 2,
+                  centreY - 2 * tailleBoutonY);
+    afficheChaine("Limite de temps", 24, 3 * centreX / 2 - tailleChaine("Limite de temps", 24) / 2,
+                  centreY + 5 * tailleBoutonY);
+
+
+    afficheChaine("Changer noms", 24, 3 * centreX / 2 - tailleChaine("Changer noms", 24) / 2,
+                  centreY - 5 * tailleBoutonY + tailleBoutonY * 3 / 5);
+    afficheChaine("Retour", 24, tailleBoutonX / 2 - tailleChaine("Retour", 24) / 2, tailleBoutonY * 3 / 5);
+
+    if (!limiteTemp) {
+        sprintf(limite, "%s", "Aucune");
+    } else {
+        sprintf(limite, "%d %s", dureeLimite, "secondes");
+    }
+    afficheChaine(limite, 24, 3 * centreX / 2 - tailleChaine(limite, 24) / 2,
+                  centreY + 2 * tailleBoutonY + tailleBoutonY * 3 / 5);
+
+
+    switch (niveauDifficulte) {
+        case 1:
+            sprintf(difficulte, "%s", "Facile");
+            break;
+        case 2:
+            sprintf(difficulte, "%s", "Moyen");
+            break;
+        case 3:
+            sprintf(difficulte, "%s", "Dur");
+            break;
+        case 4:
+            sprintf(difficulte, "%s", "Tres dur");
+            break;
+        case 5:
+            sprintf(difficulte, "%s", "Extreme");
+            break;
+        default:
+            sprintf(difficulte, "%s", "Erreur");
+            break;
+    }
+    afficheChaine(difficulte, 24, centreX / 2 - tailleChaine(difficulte, 24) / 2,
+                  centreY - 5 * tailleBoutonY + tailleBoutonY * 3 / 5);
+
+    if (modeSuivant == 2) {
+        sprintf(modeOption, "%s", "Joueur VS IA");
+    } else {
+        sprintf(modeOption, "%s", "Joueur VS Joueur");
+    }
+
+    afficheChaine(modeOption, 24, centreX / 2 - tailleChaine(modeOption, 24) / 2,
+                  centreY + 2 * tailleBoutonY + tailleBoutonY * 3 / 5);
+
 }
 
 void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY) {
@@ -449,8 +524,6 @@ void afficheInterface(char nomJ1[15], char nomJ2[15], int joueurActuelle) {
                  (int) (largeurFenetre() - x_min - marge),
                  (int) (y_max - marge), false);
     afficheDuree((int) taille);
-
-    afficheMenuEnjeu();
 }
 
 /*!
@@ -514,7 +587,7 @@ void dessinePredictif(coup coupJoueur, bool estValide, int zoom) {
  * \return 1 si l'utilisateur à clique dans la zone de selection du joueur 1
  * \return 2 si l'utilisateur à clique dans la zone de selection du joueur 3
  * \return 3 si l'utilisateur clic dans la zone du bouton Pause
- * \return 4 si l'utilisateur clic dans la zone du bouton Aide
+ * \return 4 si l'utilisateur clic dans la zone du bouton Indice
  * \return 5 si l'utilisateur clic dans la zone du bouton Quitter
  */
 int detecteCase(int *x, int *y, int zoom, unsigned int basX, unsigned int basY) {
@@ -676,21 +749,52 @@ bool estDansRectangle(int xClic, int yClic, int xMin, int yMin, int xMax, int yM
 int detecteMenuPrincipal(void) {
     int abs = abscisseSouris();
     int ord = ordonneeSouris();
-    if (estDansRectangle(abs, ord, largeurFenetre() * 2 / 5, hauteurFenetre() * 3 / 5, largeurFenetre() * 3 / 5,
-                         hauteurFenetre() * 7 / 10)) {
+    int L = largeurFenetre();
+    int H = hauteurFenetre();
+
+    if (estDansRectangle(abs, ord, L * 2 / 5, H * 3 / 5, L * 3 / 5, H * 7 / 10)) {
         return 1;
     }
-    if (estDansRectangle(abs, ord, largeurFenetre() * 2 / 5, hauteurFenetre() * 9 / 20, largeurFenetre() * 3 / 5,
-                         hauteurFenetre() * 11 / 20)) {
+    if (estDansRectangle(abs, ord, L * 2 / 5, H * 9 / 20, L * 3 / 5, H * 11 / 20)) {
         return 2;
     }
-    if (estDansRectangle(abs, ord, largeurFenetre() * 2 / 5, hauteurFenetre() * 3 / 10, largeurFenetre() * 3 / 5,
-                         hauteurFenetre() * 2 / 5)) {
+    if (estDansRectangle(abs, ord, L * 2 / 5, H * 3 / 10, L * 3 / 5, H * 2 / 5)) {
         return 3;
     }
-    if (estDansRectangle(abs, ord, largeurFenetre() * 2 / 5, hauteurFenetre() * 3 / 20, largeurFenetre() * 3 / 5,
-                         hauteurFenetre() / 4)) {
+    if (estDansRectangle(abs, ord, L * 2 / 5, H * 3 / 20, L * 3 / 5, H / 4)) {
         return 4;
+    }
+    return 0;
+}
+
+/*!
+ * \brief detecte la zone de clic du menu des options
+ * \return 1 : mode de jeu
+ * \return 2 : limite de temps
+ * \return 3 : difficulté IA
+ * \return 4 : changer de noms
+ * \return 5 : retour
+ */
+int detecteMenuOption(void) {
+    int abs = abscisseSouris();
+    int ord = ordonneeSouris();
+    int L = largeurFenetre();
+    int H = hauteurFenetre();
+
+    if (estDansRectangle(abs, ord, L / 12, H * 3 / 5, L * 5 / 12, H * 7 / 10)) {
+        return 1;
+    }
+    if (estDansRectangle(abs, ord, L / 12, H * 7 / 20, L * 5 / 12, H / 4)) {
+        return 3;
+    }
+    if (estDansRectangle(abs, ord, L * 7 / 12, H * 3 / 5, L * 11 / 12, H * 7 / 10)) {
+        return 2;
+    }
+    if (estDansRectangle(abs, ord, L * 7 / 12, H * 7 / 20, L * 11 / 12, H / 4)) {
+        return 4;
+    }
+    if (estDansRectangle(abs, ord, 0, 0, L / 6, H / 10)) {
+        return 5;
     }
     return 0;
 }
@@ -725,8 +829,9 @@ void afficheScore(int scoreJ1, int scoreJ2) {
 
 /*!
  * \brief affiche le menu en jeu
+ * \param pause true si le jeu est pause, false sinon
  */
-void afficheMenuEnjeu(void) {
+void afficheMenuEnjeu(bool pause) {
 
     float taille =
             (largeurFenetre() >=
@@ -744,8 +849,11 @@ void afficheMenuEnjeu(void) {
                       largeurFenetre() - 2.1f * taille, 2 * taille / 8);
             break;
         case 4:
-            rectangle(largeurFenetre() - 2.1f * taille, 0,
-                      largeurFenetre() - 1.65f * taille, 2 * taille / 8);
+            if (!pause) {
+                rectangle(largeurFenetre() - 2.1f * taille, 0,
+                          largeurFenetre() - 1.65f * taille, 2 * taille / 8);
+            }
+
             break;
         case 5:
             rectangle(largeurFenetre() - 1.65f * taille, 0, largeurFenetre() - taille, 2 * taille / 8);
@@ -762,7 +870,12 @@ void afficheMenuEnjeu(void) {
     //affiche le texte
     afficheChaine("QUITTER", taille / 8, largeurFenetre() - 1.6f * taille, taille / 20);
     afficheChaine("INDICE", taille / 8, largeurFenetre() - 2.07f * taille, taille / 20);
-    afficheChaine("PAUSE", taille / 8, largeurFenetre() - 2.55f * taille, taille / 20);
+    if (pause) {
+        afficheChaine("CONTINUER", taille / 12, largeurFenetre() - 2.6f * taille, taille / 20);
+    } else {
+        afficheChaine("PAUSE", taille / 8, largeurFenetre() - 2.55f * taille, taille / 20);
+    }
+
 }
 
 /*!
@@ -900,6 +1013,7 @@ int changeNom(char nomJ1[15], char nomJ2[15], int joueurActuel) {
     }
     return joueurActuel;
 }
+
 /*!
  * \brief affiche les temps restant des joueurs
  * \param joueurActuel
@@ -909,12 +1023,13 @@ int changeNom(char nomJ1[15], char nomJ2[15], int joueurActuel) {
 void afficheTempRestant(int joueurActuel) {
     float taille = (largeurFenetre() >= hauteurFenetre()) * largeurFenetre() / 6 +
                    (hauteurFenetre() > largeurFenetre()) * hauteurFenetre() / 6;
-    gestionDuree(((joueurActuel+1)%2)*2+2);
+    gestionDuree(((joueurActuel + 1) % 2) * 2 + 2);
     char tempJ1[5];
     char tempJ2[5];
-    sprintf(tempJ1,"%d",gestionDuree(3));
-    sprintf(tempJ2,"%d",gestionDuree(5));
-    couleurCourante(240,255,255);
-    afficheChaine(tempJ1,taille/6,taille/10,hauteurFenetre()*8/10);
-    afficheChaine(tempJ2,taille/6,largeurFenetre()-9*taille/10,hauteurFenetre()*8/10);
+    sprintf(tempJ1, "%d", gestionDuree(3));
+    sprintf(tempJ2, "%d", gestionDuree(5));
+    couleurCourante(240, 255, 255);
+    afficheChaine(tempJ1, taille / 6, taille / 10, hauteurFenetre() * 8 / 10);
+    afficheChaine(tempJ2, taille / 6, largeurFenetre() - 9 * taille / 10, hauteurFenetre() * 8 / 10);
 }
+

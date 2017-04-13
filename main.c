@@ -42,7 +42,7 @@ void gestionEvenement(EvenementGfx evenement) {
     static infoIa infoThread;
     static int debutHint;
     static enum {
-        menu, classique, IA, victoire, tmpIA, hint, chgmtNom,option
+        menu, classique, IA, victoire, tmpIA, hint, chgmtNom, option
     } mode, suivant;
     //position du zoom par defaut
     static unsigned int x_d = 80, y_d = 80;
@@ -56,23 +56,25 @@ void gestionEvenement(EvenementGfx evenement) {
     //variable utlilisé pour stocker l'orientation de la piece
     static orientation orientationPiece;
     //variable utilisé pour stocker le joueur actuelle
-    static int joueurActuelle=0;
+    static int joueurActuelle = 0;
     //variable utilisé pour stocker le niveau de difficulté
-    static int niveauDifficulte = 3;
+    static int niveauDifficulte = 1;
     //nom des joueurs
-    static char nomJ1[15] = "William";
-    static char nomJ2[15] = "Theo";
+    static char nomJ1[15] = "Joueur 1";
+    static char nomJ2[15] = "Joueur 2";
     //permet de savoir si une pièce est selectionné
     static bool pieceSelectionne = false;
     int zoneDetecte;
     //inidique si la limite de temp est activé ou non
-    static bool limiteTemp=true;
+    static bool limiteTemp = false;
     //durée de la limite de temp
-    static unsigned int dureeLimite=2;
+    static unsigned int dureeLimite = 0;
+    //si le mode pause est activée
+    static bool pause=false;
     switch (evenement) {
         case Initialisation:
             modePleinEcran();
-            mode = chgmtNom;
+            mode = menu;
             suivant = classique;
             activeGestionDeplacementPassifSouris();
             demandeTemporisation(30);
@@ -84,7 +86,7 @@ void gestionEvenement(EvenementGfx evenement) {
                     if (joueurActuelle == 1) {
                         infoThread.estFini = 0;
                         infoThread.niveauDifficulte = niveauDifficulte;
-                                infoThread.joueur = joueurActuelle;
+                        infoThread.joueur = joueurActuelle;
                         if (detacheThread_sur(threadIa, (void *) &infoThread)) {
                             mode = tmpIA;
                         }
@@ -94,8 +96,9 @@ void gestionEvenement(EvenementGfx evenement) {
                 case tmpIA:
                     afficheInterface(nomJ1, nomJ2, joueurActuelle);
                     afficheGrille(zoom_d, x_d, y_d);
+                    afficheMenuEnjeu(pause);
                     detecteCase(&x, &y, zoom_d, x_d, y_d);
-                    if (pieceSelectionne) {
+                    if (pieceSelectionne && !pause) {
                         coupJoueur.orientationPiece = orientationPiece;
                         coupJoueur.yCoup = (unsigned int) y;
                         coupJoueur.xCoup = (unsigned int) x;
@@ -104,12 +107,11 @@ void gestionEvenement(EvenementGfx evenement) {
                         affichePredictif(coupJoueur, zoom_d);
                     }
                     //affiche l'indice
-                    if (suivant == hint) {
+                    if (suivant == hint && !pause) {
                         //affiche l'indice
                         afficheIndice(coupHint, zoom_d, x_d, y_d);
                     }
-                    if(limiteTemp)
-                    {
+                    if (limiteTemp && classique) {
                         afficheTempRestant(joueurActuelle);
                     }
                     break;
@@ -124,7 +126,7 @@ void gestionEvenement(EvenementGfx evenement) {
                     //TODO
                     break;
                 case option:
-                    //TODO affiche ecran option
+                    afficheOption(limiteTemp, dureeLimite, niveauDifficulte, suivant);
                     break;
 
 
@@ -132,11 +134,10 @@ void gestionEvenement(EvenementGfx evenement) {
             break;
         case Clavier:
             if (mode == chgmtNom && !toucheCtrlAppuyee()) {
-                joueurActuelle=changeNom(nomJ1,nomJ2,joueurActuelle);
-                if(joueurActuelle>1)
-                {
-                    joueurActuelle=1;
-                    mode=menu;
+                joueurActuelle = changeNom(nomJ1, nomJ2, joueurActuelle);
+                if (joueurActuelle > 1) {
+                    joueurActuelle = 1;
+                    mode = option;
                 }
             } else {
                 switch (caractereClavier()) {
@@ -193,24 +194,26 @@ void gestionEvenement(EvenementGfx evenement) {
                 case tmpIA:
                 case hint:
                 case classique:
-                    switch (toucheClavier()) {
-                        case ToucheFlecheDroite:
-                        case ToucheFlecheBas:
-                            orientationPiece = (orientationPiece + 1) % 4;
-                            break;
+                    if(!pause) {
+                        switch (toucheClavier()) {
+                            case ToucheFlecheDroite:
+                            case ToucheFlecheBas:
+                                orientationPiece = (orientationPiece + 1) % 4;
+                                break;
 
-                        case ToucheFlecheGauche:
-                        case ToucheFlecheHaut:
-                            if (orientationPiece == HD) {
-                                orientationPiece = HG;
-                            } else {
-                                //(x+3)%4 =(x-1)%4 mais evite le problème des negatifs
-                                orientationPiece = (orientationPiece + 3) % 4;
-                            }
-                            break;
+                            case ToucheFlecheGauche:
+                            case ToucheFlecheHaut:
+                                if (orientationPiece == HD) {
+                                    orientationPiece = HG;
+                                } else {
+                                    //(x+3)%4 =(x-1)%4 mais evite le problème des negatifs
+                                    orientationPiece = (orientationPiece + 3) % 4;
+                                }
+                                break;
 
-                        default:
-                            break;
+                            default:
+                                break;
+                        }
                     }
                     break;
                 case menu:
@@ -235,8 +238,8 @@ void gestionEvenement(EvenementGfx evenement) {
                     switch (etatBoutonSouris()) {
                         case GaucheAppuye:
                             zoneDetecte = detecteCase(&x, &y, zoom_d, x_d, y_d);
-                            if (mode == classique || (mode == IA && joueurActuelle == 0)) {
-                                if (pieceSelectionne && zoneDetecte == 0) {
+                            if (mode == classique || (mode == IA && joueurActuelle == 0) ) {
+                                if (pieceSelectionne && zoneDetecte == 0 && !pause) {
                                     coupJoueur.orientationPiece = orientationPiece;
                                     coupJoueur.yCoup = (unsigned int) y;
                                     coupJoueur.xCoup = (unsigned int) x;
@@ -250,20 +253,29 @@ void gestionEvenement(EvenementGfx evenement) {
                                         if (ordreJoueurs[1][20] == 20
                                             && ordreJoueurs[0][20] == 20) {
                                             joueurActuelle = calculScore(0) > calculScore(1) ? 0 : 1;
-                                            suivant=mode;
+                                            suivant = mode;
+                                            gestionDuree(7);
+                                            pause=false;
                                             mode = victoire;
 
                                         }
-                                        gestionDuree(joueurActuelle*2+2);
+                                        gestionDuree(joueurActuelle * 2 + 2);
                                     }
                                     pieceSelectionne = false;
-                                } else if (zoneDetecte == joueurActuelle + 1) {
+                                } else if (zoneDetecte == joueurActuelle + 1 && !pause) {
                                     pieceSelectionne = !pieceSelectionne;
                                 }
                             }
                             if (zoneDetecte == 3) {
+                                if(pause)
+                                {
+                                    gestionDuree(7);
+                                } else{
+                                    gestionDuree(6);
+                                }
+                                pause=!pause;
 
-                            } else if (zoneDetecte == 4) {
+                            } else if (zoneDetecte == 4 && !pause) {
                                 infoThread.estFini = 0;
                                 infoThread.niveauDifficulte = 0;
                                 infoThread.joueur = joueurActuelle;
@@ -272,6 +284,15 @@ void gestionEvenement(EvenementGfx evenement) {
                                     mode = hint;
                                 }
                             } else if (zoneDetecte == 5) {
+                                if(suivant==IA  || suivant==tmpIA)
+                                {
+                                    suivant=IA;
+                                }else
+                                {
+                                    suivant=classique;
+                                }
+                                gestionDuree(7);
+                                pause=false;
                                 mode = menu;
                             }
 
@@ -328,7 +349,7 @@ void gestionEvenement(EvenementGfx evenement) {
                             mode = suivant;
                             break;
                         case 2:
-                            //option
+                            mode = option;
                             break;
                         case 3:
                             //aide
@@ -344,11 +365,48 @@ void gestionEvenement(EvenementGfx evenement) {
                     // TODO
                     break;
                 case option:
-                    //TODO
+                    if (etatBoutonSouris() == GaucheAppuye) {
+                        switch (detecteMenuOption()) {
+                            case 1:
+                                if (suivant == classique) {
+                                    suivant = IA;
+                                } else {
+                                    suivant = classique;
+                                }
+                                break;
+                            case 2:
+                                if (suivant == classique) {
+                                    if (!limiteTemp) {
+                                        limiteTemp = true;
+                                        dureeLimite = 30;
+                                    } else if (dureeLimite == 30) {
+                                        dureeLimite = 120;
+                                    } else if (dureeLimite == 120) {
+                                        dureeLimite = 300;
+                                    } else {
+                                        limiteTemp = false;
+                                    }
+                                }
+                                rafraichisFenetre();
+                                break;
+                            case 3:
+                                if (suivant == IA) {
+                                    niveauDifficulte = 1 + (niveauDifficulte) % 5;
+                                }
+                                break;
+                            case 4:
+                                joueurActuelle = 0;
+                                mode = chgmtNom;
+                                break;
+                            case 5:
+                                mode = menu;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                     break;
             }
-
-            rafraichisFenetre();
             break;
         case Souris:
             switch (mode) {
@@ -383,8 +441,9 @@ void gestionEvenement(EvenementGfx evenement) {
                     if (ordreJoueurs[1][20] == 20
                         && ordreJoueurs[0][20] == 20) {
                         joueurActuelle = calculScore(0) > calculScore(1) ? 0 : 1;
-                        suivant=mode;
+                        suivant = mode;
                         mode = victoire;
+                        pause=false;
                     }
                 }
             }
@@ -406,22 +465,22 @@ void gestionEvenement(EvenementGfx evenement) {
                     suivant = menu;
                 }
             }
-            if(mode==classique && limiteTemp)
-            {
-                if(gestionDuree(joueurActuelle*2+3)>= (int)dureeLimite)
-                {
-                    coupJoueur=coupAleatoire(joueurActuelle);
+            if (mode == classique && limiteTemp) {
+                if (gestionDuree(joueurActuelle * 2 + 3) >= (int) dureeLimite) {
+                    coupJoueur = coupAleatoire(joueurActuelle);
                     if (joueCoup(coupJoueur) == 1) {
                         ordreJoueurs[joueurActuelle][20] += 1;
                         joueurActuelle = (joueurActuelle + 1) % 2;
                         if (ordreJoueurs[1][20] == 20
                             && ordreJoueurs[0][20] == 20) {
                             joueurActuelle = calculScore(0) > calculScore(1) ? 0 : 1;
-                            suivant=mode;
+                            suivant = mode;
                             mode = victoire;
+                            gestionDuree(7);
+                            pause=false;
 
                         }
-                        gestionDuree(joueurActuelle*2+2);
+                        gestionDuree(joueurActuelle * 2 + 2);
                     }
                 }
             }
