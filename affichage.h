@@ -28,12 +28,9 @@ int afficheAide(int posX, int posY);
 
 /*!
     \brief Affiche le menu de sélection des options, et la sélection
-    \param[in] posX : position en abscisse du curseur de la souris
-    \param[in] posY : position en ordonnée du curseur de la souris
-    \return 0 si le curseur ne survole aucun bouton
-    \return 1 si le curseur survole le bouton Retour
+    \return rien
 */
-int afficheOption(int posX, int posY);
+void afficheOption(bool limiteTemp, unsigned int dureeLimite, int niveauDifficulte, int modeSuivant);
 
 
 /*!
@@ -190,11 +187,21 @@ bool estDansRectangle(int xClic,int yClic,int xMin,int yMin,int largeur,int haut
 /*!
  * \brief detecte la zone de clic du menu principale
  * \return 1 : jouer
- * \return 2 :option
- * \return 3 : Aide
- * \return 4 : leave;
+ * \return 2 : option
+ * \return 3 : aide
+ * \return 4 : quitter
  */
 int detecteMenuPrincipal(void);
+
+/*!
+ * \brief detecte la zone de clic du menu des options
+ * \return 1 : mode de jeu
+ * \return 2 : limite de temps
+ * \return 3 : difficulté IA
+ * \return 4 : changer de noms
+ * \return 5 : retour
+ */
+int detecteMenuOption(void);
 
 /*!
  * \brief affiche le menu en jeu

@@ -58,21 +58,21 @@ void gestionEvenement(EvenementGfx evenement) {
     //variable utilisé pour stocker le joueur actuelle
     static int joueurActuelle=0;
     //variable utilisé pour stocker le niveau de difficulté
-    static int niveauDifficulte = 3;
+    static int niveauDifficulte = 1;
     //nom des joueurs
-    static char nomJ1[15] = "William";
-    static char nomJ2[15] = "Theo";
+    static char nomJ1[15] = "Joueur 1";
+    static char nomJ2[15] = "Joueur 2";
     //permet de savoir si une pièce est selectionné
     static bool pieceSelectionne = false;
     int zoneDetecte;
     //inidique si la limite de temp est activé ou non
-    static bool limiteTemp=true;
+    static bool limiteTemp=false;
     //durée de la limite de temp
-    static unsigned int dureeLimite=2;
+    static unsigned int dureeLimite=0;
     switch (evenement) {
         case Initialisation:
             modePleinEcran();
-            mode = chgmtNom;
+            mode = menu;
             suivant = classique;
             activeGestionDeplacementPassifSouris();
             demandeTemporisation(30);
@@ -124,7 +124,7 @@ void gestionEvenement(EvenementGfx evenement) {
                     //TODO
                     break;
                 case option:
-                    //TODO affiche ecran option
+                    afficheOption(limiteTemp, dureeLimite, niveauDifficulte, suivant);
                     break;
 
 
@@ -136,7 +136,7 @@ void gestionEvenement(EvenementGfx evenement) {
                 if(joueurActuelle>1)
                 {
                     joueurActuelle=1;
-                    mode=menu;
+                    mode=option;
                 }
             } else {
                 switch (caractereClavier()) {
@@ -328,7 +328,7 @@ void gestionEvenement(EvenementGfx evenement) {
                             mode = suivant;
                             break;
                         case 2:
-                            //option
+                            mode = option;
                             break;
                         case 3:
                             //aide
@@ -344,11 +344,55 @@ void gestionEvenement(EvenementGfx evenement) {
                     // TODO
                     break;
                 case option:
-                    //TODO
+                  if(etatBoutonSouris() == GaucheAppuye)
+                  {
+                    switch(detecteMenuOption())
+                    {
+                      case 1:
+                        if(suivant == classique)
+                        {
+                          suivant = IA;
+                        }
+                        else
+                        {
+                          suivant = classique;
+                        }
+                        break;
+                      case 2:
+                        if(!limiteTemp)
+                        {
+                          limiteTemp = true;
+                          dureeLimite = 30;
+                        }
+                        else if(dureeLimite == 30)
+                        {
+                          dureeLimite = 120;
+                        }
+                        else if(dureeLimite == 120)
+                        {
+                          dureeLimite = 300;
+                        }
+                        else
+                        {
+                          limiteTemp = false;
+                        }
+                        rafraichisFenetre();
+                        break;
+                      case 3:
+                        niveauDifficulte = 1 + (niveauDifficulte)%5;
+                        break;
+                      case 4:
+                        mode = chgmtNom;
+                        break;
+                      case 5:
+                        mode = menu;
+                        break;
+                      default:
+                        break;
+                    }
+                  }
                     break;
             }
-
-            rafraichisFenetre();
             break;
         case Souris:
             switch (mode) {
