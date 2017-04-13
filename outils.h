@@ -193,7 +193,14 @@ int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom);
 
 /*!
  * \brief fonction permettant de gèrer le temp
- * \param ordre 0 pour reinitialiser le temp stocké, n'importe quel nombre pour récuperer le temp stocké
+ * \param ordre 0 pour reinitialiser le temp stocké n°1
+ * \param ordre 1 pour renvoie le temp stocké n°1
+ * \param ordre 2 pour reinitialiser le temp stocké n°2
+ * \param ordre 3 pour renvoie le temp stocké n°2
+ * \param ordre 4 pour reinitialiser le temp stocké n°3
+ * \param ordre 5 pour renvoie le temp stocké n°3
+ * \param ordre 6 pour activer la pause
+ * \param ordre 7 pour desactiver la pause
  * \return le temp stocké
  * \return 0 si il a été reinitialisé
  */

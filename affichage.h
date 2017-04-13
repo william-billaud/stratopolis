@@ -205,8 +205,9 @@ int detecteMenuOption(void);
 
 /*!
  * \brief affiche le menu en jeu
+ * \param pause true si le jeu est pause, false sinon
  */
-void afficheMenuEnjeu(void);
+void afficheMenuEnjeu(bool pause);
 
 /*!
  * \brief trace un rectangle vide
