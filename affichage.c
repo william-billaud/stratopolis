@@ -23,15 +23,15 @@ void afficheMenu() {
 		static DonneesImageRGB *img_logo = NULL;
         if(img_boite==NULL)
         {
-            img_boite = lisBMPRGB("ressources/boite.bmp");
+            img_boite = lisBMPRGB("./ressources/boite.bmp");
         }
 		if(img_plateau==NULL)
         {
-            img_plateau = lisBMPRGB("ressources/plateau.bmp");
+            img_plateau = lisBMPRGB("./ressources/plateau.bmp");
         }
 		if(img_logo==NULL)
         {
-            img_logo = lisBMPRGB("ressources/logo.bmp");
+            img_logo = lisBMPRGB("./ressources/logo.bmp");
         }
 		if (img_logo != NULL && img_plateau != NULL && img_boite != NULL)
 		{
@@ -92,10 +92,18 @@ void afficheOption(bool limiteTemp, unsigned int dureeLimite, int niveauDifficul
             centreX/2 + tailleBoutonX, centreY + 4 * tailleBoutonY);
 
   (detecteMenuOption() == 3) ? couleurCourante(231, 62, 1) : couleurCourante(255, 0, 0);
+    if(modeSuivant==1)
+    {
+        couleurCourante(125,125,125);
+    }
   rectangle(centreX/2 - tailleBoutonX, centreY - 3*tailleBoutonY,
             centreX/2 + tailleBoutonX, centreY - 5*tailleBoutonY);
 
   (detecteMenuOption() == 2) ? couleurCourante(231, 62, 1) : couleurCourante(255, 0, 0);
+    if(modeSuivant==2 )
+    {
+        couleurCourante(125,125,125);
+    }
   rectangle(3*centreX/2 - tailleBoutonX, centreY + 2 * tailleBoutonY,
             3*centreX/2 + tailleBoutonX, centreY + 4 * tailleBoutonY);
 
