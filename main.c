@@ -69,6 +69,8 @@ void gestionEvenement(EvenementGfx evenement) {
     static bool limiteTemp = false;
     //durée de la limite de temp
     static unsigned int dureeLimite = 0;
+    //si le mode pause est activée
+    static bool pause=false;
     switch (evenement) {
         case Initialisation:
             modePleinEcran();
@@ -94,8 +96,9 @@ void gestionEvenement(EvenementGfx evenement) {
                 case tmpIA:
                     afficheInterface(nomJ1, nomJ2, joueurActuelle);
                     afficheGrille(zoom_d, x_d, y_d);
+                    afficheMenuEnjeu(pause);
                     detecteCase(&x, &y, zoom_d, x_d, y_d);
-                    if (pieceSelectionne) {
+                    if (pieceSelectionne && !pause) {
                         coupJoueur.orientationPiece = orientationPiece;
                         coupJoueur.yCoup = (unsigned int) y;
                         coupJoueur.xCoup = (unsigned int) x;
@@ -104,7 +107,7 @@ void gestionEvenement(EvenementGfx evenement) {
                         affichePredictif(coupJoueur, zoom_d);
                     }
                     //affiche l'indice
-                    if (suivant == hint) {
+                    if (suivant == hint && !pause) {
                         //affiche l'indice
                         afficheIndice(coupHint, zoom_d, x_d, y_d);
                     }
@@ -191,24 +194,26 @@ void gestionEvenement(EvenementGfx evenement) {
                 case tmpIA:
                 case hint:
                 case classique:
-                    switch (toucheClavier()) {
-                        case ToucheFlecheDroite:
-                        case ToucheFlecheBas:
-                            orientationPiece = (orientationPiece + 1) % 4;
-                            break;
+                    if(!pause) {
+                        switch (toucheClavier()) {
+                            case ToucheFlecheDroite:
+                            case ToucheFlecheBas:
+                                orientationPiece = (orientationPiece + 1) % 4;
+                                break;
 
-                        case ToucheFlecheGauche:
-                        case ToucheFlecheHaut:
-                            if (orientationPiece == HD) {
-                                orientationPiece = HG;
-                            } else {
-                                //(x+3)%4 =(x-1)%4 mais evite le problème des negatifs
-                                orientationPiece = (orientationPiece + 3) % 4;
-                            }
-                            break;
+                            case ToucheFlecheGauche:
+                            case ToucheFlecheHaut:
+                                if (orientationPiece == HD) {
+                                    orientationPiece = HG;
+                                } else {
+                                    //(x+3)%4 =(x-1)%4 mais evite le problème des negatifs
+                                    orientationPiece = (orientationPiece + 3) % 4;
+                                }
+                                break;
 
-                        default:
-                            break;
+                            default:
+                                break;
+                        }
                     }
                     break;
                 case menu:
@@ -233,8 +238,8 @@ void gestionEvenement(EvenementGfx evenement) {
                     switch (etatBoutonSouris()) {
                         case GaucheAppuye:
                             zoneDetecte = detecteCase(&x, &y, zoom_d, x_d, y_d);
-                            if (mode == classique || (mode == IA && joueurActuelle == 0)) {
-                                if (pieceSelectionne && zoneDetecte == 0) {
+                            if (mode == classique || (mode == IA && joueurActuelle == 0) ) {
+                                if (pieceSelectionne && zoneDetecte == 0 && !pause) {
                                     coupJoueur.orientationPiece = orientationPiece;
                                     coupJoueur.yCoup = (unsigned int) y;
                                     coupJoueur.xCoup = (unsigned int) x;
@@ -249,19 +254,28 @@ void gestionEvenement(EvenementGfx evenement) {
                                             && ordreJoueurs[0][20] == 20) {
                                             joueurActuelle = calculScore(0) > calculScore(1) ? 0 : 1;
                                             suivant = mode;
+                                            gestionDuree(7);
+                                            pause=false;
                                             mode = victoire;
 
                                         }
                                         gestionDuree(joueurActuelle * 2 + 2);
                                     }
                                     pieceSelectionne = false;
-                                } else if (zoneDetecte == joueurActuelle + 1) {
+                                } else if (zoneDetecte == joueurActuelle + 1 && !pause) {
                                     pieceSelectionne = !pieceSelectionne;
                                 }
                             }
                             if (zoneDetecte == 3) {
+                                if(pause)
+                                {
+                                    gestionDuree(7);
+                                } else{
+                                    gestionDuree(6);
+                                }
+                                pause=!pause;
 
-                            } else if (zoneDetecte == 4) {
+                            } else if (zoneDetecte == 4 && !pause) {
                                 infoThread.estFini = 0;
                                 infoThread.niveauDifficulte = 0;
                                 infoThread.joueur = joueurActuelle;
@@ -270,6 +284,15 @@ void gestionEvenement(EvenementGfx evenement) {
                                     mode = hint;
                                 }
                             } else if (zoneDetecte == 5) {
+                                if(suivant==IA  || suivant==tmpIA)
+                                {
+                                    suivant=IA;
+                                }else
+                                {
+                                    suivant=classique;
+                                }
+                                gestionDuree(7);
+                                pause=false;
                                 mode = menu;
                             }
 
@@ -420,6 +443,7 @@ void gestionEvenement(EvenementGfx evenement) {
                         joueurActuelle = calculScore(0) > calculScore(1) ? 0 : 1;
                         suivant = mode;
                         mode = victoire;
+                        pause=false;
                     }
                 }
             }
@@ -452,6 +476,8 @@ void gestionEvenement(EvenementGfx evenement) {
                             joueurActuelle = calculScore(0) > calculScore(1) ? 0 : 1;
                             suivant = mode;
                             mode = victoire;
+                            gestionDuree(7);
+                            pause=false;
 
                         }
                         gestionDuree(joueurActuelle * 2 + 2);

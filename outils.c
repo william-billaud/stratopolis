@@ -360,19 +360,44 @@ int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom)
 
 /*!
  * \brief fonction permettant de gèrer le temp
- * \param ordre 0 pour reinitialiser le temp stocké, n'importe quel nombre pour récuperer le temp stocké
+ * \param ordre 0 pour reinitialiser le temp stocké n°1
+ * \param ordre 1 pour renvoie le temp stocké n°1
+ * \param ordre 2 pour reinitialiser le temp stocké n°2
+ * \param ordre 3 pour renvoie le temp stocké n°2
+ * \param ordre 4 pour reinitialiser le temp stocké n°3
+ * \param ordre 5 pour renvoie le temp stocké n°3
+ * \param ordre 6 pour activer la pause
+ * \param ordre 7 pour desactiver la pause
  * \return le temp stocké
  * \return 0 si il a été reinitialisé
  */
 int gestionDuree(int ordre)
 {
 	static int temp[3];
+    static int pause;
+    //lance la pause
+    if(ordre==6)
+    {
+        pause=(int)time(NULL);
+    } else if(ordre==7)
+    {
+        temp[0]=temp[0]+((int) time(NULL))-pause;
+        temp[1]=temp[1]+((int) time(NULL))-pause;
+        temp[2]=temp[2]+((int) time(NULL))-pause;
+        pause=0;
+    }
 	if(ordre%2==0)
 	{
 		temp[ordre/2]=(int) time(NULL);
 		return 0;
 	}else
 	{
-		return (int) (time(NULL))-temp[ordre/2];
+        if(pause==0)
+        {
+            return (int) (time(NULL))-temp[ordre/2];
+        } else{
+            return ((pause-temp[ordre/2])>0)?pause-temp[ordre/2]:0;
+        }
+
 	}
 }
