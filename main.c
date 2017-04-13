@@ -42,7 +42,7 @@ void gestionEvenement(EvenementGfx evenement) {
     static infoIa infoThread;
     static int debutHint;
     static enum {
-        menu, classique, IA, victoire, tmpIA, hint, chgmtNom,option
+        menu, classique, IA, victoire, tmpIA, hint, chgmtNom, option
     } mode, suivant;
     //position du zoom par defaut
     static unsigned int x_d = 80, y_d = 80;
@@ -56,7 +56,7 @@ void gestionEvenement(EvenementGfx evenement) {
     //variable utlilisé pour stocker l'orientation de la piece
     static orientation orientationPiece;
     //variable utilisé pour stocker le joueur actuelle
-    static int joueurActuelle=0;
+    static int joueurActuelle = 0;
     //variable utilisé pour stocker le niveau de difficulté
     static int niveauDifficulte = 1;
     //nom des joueurs
@@ -66,9 +66,9 @@ void gestionEvenement(EvenementGfx evenement) {
     static bool pieceSelectionne = false;
     int zoneDetecte;
     //inidique si la limite de temp est activé ou non
-    static bool limiteTemp=false;
+    static bool limiteTemp = false;
     //durée de la limite de temp
-    static unsigned int dureeLimite=0;
+    static unsigned int dureeLimite = 0;
     switch (evenement) {
         case Initialisation:
             modePleinEcran();
@@ -84,7 +84,7 @@ void gestionEvenement(EvenementGfx evenement) {
                     if (joueurActuelle == 1) {
                         infoThread.estFini = 0;
                         infoThread.niveauDifficulte = niveauDifficulte;
-                                infoThread.joueur = joueurActuelle;
+                        infoThread.joueur = joueurActuelle;
                         if (detacheThread_sur(threadIa, (void *) &infoThread)) {
                             mode = tmpIA;
                         }
@@ -108,8 +108,7 @@ void gestionEvenement(EvenementGfx evenement) {
                         //affiche l'indice
                         afficheIndice(coupHint, zoom_d, x_d, y_d);
                     }
-                    if(limiteTemp)
-                    {
+                    if (limiteTemp && classique) {
                         afficheTempRestant(joueurActuelle);
                     }
                     break;
@@ -132,11 +131,10 @@ void gestionEvenement(EvenementGfx evenement) {
             break;
         case Clavier:
             if (mode == chgmtNom && !toucheCtrlAppuyee()) {
-                joueurActuelle=changeNom(nomJ1,nomJ2,joueurActuelle);
-                if(joueurActuelle>1)
-                {
-                    joueurActuelle=1;
-                    mode=option;
+                joueurActuelle = changeNom(nomJ1, nomJ2, joueurActuelle);
+                if (joueurActuelle > 1) {
+                    joueurActuelle = 1;
+                    mode = option;
                 }
             } else {
                 switch (caractereClavier()) {
@@ -250,11 +248,11 @@ void gestionEvenement(EvenementGfx evenement) {
                                         if (ordreJoueurs[1][20] == 20
                                             && ordreJoueurs[0][20] == 20) {
                                             joueurActuelle = calculScore(0) > calculScore(1) ? 0 : 1;
-                                            suivant=mode;
+                                            suivant = mode;
                                             mode = victoire;
 
                                         }
-                                        gestionDuree(joueurActuelle*2+2);
+                                        gestionDuree(joueurActuelle * 2 + 2);
                                     }
                                     pieceSelectionne = false;
                                 } else if (zoneDetecte == joueurActuelle + 1) {
@@ -344,53 +342,46 @@ void gestionEvenement(EvenementGfx evenement) {
                     // TODO
                     break;
                 case option:
-                  if(etatBoutonSouris() == GaucheAppuye)
-                  {
-                    switch(detecteMenuOption())
-                    {
-                      case 1:
-                        if(suivant == classique)
-                        {
-                          suivant = IA;
+                    if (etatBoutonSouris() == GaucheAppuye) {
+                        switch (detecteMenuOption()) {
+                            case 1:
+                                if (suivant == classique) {
+                                    suivant = IA;
+                                } else {
+                                    suivant = classique;
+                                }
+                                break;
+                            case 2:
+                                if (suivant == classique) {
+                                    if (!limiteTemp) {
+                                        limiteTemp = true;
+                                        dureeLimite = 30;
+                                    } else if (dureeLimite == 30) {
+                                        dureeLimite = 120;
+                                    } else if (dureeLimite == 120) {
+                                        dureeLimite = 300;
+                                    } else {
+                                        limiteTemp = false;
+                                    }
+                                }
+                                rafraichisFenetre();
+                                break;
+                            case 3:
+                                if (suivant == IA) {
+                                    niveauDifficulte = 1 + (niveauDifficulte) % 5;
+                                }
+                                break;
+                            case 4:
+                                joueurActuelle = 0;
+                                mode = chgmtNom;
+                                break;
+                            case 5:
+                                mode = menu;
+                                break;
+                            default:
+                                break;
                         }
-                        else
-                        {
-                          suivant = classique;
-                        }
-                        break;
-                      case 2:
-                        if(!limiteTemp)
-                        {
-                          limiteTemp = true;
-                          dureeLimite = 30;
-                        }
-                        else if(dureeLimite == 30)
-                        {
-                          dureeLimite = 120;
-                        }
-                        else if(dureeLimite == 120)
-                        {
-                          dureeLimite = 300;
-                        }
-                        else
-                        {
-                          limiteTemp = false;
-                        }
-                        rafraichisFenetre();
-                        break;
-                      case 3:
-                        niveauDifficulte = 1 + (niveauDifficulte)%5;
-                        break;
-                      case 4:
-                        mode = chgmtNom;
-                        break;
-                      case 5:
-                        mode = menu;
-                        break;
-                      default:
-                        break;
                     }
-                  }
                     break;
             }
             break;
@@ -427,7 +418,7 @@ void gestionEvenement(EvenementGfx evenement) {
                     if (ordreJoueurs[1][20] == 20
                         && ordreJoueurs[0][20] == 20) {
                         joueurActuelle = calculScore(0) > calculScore(1) ? 0 : 1;
-                        suivant=mode;
+                        suivant = mode;
                         mode = victoire;
                     }
                 }
@@ -450,22 +441,20 @@ void gestionEvenement(EvenementGfx evenement) {
                     suivant = menu;
                 }
             }
-            if(mode==classique && limiteTemp)
-            {
-                if(gestionDuree(joueurActuelle*2+3)>= (int)dureeLimite)
-                {
-                    coupJoueur=coupAleatoire(joueurActuelle);
+            if (mode == classique && limiteTemp) {
+                if (gestionDuree(joueurActuelle * 2 + 3) >= (int) dureeLimite) {
+                    coupJoueur = coupAleatoire(joueurActuelle);
                     if (joueCoup(coupJoueur) == 1) {
                         ordreJoueurs[joueurActuelle][20] += 1;
                         joueurActuelle = (joueurActuelle + 1) % 2;
                         if (ordreJoueurs[1][20] == 20
                             && ordreJoueurs[0][20] == 20) {
                             joueurActuelle = calculScore(0) > calculScore(1) ? 0 : 1;
-                            suivant=mode;
+                            suivant = mode;
                             mode = victoire;
 
                         }
-                        gestionDuree(joueurActuelle*2+2);
+                        gestionDuree(joueurActuelle * 2 + 2);
                     }
                 }
             }
