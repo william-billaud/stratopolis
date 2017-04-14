@@ -258,5 +258,5 @@ void afficheTempRestant(int joueurActuel);
  * \brief affiche le joueur gagnant et son score
  * \return rien
 	*/
-void afficheVictoire(int scoreGagnant, char joueurGagnant[15]);
+void afficheVictoire(int scoreGagnant, int scorePerdant, char joueurGagnant[15]);
 #endif

@@ -171,7 +171,7 @@ void afficheOption(bool limiteTemp, unsigned int dureeLimite, int niveauDifficul
  * \brief affiche le joueur gagnant et son score
  * \return rien
 	*/
-void afficheVictoire(int scoreGagnant, char joueurGagnant[15])
+void afficheVictoire(int scoreGagnant, int scorePerdant, char joueurGagnant[15])
 {
   static bool chgmtCouleur = true;
   static unsigned int timerChgmtCouleur = 0;
@@ -179,7 +179,7 @@ void afficheVictoire(int scoreGagnant, char joueurGagnant[15])
   float nb_rectangles = 20;
   float taille = largeurFenetre()/nb_rectangles;
   float minX, maxX;
-  char score[20];
+  char score[40];
   char gagnant[30];
   unsigned int i;
 
@@ -215,7 +215,7 @@ void afficheVictoire(int scoreGagnant, char joueurGagnant[15])
   couleurCourante(200, 200, 200);
   rectangleVide(2, 2*taille + 1, largeurFenetre() - 2, hauteurFenetre() - 2*taille - 1, 5);
 
-  sprintf(score, "Score  : %d", scoreGagnant);
+  sprintf(score, "Score  : %d a %d", scoreGagnant, scorePerdant);
   sprintf(gagnant, "%s a gagne !", joueurGagnant);
   epaisseurDeTrait(5);
   afficheChaine(score, 50, largeurFenetre()/2 - tailleChaine(score, 50)/2, hauteurFenetre() / 3);

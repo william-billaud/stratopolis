@@ -121,11 +121,11 @@ void gestionEvenement(EvenementGfx evenement) {
                 case victoire:
                     if(joueurActuelle == 0)
                     {
-                        afficheVictoire(calculScore(0), nomJ1);
+                        afficheVictoire(calculScore(0), calculScore(1), nomJ1);
                     }
                     else
                     {
-                        afficheVictoire(calculScore(1), nomJ2);
+                        afficheVictoire(calculScore(1), calculScore(0), nomJ2);
                     }
                     break;
                 case chgmtNom:
