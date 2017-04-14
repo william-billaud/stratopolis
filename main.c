@@ -42,7 +42,7 @@ void gestionEvenement(EvenementGfx evenement) {
     static infoIa infoThread;
     static int debutHint;
     static enum {
-        menu, classique, IA, victoire, tmpIA, hint, chgmtNom, option
+        menu, classique, IA, victoire, tmpIA, hint, chgmtNom, option, aide
     } mode, suivant;
     //position du zoom par defaut
     static unsigned int x_d = 80, y_d = 80;
@@ -135,8 +135,8 @@ void gestionEvenement(EvenementGfx evenement) {
                 case option:
                     afficheOption(limiteTemp, dureeLimite, niveauDifficulte, suivant);
                     break;
-
-
+                case aide :
+                    afficheAide();
             }
             break;
         case Clavier:
@@ -185,6 +185,7 @@ void gestionEvenement(EvenementGfx evenement) {
                             case menu:
                             case chgmtNom:
                             case option:
+                            case aide:
                                 break;
                         }
                         rafraichisFenetre();
@@ -231,6 +232,8 @@ void gestionEvenement(EvenementGfx evenement) {
                 case victoire:
                     break;
                 case option:
+                    break;
+                case aide:
                     break;
             }
             rafraichisFenetre();
@@ -359,7 +362,7 @@ void gestionEvenement(EvenementGfx evenement) {
                             mode = option;
                             break;
                         case 3:
-                            //aide
+                            mode = aide;
                             break;
                         case 4:
                             termineBoucleEvenements();
@@ -413,6 +416,12 @@ void gestionEvenement(EvenementGfx evenement) {
                         }
                     }
                     break;
+                case aide:
+                    if(etatBoutonSouris() == GaucheAppuye)
+                    {
+                      mode = menu;
+                    }
+                    break;
             }
             break;
         case Souris:
@@ -426,6 +435,7 @@ void gestionEvenement(EvenementGfx evenement) {
                 case hint:
                 case tmpIA:
                 case option:
+                case aide:
                     rafraichisFenetre();
                     break;
             }

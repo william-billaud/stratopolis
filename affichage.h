@@ -19,12 +19,9 @@ void afficheMenu(void);
 
 /*!
     \brief Affiche les règles du jeu et le mode d’emploi du programme, et la sélection
-    \param[in] posX : position en abscisse du curseur de la souris
-    \param[in] posY : position en ordonnée du curseur de la souris
-    \return 0 si le curseur ne survole aucun bouton
-    \return 1 si le curseur survole le bouton Retour
+    \return rien
 */
-int afficheAide(int posX, int posY);
+void afficheAide(void);
 
 /*!
     \brief Affiche le menu de sélection des options, et la sélection

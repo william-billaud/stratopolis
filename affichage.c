@@ -168,6 +168,44 @@ void afficheOption(bool limiteTemp, unsigned int dureeLimite, int niveauDifficul
 }
 
 /*!
+    \brief Affiche les règles du jeu et le mode d’emploi du programme, et la sélection
+    \return rien
+*/
+void afficheAide(void)
+{
+  float centreX = largeurFenetre() / 2;
+  float centreY = hauteurFenetre() / 2;
+
+  static DonneesImageRGB *img_reglesPetit = NULL;
+  static DonneesImageRGB *img_reglesMoyen = NULL;
+  static DonneesImageRGB *img_reglesGrand = NULL;
+  if (img_reglesPetit == NULL && largeurFenetre() < 600 && hauteurFenetre() < 480) {
+      img_reglesPetit = lisBMPRGB("./ressources/regles400x320.bmp");
+  }
+  else if (img_reglesMoyen == NULL && largeurFenetre() < 750 && hauteurFenetre() < 600) {
+      img_reglesMoyen = lisBMPRGB("./ressources/regles600x480.bmp");
+  }
+  if (img_reglesGrand == NULL && largeurFenetre() >= 750 && hauteurFenetre() >= 600) {
+      img_reglesGrand = lisBMPRGB("./ressources/regles750x600.bmp");
+  }
+  if(img_reglesPetit != NULL)
+  {
+    ecrisImage((centreX - img_reglesPetit->largeurImage/2), centreY - img_reglesPetit->hauteurImage/2, img_reglesPetit->largeurImage,
+               img_reglesPetit->hauteurImage, img_reglesPetit->donneesRGB);
+  }
+  if(img_reglesMoyen != NULL)
+  {
+    ecrisImage((centreX - img_reglesMoyen->largeurImage/2), centreY - img_reglesMoyen->hauteurImage/2, img_reglesMoyen->largeurImage,
+               img_reglesMoyen->hauteurImage, img_reglesMoyen->donneesRGB);
+  }
+  if(img_reglesGrand != NULL)
+  {
+    ecrisImage((centreX - img_reglesGrand->largeurImage/2), centreY - img_reglesGrand->hauteurImage/2, img_reglesGrand->largeurImage,
+               img_reglesGrand->hauteurImage, img_reglesGrand->donneesRGB);
+  }
+}
+
+/*!
  * \brief affiche le joueur gagnant et son score
  * \return rien
 	*/
