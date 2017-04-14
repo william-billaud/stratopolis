@@ -383,13 +383,13 @@ bool toucheAltAppuyee(void);
 
 /*!
  * \brief Renvoie la largeur actuelle de la fenetre
- * \return largeur actuelle de la fenetre
+ * \return largeur actuelle de la fenetre (minimum 400)
  */
 int largeurFenetre(void);
 
 /*!
  * \brief Renvoie la hauteur actuelle de la fenetre
- * \return hauteur actuelle de la fentre
+ * \return hauteur actuelle de la fentre (minimum 400)
  */
 int hauteurFenetre(void);
 
