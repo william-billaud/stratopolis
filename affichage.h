@@ -232,7 +232,7 @@ void afficheIndice(coup coupJoueur,int zoom,int x,int y);
  * \brief affiche l'écran pour changer le nom des joueur
  * \param nomJ1 nom du joueur 1
  * \param nomJ2 nom du joueur 2
- * \param joueurActuelle joueur dont le nom est en train d'etres modifié
+ * \param joueurActuel joueur dont le nom est en train d'etres modifié
  */
 void afficheChangemntNom(char nomJ1[15], char nomJ2[15],int joueurActuel);
 
