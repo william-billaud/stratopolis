@@ -7,7 +7,7 @@ CFLAGS = -std=c99 -m64 -O3 $(WARNING_FLAGS)
 
 CLIBS =lib/libisentlib.a -lm -lGL -lGLU -lglut -lX11 -lpthread
 
-all: main.o  moteur.o  affichage.o outils.o ia.o
+all: main.o  moteur.o  affichage.o outils.o ia.o lib/libisentlib.a
 	gcc -o main main.o  moteur.o  affichage.o outils.o ia.o $(CLIBS)
 	rm -f *~
 
@@ -26,7 +26,11 @@ outils.o: outils.c outils.h
 ia.o: ia.c ia.h
 	gcc $(CFLAGS) -c ia.c
 
+lib/libisentlib.a:
+	cd lib/ && make
+
 clean:
 	rm -f *.o
 	rm -f main test
 	rm -f *~
+	cd lib/ && make deepclean

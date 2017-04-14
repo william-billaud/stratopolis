@@ -167,6 +167,111 @@ void afficheOption(bool limiteTemp, unsigned int dureeLimite, int niveauDifficul
 
 }
 
+/*!
+    \brief Affiche les règles du jeu et le mode d’emploi du programme, et la sélection
+    \return rien
+*/
+void afficheAide(void)
+{
+  float centreX = largeurFenetre() / 2;
+  float centreY = hauteurFenetre() / 2;
+
+  static DonneesImageRGB *img_reglesPetit = NULL;
+  static DonneesImageRGB *img_reglesMoyen = NULL;
+  static DonneesImageRGB *img_reglesGrand = NULL;
+  if (img_reglesPetit == NULL && largeurFenetre() < 600 && hauteurFenetre() < 480) {
+      img_reglesPetit = lisBMPRGB("./ressources/regles400x320.bmp");
+  }
+  else if (img_reglesMoyen == NULL && largeurFenetre() < 750 && hauteurFenetre() < 600) {
+      img_reglesMoyen = lisBMPRGB("./ressources/regles600x480.bmp");
+  }
+  if (img_reglesGrand == NULL && largeurFenetre() >= 750 && hauteurFenetre() >= 600) {
+      img_reglesGrand = lisBMPRGB("./ressources/regles750x600.bmp");
+  }
+  if(img_reglesPetit != NULL)
+  {
+    ecrisImage((centreX - img_reglesPetit->largeurImage/2), centreY - img_reglesPetit->hauteurImage/2, img_reglesPetit->largeurImage,
+               img_reglesPetit->hauteurImage, img_reglesPetit->donneesRGB);
+  }
+  if(img_reglesMoyen != NULL)
+  {
+    ecrisImage((centreX - img_reglesMoyen->largeurImage/2), centreY - img_reglesMoyen->hauteurImage/2, img_reglesMoyen->largeurImage,
+               img_reglesMoyen->hauteurImage, img_reglesMoyen->donneesRGB);
+  }
+  if(img_reglesGrand != NULL)
+  {
+    ecrisImage((centreX - img_reglesGrand->largeurImage/2), centreY - img_reglesGrand->hauteurImage/2, img_reglesGrand->largeurImage,
+               img_reglesGrand->hauteurImage, img_reglesGrand->donneesRGB);
+  }
+}
+
+/*!
+ * \brief affiche le joueur gagnant et son score
+ * \return rien
+	*/
+void afficheVictoire(int scoreGagnant, int scorePerdant, char joueurGagnant[15])
+{
+  static bool chgmtCouleur = true;
+  static unsigned int timerChgmtCouleur = 0;
+  static float positionX = 0;
+  float nb_rectangles = 20;
+  float taille = largeurFenetre()/nb_rectangles;
+  float minX, maxX;
+  char score[40];
+  char gagnant[30];
+  unsigned int i;
+
+  if(chgmtCouleur)
+  {
+    effaceFenetre(78, 61, 40);
+    couleurCourante(58, 242, 75);
+  }
+  else
+  {
+    effaceFenetre(78, 61, 40);
+    couleurCourante(247, 35, 12);
+  }
+  rectangle(positionX - taille, 0, positionX - 2*taille, taille);
+  rectangle(positionX - taille , taille, positionX, 2*taille);
+  rectangle(largeurFenetre() - positionX + taille, hauteurFenetre() - taille, largeurFenetre() - positionX + 2*taille, hauteurFenetre());
+  for(i = 0; i <= nb_rectangles; i += 2)
+  {
+    minX = positionX + i*taille;
+    maxX = positionX + i*taille + taille;
+    rectangle(minX, 0, maxX, taille);
+    minX = positionX + (i - 1)*taille;
+    maxX = positionX + (i - 1)*taille + taille;
+    rectangle(minX, taille, maxX, 2*taille);
+    minX = largeurFenetre() - positionX - (i+1)*taille;
+    maxX = largeurFenetre() - positionX - (i+1)*taille + taille;
+    rectangle(minX, hauteurFenetre() - taille, maxX, hauteurFenetre());
+    minX = largeurFenetre() - positionX - i*taille;
+    maxX = largeurFenetre() - positionX - i*taille + taille;
+    rectangle(minX, hauteurFenetre() - 2*taille, maxX, hauteurFenetre() - taille);
+  }
+
+  couleurCourante(200, 200, 200);
+  rectangleVide(2, 2*taille + 1, largeurFenetre() - 2, hauteurFenetre() - 2*taille - 1, 5);
+
+  sprintf(score, "Score  : %d a %d", scoreGagnant, scorePerdant);
+  sprintf(gagnant, "%s a gagne !", joueurGagnant);
+  epaisseurDeTrait(5);
+  afficheChaine(score, 50, largeurFenetre()/2 - tailleChaine(score, 50)/2, hauteurFenetre() / 3);
+  afficheChaine(gagnant, 50, largeurFenetre()/2 - tailleChaine(gagnant, 50)/2, hauteurFenetre() / 2);
+
+  timerChgmtCouleur ++;
+  positionX += 2;
+  if(positionX > 2*taille)
+  {
+    positionX = 0;
+  }
+  if(timerChgmtCouleur > 50)
+  {
+    timerChgmtCouleur = 0;
+    chgmtCouleur = !chgmtCouleur;
+  }
+}
+
 void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY) {
     //Bloque le nombre maximum de cases à afficher
     if (zoom < 1) {
@@ -950,7 +1055,7 @@ void afficheIndice(coup coupJoueur, int zoom, int x, int y) {
  * \brief affiche l'écran pour changer le nom des joueur
  * \param nomJ1 nom du joueur 1
  * \param nomJ2 nom du joueur 2
- * \param joueurActuelle joueur dont le nom est en train d'etres modifié
+ * \param joueurActuel joueur dont le nom est en train d'etres modifié
  */
 void afficheChangemntNom(char nomJ1[15], char nomJ2[15], int joueurActuel) {
     effaceFenetre(0, 0, 0);
@@ -1032,4 +1137,3 @@ void afficheTempRestant(int joueurActuel) {
     afficheChaine(tempJ1, taille / 6, taille / 10, hauteurFenetre() * 8 / 10);
     afficheChaine(tempJ2, taille / 6, largeurFenetre() - 9 * taille / 10, hauteurFenetre() * 8 / 10);
 }
-

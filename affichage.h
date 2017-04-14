@@ -19,12 +19,9 @@ void afficheMenu(void);
 
 /*!
     \brief Affiche les règles du jeu et le mode d’emploi du programme, et la sélection
-    \param[in] posX : position en abscisse du curseur de la souris
-    \param[in] posY : position en ordonnée du curseur de la souris
-    \return 0 si le curseur ne survole aucun bouton
-    \return 1 si le curseur survole le bouton Retour
+    \return rien
 */
-int afficheAide(int posX, int posY);
+void afficheAide(void);
 
 /*!
     \brief Affiche le menu de sélection des options, et la sélection
@@ -232,7 +229,7 @@ void afficheIndice(coup coupJoueur,int zoom,int x,int y);
  * \brief affiche l'écran pour changer le nom des joueur
  * \param nomJ1 nom du joueur 1
  * \param nomJ2 nom du joueur 2
- * \param joueurActuelle joueur dont le nom est en train d'etres modifié
+ * \param joueurActuel joueur dont le nom est en train d'etres modifié
  */
 void afficheChangemntNom(char nomJ1[15], char nomJ2[15],int joueurActuel);
 
@@ -253,4 +250,10 @@ int changeNom(char nomJ1[15], char nomJ2[15],int joueurActuel);
  * le joueur dont ce n'est pas le tour voit son temp restant mis à zero
  */
 void afficheTempRestant(int joueurActuel);
+
+/*!
+ * \brief affiche le joueur gagnant et son score
+ * \return rien
+	*/
+void afficheVictoire(int scoreGagnant, int scorePerdant, char joueurGagnant[15]);
 #endif
