@@ -167,6 +167,73 @@ void afficheOption(bool limiteTemp, unsigned int dureeLimite, int niveauDifficul
 
 }
 
+/*!
+ * \brief affiche le joueur gagnant et son score
+ * \return rien
+	*/
+void afficheVictoire(int scoreGagnant, char joueurGagnant[15])
+{
+  static bool chgmtCouleur = true;
+  static unsigned int timerChgmtCouleur = 0;
+  static float positionX = 0;
+  float nb_rectangles = 20;
+  float taille = largeurFenetre()/nb_rectangles;
+  float minX, maxX;
+  char score[20];
+  char gagnant[30];
+  unsigned int i;
+
+  if(chgmtCouleur)
+  {
+    effaceFenetre(78, 61, 40);
+    couleurCourante(58, 242, 75);
+  }
+  else
+  {
+    effaceFenetre(78, 61, 40);
+    couleurCourante(247, 35, 12);
+  }
+  rectangle(positionX - taille, 0, positionX - 2*taille, taille);
+  rectangle(positionX - taille , taille, positionX, 2*taille);
+  rectangle(largeurFenetre() - positionX + taille, hauteurFenetre() - taille, largeurFenetre() - positionX + 2*taille, hauteurFenetre());
+  for(i = 0; i <= nb_rectangles; i += 2)
+  {
+    minX = positionX + i*taille;
+    maxX = positionX + i*taille + taille;
+    rectangle(minX, 0, maxX, taille);
+    minX = positionX + (i - 1)*taille;
+    maxX = positionX + (i - 1)*taille + taille;
+    rectangle(minX, taille, maxX, 2*taille);
+    minX = largeurFenetre() - positionX - (i+1)*taille;
+    maxX = largeurFenetre() - positionX - (i+1)*taille + taille;
+    rectangle(minX, hauteurFenetre() - taille, maxX, hauteurFenetre());
+    minX = largeurFenetre() - positionX - i*taille;
+    maxX = largeurFenetre() - positionX - i*taille + taille;
+    rectangle(minX, hauteurFenetre() - 2*taille, maxX, hauteurFenetre() - taille);
+  }
+
+  couleurCourante(200, 200, 200);
+  rectangleVide(2, 2*taille + 1, largeurFenetre() - 2, hauteurFenetre() - 2*taille - 1, 5);
+
+  sprintf(score, "Score  : %d", scoreGagnant);
+  sprintf(gagnant, "%s a gagne !", joueurGagnant);
+  epaisseurDeTrait(5);
+  afficheChaine(score, 50, largeurFenetre()/2 - tailleChaine(score, 50)/2, hauteurFenetre() / 3);
+  afficheChaine(gagnant, 50, largeurFenetre()/2 - tailleChaine(gagnant, 50)/2, hauteurFenetre() / 2);
+
+  timerChgmtCouleur ++;
+  positionX += 2;
+  if(positionX > 2*taille)
+  {
+    positionX = 0;
+  }
+  if(timerChgmtCouleur > 50)
+  {
+    timerChgmtCouleur = 0;
+    chgmtCouleur = !chgmtCouleur;
+  }
+}
+
 void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY) {
     //Bloque le nombre maximum de cases à afficher
     if (zoom < 1) {
@@ -1032,4 +1099,3 @@ void afficheTempRestant(int joueurActuel) {
     afficheChaine(tempJ1, taille / 6, taille / 10, hauteurFenetre() * 8 / 10);
     afficheChaine(tempJ2, taille / 6, largeurFenetre() - 9 * taille / 10, hauteurFenetre() * 8 / 10);
 }
-

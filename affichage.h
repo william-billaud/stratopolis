@@ -253,4 +253,10 @@ int changeNom(char nomJ1[15], char nomJ2[15],int joueurActuel);
  * le joueur dont ce n'est pas le tour voit son temp restant mis à zero
  */
 void afficheTempRestant(int joueurActuel);
+
+/*!
+ * \brief affiche le joueur gagnant et son score
+ * \return rien
+	*/
+void afficheVictoire(int scoreGagnant, char joueurGagnant[15]);
 #endif

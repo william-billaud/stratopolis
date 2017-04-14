@@ -119,7 +119,14 @@ void gestionEvenement(EvenementGfx evenement) {
                     afficheMenu();
                     break;
                 case victoire:
-                    afficheChaine("PARTIE FINI ", 10, largeurFenetre() / 3, hauteurFenetre() / 2);
+                    if(joueurActuelle == 0)
+                    {
+                        afficheVictoire(calculScore(0), nomJ1);
+                    }
+                    else
+                    {
+                        afficheVictoire(calculScore(1), nomJ2);
+                    }
                     break;
                 case chgmtNom:
                     afficheChangemntNom(nomJ1, nomJ2, joueurActuelle);
