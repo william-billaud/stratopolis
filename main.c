@@ -59,7 +59,7 @@ void gestionEvenement(EvenementGfx evenement) {
     //variable utilisée pour stocker le joueur actuelle
     static int joueurActuel = 0;
     //variable utilisée pour stocker le niveau de difficulté
-    static int niveauDifficulte = 1;
+    static int niveauDifficulte = 0;
     //noms des joueurs
     static char nomJ1[15] = "Joueur 1";
     static char nomJ2[15] = "Joueur 2";
@@ -79,7 +79,6 @@ void gestionEvenement(EvenementGfx evenement) {
             suivant = classique;
             activeGestionDeplacementPassifSouris();
             demandeTemporisation(30);
-            infoThread.estFini=1;
             break;
         case Affichage:
             effaceFenetre(255, 255, 255);
@@ -260,6 +259,8 @@ void gestionEvenement(EvenementGfx evenement) {
                                     if (joueCoup(coupJoueur) == 1) {
                                         ordreJoueurs[joueurActuel][20] += 1;
                                         joueurActuel = (joueurActuel + 1) % 2;
+                                        //pour arreter l'affichage de l'indice
+                                        suivant=menu;
                                         if (ordreJoueurs[1][20] == 20
                                             && ordreJoueurs[0][20] == 20) {
                                             joueurActuel = calculScore(0) > calculScore(1) ? 0 : 1;
@@ -358,6 +359,7 @@ void gestionEvenement(EvenementGfx evenement) {
                             {
                                 initPartie(&joueurActuel);
                                 trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
+                                infoThread.estFini=1;
                                 mode = suivant;
                             } else{
                                 infoThread.estFini=3;
@@ -406,7 +408,7 @@ void gestionEvenement(EvenementGfx evenement) {
                                 break;
                             case 3:
                                 if (suivant == IA) {
-                                    niveauDifficulte = 1 + (niveauDifficulte) % 5;
+                                    niveauDifficulte =(1+niveauDifficulte) % 5;
                                 }
                                 break;
                             case 4:

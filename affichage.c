@@ -134,19 +134,19 @@ void afficheOption(bool limiteTemp, unsigned int dureeLimite, int niveauDifficul
 
 
     switch (niveauDifficulte) {
-        case 1:
+        case 0:
             sprintf(difficulte, "%s", "Facile");
             break;
-        case 2:
+        case 1:
             sprintf(difficulte, "%s", "Moyen");
             break;
-        case 3:
+        case 2:
             sprintf(difficulte, "%s", "Dur");
             break;
-        case 4:
+        case 3:
             sprintf(difficulte, "%s", "Tres dur");
             break;
-        case 5:
+        case 4:
             sprintf(difficulte, "%s", "Extreme");
             break;
         default:
