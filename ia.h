@@ -16,7 +16,7 @@
  * \brief structure utilisée pour la recherche d'un coup par l'ia sur un thread parallèle
  */
 typedef struct infoIa{
-    int estFini /*!< entier pour connaitre l'etat de la recherche, 0 : en cour; 1 : succès; 2 : echec*/;
+    int estFini /*!< entier pour connaitre l'etat de la recherche, 0 : en cour; 1 : succès; 2 : echec* ; 3 pour forcer l'arret*/;
     int joueur /*!< joueur dont le coup doit être trouvé*/;
     int niveauDifficulte/*!< niveau de difficulté ( nombre de recusion)*/;
     coup coupIA /*!< coup d'ia retourné par la fonction  */;
@@ -56,4 +56,4 @@ int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
 * elle modifie la variable coupIA de la structure par le meilleur coup trouvé
 */
 void *threadIa(void *args);
-#endif PROJET_IA_H
+#endif

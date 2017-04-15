@@ -285,7 +285,7 @@ void gestionEvenement(EvenementGfx evenement) {
                                 }
                                 pause=!pause;
 
-                            } else if (zoneDetecte == 4 && !pause) {
+                            } else if (zoneDetecte == 4 && !pause && infoThread.estFini==1) {
                                 infoThread.estFini = 0;
                                 infoThread.niveauDifficulte = 0;
                                 infoThread.joueur = joueurActuel;
