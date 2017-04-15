@@ -26,9 +26,10 @@ typedef struct infoIa{
  * \brief cherche un coup pour l'ia
  * \param[in] joueur : joueur joué par l'ia
  * \param[in] niveauDifficulte : niveau de difficulté de l'ia
+ * \param[in]etat entier permettant d'arreter la recherche de l'IA si necessaire
  * \return un coup proposé par l'ia
   */
-coup coupIA(int joueur, int niveauDifficulte);
+coup coupIA(int joueur, int niveauDifficulte,int *etat);
 
 /*!
  * \brief algorithme min max
@@ -39,10 +40,11 @@ coup coupIA(int joueur, int niveauDifficulte);
  * \param alpha : valeur du Alpha
  * \param beta : valeur du beta
  * \param tourActuelle : numero du tour actuel (= nombre de pièces posées depuis le début de la partie
+ * \param[in]etat entier permettant d'arreter la recherche de l'IA si necessaire
  * \return score de la situation
   */
 int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
-           int ProfondeurMaximum, int alpha, int beta, int tourActuelle);
+           int ProfondeurMaximum, int alpha, int beta, int tourActuelle,int *etat);
 
 /*!
 * \brief fonction à lancer dans un thread parallèle pour trouver le coup de l'ia
@@ -54,4 +56,4 @@ int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
 * elle modifie la variable coupIA de la structure par le meilleur coup trouvé
 */
 void *threadIa(void *args);
-#endif //PROJET_IA_H
+#endif PROJET_IA_H

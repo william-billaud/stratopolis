@@ -79,6 +79,7 @@ void gestionEvenement(EvenementGfx evenement) {
             suivant = classique;
             activeGestionDeplacementPassifSouris();
             demandeTemporisation(30);
+            infoThread.estFini=1;
             break;
         case Affichage:
             effaceFenetre(255, 255, 255);
@@ -353,9 +354,15 @@ void gestionEvenement(EvenementGfx evenement) {
                 case menu:
                     switch (detecteMenuPrincipal()) {
                         case 1:
-                            initPartie(&joueurActuel);
-                            trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
-                            mode = suivant;
+                            if(infoThread.estFini!=0)
+                            {
+                                initPartie(&joueurActuel);
+                                trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
+                                mode = suivant;
+                            } else{
+                                infoThread.estFini=3;
+                            }
+
                             break;
                         case 2:
                             mode = option;

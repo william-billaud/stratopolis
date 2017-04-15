@@ -12,9 +12,10 @@
  * \brief cherche un coup pour l'ia
  * \param[in] joueur : joueur joué par l'ia
  * \param[in] niveauDifficulte : niveau de difficulté de l'ia
+ * \param[in]etat entier permettant d'arreter la recherche de l'IA si necessaire
  * \return un coup proposé par l'ia
   */
-coup coupIA(int joueur, int niveauDifficulte) {
+coup coupIA(int joueur, int niveauDifficulte,int *etat) {
     coup cp;
     //variable pour stocker le meilleur coup
     coup meilleurCp;
@@ -50,13 +51,18 @@ coup coupIA(int joueur, int niveauDifficulte) {
                 if (joueCoup(cp)==1) {
                     res =
                             minMax((joueur + 1) % 2, joueur, 0,
-                                   profondeurMax, 32767, 0,
-                                   nbPieceJoue + 1);
+                                   profondeurMax, -32767, 32767,
+                                   nbPieceJoue + 1,etat);
                     dejoueCoup(cp);
                     if (res > max) {
                         max = res;
                         meilleurCp = cp;
                     }
+                }
+                //procedure d'arret brutal
+                if(*etat==3)
+                {
+                    return meilleurCp;
                 }
             }
         }
@@ -73,10 +79,11 @@ coup coupIA(int joueur, int niveauDifficulte) {
  * \param alpha : valeur du Alpha
  * \param beta : valeur du beta
  * \param tourActuelle : numero du tour actuel (= nombre de pièces posées depuis le début de la partie
+ * \param[in]etat entier permettant d'arreter la recherche de l'IA si necessaire
  * \return score de la situation
   */
 int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
-           int ProfondeurMaximum, int alpha, int beta, int tourActuelle) {
+           int ProfondeurMaximum, int alpha, int beta, int tourActuelle,int *etat) {
     //si P est une feuille alors
     //cad : plus de pièces à jouer ou profondeur atteinte.
     int val;
@@ -89,7 +96,7 @@ int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
     int i_o;
     unsigned int zoom;
     coup cp;
-    if (ProfondeurActuelle == ProfondeurMaximum || tourActuelle == 40) {
+    if (ProfondeurActuelle == ProfondeurMaximum || tourActuelle == 40 || *etat==3) {
         return calculScore(joueurIA) - calculScore((joueurIA + 1) % 2);
     } else {
         //on reduit le champ des possibiltés
@@ -112,7 +119,7 @@ int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
                             val =
                                     min(val,
                                         minMax((joueurActuel + 1) % 2, joueurIA, ProfondeurActuelle + 1,
-                                               ProfondeurMaximum, alpha, beta, tourActuelle + 1));
+                                               ProfondeurMaximum, alpha, beta, tourActuelle + 1,etat));
                             dejoueCoup(cp);
                             //si alpha ≥ Val alors  /* coupure alpha */
                             if (alpha >= val) {
@@ -122,7 +129,6 @@ int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
                             //finsi
                             //beta = Min(beta, Val)
                             beta = min(beta, val);
-                            dejoueCoup(cp);
                         }
                     }
                 }
@@ -144,7 +150,7 @@ int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
                             //Val = Max(Val, ALPHABETA(Pi, alpha, beta))
                             val = max(val,
                                       minMax((joueurActuel + 1) % 2, joueurIA, ProfondeurActuelle + 1,
-                                             ProfondeurMaximum, alpha, beta, tourActuelle + 1));
+                                             ProfondeurMaximum, alpha, beta, tourActuelle + 1,etat));
                             dejoueCoup(cp);
                             //Val ≥ beta alors /* coupure beta */
                             if (beta <= val) {
@@ -175,7 +181,7 @@ int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
 void *threadIa(void *args)
 {
     infoIa* i= (infoIa*) args;
-    i->coupIA=coupIA(i->joueur,i->niveauDifficulte);
+    i->coupIA=coupIA(i->joueur, i->niveauDifficulte, &(i->estFini));
     if(i->coupIA.numeroPiece==42)
     {
         i->estFini=2;
