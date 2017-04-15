@@ -179,9 +179,11 @@ void afficheAide(void) {
     static DonneesImageRGB *img_reglesGrand = NULL;
     if (img_reglesPetit == NULL ) {
         img_reglesPetit = lisBMPRGB("./ressources/regles400x320.bmp");
-    } else if (img_reglesMoyen == NULL) {
+    }
+    if (img_reglesMoyen == NULL) {
         img_reglesMoyen = lisBMPRGB("./ressources/regles600x480.bmp");
-    } else if (img_reglesGrand == NULL) {
+    }
+    if (img_reglesGrand == NULL) {
         img_reglesGrand = lisBMPRGB("./ressources/regles750x600.bmp");
     }
 
