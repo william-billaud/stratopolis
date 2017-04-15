@@ -935,6 +935,15 @@ void afficheMenuEnjeu(bool pause) {
              hauteurFenetre()) * largeurFenetre() / 6 + (hauteurFenetre() >
                                                          largeurFenetre()) *
                                                         hauteurFenetre() / 6;
+    //Affiche une indication si le jeu est en pause
+    if(pause)
+    {
+        couleurCourante(200, 200, 200);
+        rectangle(largeurFenetre()/2 - tailleChaine("PAUSE", 35), hauteurFenetre()/2 - 35, largeurFenetre()/2 + tailleChaine("PAUSE", 35), hauteurFenetre()/2 + 35);
+        couleurCourante(63, 34, 4);
+        epaisseurDeTrait(4);
+        afficheChaine("PAUSE", 35, largeurFenetre()/2 - tailleChaine("PAUSE", 35)/2, hauteurFenetre()/2 - 17);
+    }
     //affiche le rectangle noir de fond
     couleurCourante(0, 0, 0);
     rectangle(largeurFenetre() - 2.6f * taille, 0, largeurFenetre() - taille, 2 * taille / 8);
@@ -950,7 +959,6 @@ void afficheMenuEnjeu(bool pause) {
                 rectangle(largeurFenetre() - 2.1f * taille, 0,
                           largeurFenetre() - 1.65f * taille, 2 * taille / 8);
             }
-
             break;
         case 5:
             rectangle(largeurFenetre() - 1.65f * taille, 0, largeurFenetre() - taille, 2 * taille / 8);
