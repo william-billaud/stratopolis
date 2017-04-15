@@ -53,7 +53,10 @@ coup coupIA(int joueur, int niveauDifficulte,int *etat) {
                             minMax((joueur + 1) % 2, joueur, 0,
                                    profondeurMax, -32767, 32767,
                                    nbPieceJoue + 1,etat);
-                    dejoueCoup(cp);
+                    if(dejoueCoup(cp)==-1)
+                    {
+                        puts("error dejoue coup");
+                    }
                     if (res > max) {
                         max = res;
                         meilleurCp = cp;
@@ -120,7 +123,10 @@ int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
                                     min(val,
                                         minMax((joueurActuel + 1) % 2, joueurIA, ProfondeurActuelle + 1,
                                                ProfondeurMaximum, alpha, beta, tourActuelle + 1,etat));
-                            dejoueCoup(cp);
+                            if(dejoueCoup(cp)==-1)
+                            {
+                                puts("error dejoue coup");
+                            }
                             //si alpha ≥ Val alors  /* coupure alpha */
                             if (alpha >= val) {
                                 //retourner Val
@@ -151,7 +157,11 @@ int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
                             val = max(val,
                                       minMax((joueurActuel + 1) % 2, joueurIA, ProfondeurActuelle + 1,
                                              ProfondeurMaximum, alpha, beta, tourActuelle + 1,etat));
-                            dejoueCoup(cp);
+
+                            if(dejoueCoup(cp)==-1)
+                            {
+                                puts("error dejoue coup");
+                            }
                             //Val ≥ beta alors /* coupure beta */
                             if (beta <= val) {
                                 //retourner Val

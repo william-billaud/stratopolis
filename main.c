@@ -295,7 +295,7 @@ void gestionEvenement(EvenementGfx evenement) {
                                     mode = hint;
                                 }
                             } else if (zoneDetecte == 5) {
-                                if(suivant==IA  || suivant==tmpIA)
+                                if(mode==IA  || mode==tmpIA)
                                 {
                                     suivant=IA;
                                 }else
