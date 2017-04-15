@@ -241,16 +241,16 @@ int joueCoup(coup coupJoueur)
  * \return 1 si tout s'est bien passé
  * \return -1 si le coup n'as pas pu être annulé
 	*/
-int dejoueCoup(coup coupAnnulle)
+int dejoueCoup(coup coupAnnule)
 {
 	historiqueCase *caseCoups[3];
-	if (getCasesFromCoup(coupAnnulle, caseCoups) == -1) {
+	if (getCasesFromCoup(coupAnnule, caseCoups) == -1) {
 		return -1;
 	}
 	int i;
 	//on verifie que rien n'a été posé sur la pièce
 	for (i = 0; i < 3; ++i) {
-		if ((int)coupAnnulle.numeroPiece !=
+		if ((int)coupAnnule.numeroPiece !=
 		    getNumeroPiece((caseCoups[i]))) {
 			return -2;
 		}
@@ -326,7 +326,6 @@ int calculScore(int joueur)
 							     (getCase(i, j)));
 					match = 1;
 				} else {
-					printf("I : %d J :%d \n",i,j);
 					puts("erreur dans la calcul du score A");
 				}
 

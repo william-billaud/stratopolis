@@ -123,12 +123,6 @@ void afficheBordureEntreCases(int numero1, int numero2, float centreX1,
 void afficheScore(int scoreJ1, int scoreJ2);
 
 /*!
- * \brief Met le jeu en pause
- * \return rien
-	 */
-void pause(void);
-
-/*!
  * \brief donne les coordonées dans le plateau des coordonnée de la souris
  * \param[out] x : abscisse de la casse ou la souris est
  * \param[out] y : ordonnée de la casse ou la souris est

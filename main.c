@@ -59,7 +59,7 @@ void gestionEvenement(EvenementGfx evenement) {
     //variable utilisée pour stocker le joueur actuelle
     static int joueurActuel = 0;
     //variable utilisée pour stocker le niveau de difficulté
-    static int niveauDifficulte = 1;
+    static int niveauDifficulte = 0;
     //noms des joueurs
     static char nomJ1[15] = "Joueur 1";
     static char nomJ2[15] = "Joueur 2";
@@ -259,6 +259,8 @@ void gestionEvenement(EvenementGfx evenement) {
                                     if (joueCoup(coupJoueur) == 1) {
                                         ordreJoueurs[joueurActuel][20] += 1;
                                         joueurActuel = (joueurActuel + 1) % 2;
+                                        //pour arreter l'affichage de l'indice
+                                        suivant=menu;
                                         if (ordreJoueurs[1][20] == 20
                                             && ordreJoueurs[0][20] == 20) {
                                             joueurActuel = calculScore(0) > calculScore(1) ? 0 : 1;
@@ -284,7 +286,7 @@ void gestionEvenement(EvenementGfx evenement) {
                                 }
                                 pause=!pause;
 
-                            } else if (zoneDetecte == 4 && !pause) {
+                            } else if (zoneDetecte == 4 && !pause && infoThread.estFini==1) {
                                 infoThread.estFini = 0;
                                 infoThread.niveauDifficulte = 0;
                                 infoThread.joueur = joueurActuel;
@@ -293,7 +295,7 @@ void gestionEvenement(EvenementGfx evenement) {
                                     mode = hint;
                                 }
                             } else if (zoneDetecte == 5) {
-                                if(suivant==IA  || suivant==tmpIA)
+                                if(mode==IA  || mode==tmpIA)
                                 {
                                     suivant=IA;
                                 }else
@@ -353,9 +355,16 @@ void gestionEvenement(EvenementGfx evenement) {
                 case menu:
                     switch (detecteMenuPrincipal()) {
                         case 1:
-                            initPartie(&joueurActuel);
-                            trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
-                            mode = suivant;
+                            if(infoThread.estFini!=0)
+                            {
+                                initPartie(&joueurActuel);
+                                trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
+                                infoThread.estFini=1;
+                                mode = suivant;
+                            } else{
+                                infoThread.estFini=3;
+                            }
+
                             break;
                         case 2:
                             mode = option;
@@ -399,7 +408,7 @@ void gestionEvenement(EvenementGfx evenement) {
                                 break;
                             case 3:
                                 if (suivant == IA) {
-                                    niveauDifficulte = 1 + (niveauDifficulte) % 5;
+                                    niveauDifficulte =(1+niveauDifficulte) % 5;
                                 }
                                 break;
                             case 4:
