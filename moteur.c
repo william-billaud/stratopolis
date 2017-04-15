@@ -14,15 +14,15 @@ extern ORDREPIECE ordreJoueurs[2];/**<\var tableau contenant l'ordre des pièces
 
 /*!
  * \brief initialise le plateau (pose la pièce initiale)
- * \return 0 si tout c'est bien passé
+ * \return 0 si tout s'est bien passé
  * \return -1 si un problème a eu lieu
- */
+	*/
 int initPlateau(void)
 {
 	int i_x;
     /**< index des abscisse*/
 	int i_y;
-    /**< index des ordonées*/
+    /**< index des ordonnées*/
 
 	for (i_x = 0; i_x < TAILLEMAX; ++i_x) {
 		for (i_y = 0; i_y < TAILLEMAX; ++i_y) {
@@ -42,18 +42,18 @@ int initPlateau(void)
 }
 
 /*!
- * \brief choisis le joueur qui commenceras
- * \return 0 si le joueur 1 commenceras
- * \return 1 si le joueur 2 commenceras
- */
+ * \brief choisis le joueur qui commence
+ * \return 1 si le joueur 1 commence
+ * \return 2 si le joueur 2 commence
+	*/
 int choisisJoueur(void)
 {
-	/* recupère le timestamp actuelle et le stock dans a) */
+	/* recupère le timestamp actuel et le stocke dans a) */
 	unsigned int a = (unsigned int)time(NULL);
-    /**<\var seed recupere a partir du timestamp*/
-	//defini la seed du lancer aléatoire
+    /**<\var seed recupere à partir du timestamp*/
+	//definit la seed du lancer aléatoire
 	srand(a);
-	//effectue le lancer aléatoire et redui les possibilité à 1 ou 2
+	//effectue le lancer aléatoire et reduit les possibilité à 1 ou 2
 	return rand() % 2;
 }
 
@@ -62,7 +62,7 @@ int choisisJoueur(void)
  * \param joueur numero du joueur
  * \return 0 si la fonctions n'a pas eu de problème pour s'effectuer
  * \return -1 si il y a eu une erreur
- */
+	*/
 int initOrdrePieces(int joueur)
 {
 	int i;
@@ -79,18 +79,18 @@ int initOrdrePieces(int joueur)
 	for (i = 0; i < 20; ++i) {
 		liste[i] = i + 1;
 	}
-	/* recupère le timestamp actuelle et le stock dans a) */
+	/* recupère le timestamp actuel et le stocke dans a) */
 	a = (unsigned int)time(NULL);
-    /**< seed recupere a partir du timestamp*/
-	//defini la seed du lancer aléatoire
+    /**< seed récupère à partir du timestamp*/
+	//definit la seed du lancer aléatoire
 	srand(a + 100 * joueur);
 	for (i = 0; i < 19; ++i) {
 		n = 20 - i - 1;
-		//tirage d'une valeur aléatoire comprise entre 0 et n (nombre de pièce à tirer restante
+		//tirage d'une valeur aléatoire comprise entre 0 et n (nombre de pièces à tirer restante
 		r = rand() % (n);
-		//la pièce tirée est ajouté à la liste
+		//la pièce tirée est ajoutée à la liste
 		ordreJoueurs[joueur - 1][i] = liste[r] + 20 * (joueur - 1);
-		//sa place dans la liste est remplacé par la celle la plus en haut du tableau
+		//sa place dans la liste est remplacée par la celle la plus en haut du tableau
 		liste[r] = liste[n];
 	}
 	// on ajoute le dernier terme
@@ -101,13 +101,12 @@ int initOrdrePieces(int joueur)
 }
 
 /*!
-\brief recherche si la case possède une tuile adjacente
-\param x : ordonnee de la case
-\param y : abscisse de la case
-\return true si la case possede une tuile adjacente
-\return false si la case ne possède pas de tuile adjacente
-*/
-
+ * \brief recherche si la case possède une tuile adjacente
+ * \param x : ordonnee de la case
+ * \param y : abscisse de la case
+ * \return true si la case possede une tuile adjacente
+ * \return false si la case ne possède pas de tuile adjacente
+	*/
 bool possedeTuileAdjacente(int x, int y)
 {
 	historiqueCase *tab[4];
@@ -126,11 +125,11 @@ bool possedeTuileAdjacente(int x, int y)
 
 /*!
  * \brief permet de savoir si une superposition de couleur est valide
- * \param haut pièce du haut
- * \param bas pièce du bas
+ * \param haut : pièce du haut
+ * \param bas : pièce du bas
  * \return true si la superposition est valide
  * \return false si la superpostion est invalide
- */
+	*/
 bool estValideSuperposition(couleur haut, couleur bas)
 {
 	if ((haut == rouge && bas == vert) || (haut == vert && bas == rouge)) {
@@ -141,11 +140,11 @@ bool estValideSuperposition(couleur haut, couleur bas)
 }
 
 /*!
-\brief verifie qu'un coup est valide
-\param[in] coupJoueur coup du joueur
-\return true si le coup est valide
-\return false si le coup n'est pas possible
-*/
+ * \brief verifie qu'un coup est valide
+ * \param[in] coupJoueur : coup du joueur
+ * \return true si le coup est valide
+ * \return false si le coup n'est pas possible
+	*/
 bool estValideCoup(coup coupJoueur)
 {
 	historiqueCase *c1, *c2, *c3;
@@ -161,12 +160,12 @@ bool estValideCoup(coup coupJoueur)
 	x3 = caseCoups[2]->x;
 	y3 = caseCoups[2]->y;
 	y1 = caseCoups[0]->y;
-	//verifie que toutes les case en dessous sont a la même hauteur
+	//verifie que toutes les cases en dessous sont à la même hauteur
 	if (getHauteurCase(c1) != getHauteurCase(c2)
 	    || getHauteurCase(c1) != getHauteurCase(c3)) {
 		return false;
 	}
-	//si la pièce va êtres posée au niveau zero, verifie que l'une des tuile possède un coté adjacent a une autres tuile
+	//si la pièce va être posée au niveau zero, verifie que l'une des tuiles possède un coté adjacent à une autre tuile
 	if (getHauteurCase(c1) == 0) {
 		if (possedeTuileAdjacente(x1, y1) == false
 		    && possedeTuileAdjacente(x3, y3) == false
@@ -175,7 +174,7 @@ bool estValideCoup(coup coupJoueur)
 			return false;
 		}
 	} else {
-		//sinon verifie que toutes les superposition sont valide
+		//sinon verifie que toutes les superpositions sont valides
 		if (!estValideSuperposition
 		    (couleurPiece(coupJoueur.numeroPiece, 1),
 		     (couleur) getCouleurCase(c1))
@@ -189,7 +188,7 @@ bool estValideCoup(coup coupJoueur)
 					    (couleur) getCouleurCase(c3))) {
 			return false;
 		}
-		//verifie que la pièce va etresposé sur au moins deux autres pièces
+		//verifie que la pièce va être posée sur au moins deux autres pièces
 		if (getNumeroPiece(c1) == getNumeroPiece(c2)
 		    && getNumeroPiece(c1) == getNumeroPiece(c3)) {
 			return false;
@@ -199,12 +198,12 @@ bool estValideCoup(coup coupJoueur)
 }
 
 /*!
-\brief pose une tuile sur le plateau
-\param[in] coupJoueur : coup du joueur
-\return 1 si le coup a pu être effectué
-\return 0 si le coup est invalide
-\return -1 en cas d'erreur
-*/
+ * \brief pose une tuile sur le plateau
+ * \param[in] coupJoueur : coup du joueur
+ * \return 1 si le coup a pu être effectué
+ * \return 0 si le coup est invalide
+ * \return -1 en cas d'erreur
+	*/
 int joueCoup(coup coupJoueur)
 {
 
@@ -218,9 +217,9 @@ int joueCoup(coup coupJoueur)
 
 	int i;
 	for (i = 0; i < 3; ++i) {
-		//change la hauteur des case
+		//change la hauteur des cases
 		caseCoups[i]->hauteur += 1;
-		//ajoute la numero de pièce a cette hauteur
+		//ajoute le numero de pièce a cette hauteur
 		caseCoups[i]->
 		    tabEtage[getHauteurCase((caseCoups[i]))].numeroPiece =
 		    coupJoueur.numeroPiece;
@@ -238,20 +237,20 @@ int joueCoup(coup coupJoueur)
 
 /*!
  * \brief dejoue un coup
- * \param[in] coupAnnulle : coup à annullée
- * \return 1 si tout c'est bien passé
- * \return -1 si le coup n'as pas pu etres annullé
-*/
-int dejoueCoup(coup coupAnnulle)
+ * \param[in] coupAnnule : coup à annuler
+ * \return 1 si tout s'est bien passé
+ * \return -1 si le coup n'as pas pu être annulé
+	*/
+int dejoueCoup(coup coupAnnule)
 {
 	historiqueCase *caseCoups[3];
-	if (getCasesFromCoup(coupAnnulle, caseCoups) == -1) {
+	if (getCasesFromCoup(coupAnnule, caseCoups) == -1) {
 		return -1;
 	}
 	int i;
-	//on verifie que rien n'a été posée sur la pièce
+	//on verifie que rien n'a été posé sur la pièce
 	for (i = 0; i < 3; ++i) {
-		if ((int)coupAnnulle.numeroPiece !=
+		if ((int)coupAnnule.numeroPiece !=
 		    getNumeroPiece((caseCoups[i]))) {
 			return -2;
 		}
@@ -269,11 +268,11 @@ int dejoueCoup(coup coupAnnulle)
 }
 
 /*!
-\brief calcul le score d'un joueur
-\param[in] joueur : numero du joueur
-\return score du joueur
-\return -1 en cas d'erreur
-*/
+ * \brief calcule le score d'un joueur
+ * \param[in] joueur : numero du joueur
+ * \return score du joueur
+ * \return -1 en cas d'erreur
+	*/
 int calculScore(int joueur)
 {
 	int score = 0;
@@ -281,7 +280,7 @@ int calculScore(int joueur)
 	int i;
 	int j;
 	int match = 0
-    /**<\var 0 si ni la case a gauche ou en dessous est de la meme couleur, 1 s l'uen des deux, 2 si les deux le sont*/
+    /**<\var 0 si ni la case a gauche ou en dessous est de la meme couleur, 1 si l'une des deux, 2 si les deux le sont*/
 	    ;
 	couleur couleurJoueur;
 	couleur couleurCase;
@@ -304,12 +303,12 @@ int calculScore(int joueur)
 				continue;
 			}
 			match = 0;
-			//si la case a droite est de la meme couleur
+			//si la case à droite est de la meme couleur
 			if (getCouleurCase(getCase(i - 1, j)) == (int)
 			    couleurJoueur) {
 				listeCase = NULL;
 				tmp = liste;
-				//on cherche dans quelle block cette case est
+				//on cherche dans quel bloc cette case est
 				while (listeCase == NULL && tmp != NULL) {
 					if (estDansBlock
 					    (i - 1, j, tmp->debutBlock)) {
@@ -319,7 +318,7 @@ int calculScore(int joueur)
 					}
 				}
 				if (tmp != NULL) {
-					//si on l'a trouvé on ajoute la case actuelle au block de la case a droite
+					//si on l'a trouvé on ajoute la case actuelle au block de la case à droite
 					tmp->debutBlock =
 					    ajouteCaseCalcul(tmp->debutBlock, i,
 							     j,
@@ -327,17 +326,16 @@ int calculScore(int joueur)
 							     (getCase(i, j)));
 					match = 1;
 				} else {
-					printf("I : %d J :%d \n",i,j);
 					puts("erreur dans la calcul du score A");
 				}
 
 			}
-			//si le case en dessous est de la meme couleur
+			//si la case en dessous est de la meme couleur
 			if (getCouleurCase(getCase(i, j - 1)) ==
 			    (int)couleurJoueur) {
-				//et si la case a droite n'était pas de la même couleur
+				//et si la case à droite n'était pas de la même couleur
 				if (match == 0) {
-					//on fat pareille que dans la cas ou la case a droite était de la meme couleur
+					//on fait pareil que dans le cas ou la case à droite était de la meme couleur
 					listeCase = NULL;
 					tmp = liste;
 					while (listeCase == NULL && tmp != NULL) {
@@ -361,14 +359,14 @@ int calculScore(int joueur)
 						puts("erreur dans la calcul du score B");
 					}
 				} else {
-					//si la case a droite et celle du dessous son de la bonne couleur
-					//on verifie si elle sont dans la meme block
-					//si elle sont dans le meme block, il n'y a rien à faire
+					//si la case à droite et celle du dessous sont de la bonne couleur
+					//on verifie si elle sont dans le meme bloc
+					//si elle sont dans le meme bloc, il n'y a rien à faire
 					if (!estDansBlock
 					    (i, j - 1, tmp->debutBlock)) {
 						tmpB = liste;
 						listeCase = NULL;
-						//si elle sont dans des block different, on cherche le block de la case du dessous
+						//si elle sont dans des blocs differents, on cherche le block de la case du dessous
 						while (listeCase == NULL
 						       && tmpB != NULL) {
 							if (estDansBlock
@@ -396,7 +394,7 @@ int calculScore(int joueur)
 				match += 1;
 			}
 			if (match == 0) {
-				// si aucun des deux on crée un nouvelle liste
+				// si aucun des deux, on crée un nouvelle liste
 				tmp = malloc(sizeof *tmp);
 				tmp->next = liste;
 				tmp->debutBlock =
@@ -408,9 +406,9 @@ int calculScore(int joueur)
 			}
 		}
 	}
-	//on calcul le score de chaque liste et on trouve le plus grand
+	//on calcule le score de chaque liste et on trouve le plus grand
 
-	//on libère chaque liste && on trouve celle avec la score le plus grand
+	//on libère chaque liste et on trouve celle avec le score le plus grand
 	while (liste != NULL) {
 		scoreTmp = scoreListe(liste->debutBlock);
 		score = (scoreTmp > score) ? scoreTmp : score;
@@ -423,13 +421,13 @@ int calculScore(int joueur)
 }
 
 /*!
- * \brief fonction permettant de savoir si un couple de coordonée est present dans une liste simplement chainée
- * \param x abscisse à tester
- * \param y ordonée à tester
- * \param caseDebut tête de la liste
- * \return true si le couple est present dans la liste
- * \return false si le couple n'est pas present dans la liste
- */
+ * \brief fonction permettant de savoir si un couple de coordonées est present dans une liste simplement chainée
+ * \param x : abscisse à tester
+ * \param y : ordonnée à tester
+ * \param caseDebut : tête de la liste
+ * \return true si le couple est présent dans la liste
+ * \return false si le couple n'est pas présent dans la liste
+	*/
 bool estDansBlock(int x, int y, caseCalcul * caseDebut)
 {
 	caseCalcul *caseTeste;
@@ -445,12 +443,12 @@ bool estDansBlock(int x, int y, caseCalcul * caseDebut)
 
 /*!
  * \brief ajoute une caseCalcul en debut de ligne et initialise ses valeurs
- * \param tete pointeur de le tête precedente
- * \param x abscisse de la case
- * \param y ordonnée de la case
- * \param hauteur hauteur de la case
+ * \param tete : pointeur de le tête precedente
+ * \param x : abscisse de la case
+ * \param y : ordonnée de la case
+ * \param hauteur : hauteur de la case
  * \return pointeur vers la nouvelle tete
- */
+	*/
 caseCalcul *ajouteCaseCalcul(caseCalcul * tete, int x, int y, int hauteur)
 {
 	caseCalcul *ptr = malloc(sizeof *ptr);
@@ -462,9 +460,9 @@ caseCalcul *ajouteCaseCalcul(caseCalcul * tete, int x, int y, int hauteur)
 }
 
 /*!
- * \brief fonction liberant une liste de caseCalcul
- * \param tete tete de la liste à libérer
- */
+ * \brief fonction libérant une liste de caseCalcul
+ * \param tete : tête de la liste à libérer
+	*/
 void libereCaseCalcul(caseCalcul * tete)
 {
 	caseCalcul *tmp;
@@ -476,10 +474,10 @@ void libereCaseCalcul(caseCalcul * tete)
 }
 
 /*!
- * \brief calcul le score donnée par une liste
- * \param tete tete de la liste
+ * \brief calcule le score donné par une liste
+ * \param tete : tête de la liste
  * \return score de la liste
- */
+	*/
 int scoreListe(caseCalcul * tete)
 {
 	caseCalcul *tmp;
@@ -496,11 +494,11 @@ int scoreListe(caseCalcul * tete)
 }
 
 /*!
- * \brief concatene deux liste de caseCalcul dans listeBlock et libère la case ainsi libere
- * \param block listeBlock dans laquelle il faut concatener les liste de caseCalcul
+ * \brief concatène deux listes de caseCalcul dans listeBlock et libère la case ainsi libérée
+ * \param block : listeBlock dans laquelle il faut concatener les liste de caseCalcul
  * \param listeA
- * \param listeB liste à ajouter a la fin de listeA
- */
+ * \param listeB : liste à ajouter a la fin de listeA
+	*/
 void concateneCaseCalcul(listeBlock * block, caseCalcul * listeA,
 			 caseCalcul * listeB)
 {
@@ -511,8 +509,8 @@ void concateneCaseCalcul(listeBlock * block, caseCalcul * listeA,
 	}
 	//on y ajoute la liste B
 	listeA->next = listeB;
-	//on parcours la liste de block a la recherche du debut de la listeB
-	//traitement speciale si listeB correspond au tout premier block
+	//on parcours la liste de block à la recherche du debut de la listeB
+	//traitement special si listeB correspond au tout premier block
 	if (block->debutBlock == listeB) {
 		block->debutBlock = block->next->debutBlock;
 		tmp = block->next;
@@ -529,12 +527,12 @@ void concateneCaseCalcul(listeBlock * block, caseCalcul * listeA,
 
 /*!
  * \brief
- * \param joueur joueur pointeur vers un entier contenant le joueur qui commenceras
+ * \param joueur : pointeur vers un entier contenant le joueur qui commencera
  * \return -1 si l'initation des pièce du joueur 1 a eu un problème
- * \return -2 si l'initiation des pièces du joueur 2 à eu un problème
- * \return -4 si le plateau à été mal initialisé
- * \return somme des retour precedent ( à la manière du chmod)
- */
+ * \return -2 si l'initiation des pièces du joueur 2 a eu un problème
+ * \return -4 si le plateau a été mal initialisé
+ * \return somme des retour precedents ( à la manière du chmod)
+	*/
 int initPartie(int *joueur)
 {
 	int retour = 0;
@@ -553,7 +551,7 @@ int initPartie(int *joueur)
  * \brief trouve un coup aleatoire pour le joueur
  * \param joueur
  * \return un coup aleatoire valide
- */
+	*/
 coup coupAleatoire(int joueur)
 {
 	coup cp;
@@ -562,7 +560,7 @@ coup coupAleatoire(int joueur)
 	unsigned int j;
 	unsigned int i_r,j_r;
 	int i_o;
-	//variables necessaire pour reduire le nombre de possibilité à tester
+	//variables necessaires pour reduire le nombre de possibilités à tester
 	unsigned int zoom;
 	unsigned int l;
 	unsigned int h;
@@ -570,7 +568,7 @@ coup coupAleatoire(int joueur)
 	cp.yCoup = 0;
 	cp.xCoup = 0;
 	cp.orientationPiece = HD;
-	//on reduit le champ des possibilté
+	//on reduit le champ des possibiltés
 	if (trouveMeilleurZoom(&l, &h, &zoom) == -1) {
 		return cp;
 	}
