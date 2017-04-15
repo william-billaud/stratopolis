@@ -9,11 +9,11 @@
 #include "ia.h"
 
 /*!
-\brief cherche un coup pour l'ia
-\param[in] joueur : joueur jouer par l'ia
-\param[in] niveauDifficulte : niveau de difficulté de l'ia
-\return un coup proposé par l'ia
-*/
+ * \brief cherche un coup pour l'ia
+ * \param[in] joueur : joueur joué par l'ia
+ * \param[in] niveauDifficulte : niveau de difficulté de l'ia
+ * \return un coup proposé par l'ia
+  */
 coup coupIA(int joueur, int niveauDifficulte) {
     coup cp;
     //variable pour stocker le meilleur coup
@@ -24,7 +24,7 @@ coup coupIA(int joueur, int niveauDifficulte) {
     unsigned int i;
     unsigned int j;
     int i_o;
-    //variables necessaire pour reduire le nombre de possibilité à tester
+    //variables necessaires pour reduire le nombre de possibilités à tester
     unsigned int zoom;
     unsigned int l;
     unsigned int h;
@@ -35,7 +35,7 @@ coup coupIA(int joueur, int niveauDifficulte) {
     meilleurCp.yCoup = 0;
     meilleurCp.xCoup = 0;
     meilleurCp.orientationPiece = HD;
-    //on reduit le champ des possibilté
+    //on reduit le champ des possibiltés
     if (trouveMeilleurZoom(&l, &h, &zoom) == -1) {
         return meilleurCp;
     }
@@ -66,19 +66,19 @@ coup coupIA(int joueur, int niveauDifficulte) {
 
 /*!
  * \brief algorithme min max
- * \param joueurActuel joueur qui doit jouer
- * \param joueurIA joueur remplacé par l'IA
- * \param ProfondeurActuelle nombre de recursion
- * \param ProfondeurMaximum nom de recursion maximum
- * \param alpha valeur du Alpha
- * \param beta valeur du beta
- * \param tourActuelle numero du tour actuelle (= nombre de pièces posées depuis le début de la partie
+ * \param joueurActuel : joueur qui doit jouer
+ * \param joueurIA : joueur remplacé par l'IA
+ * \param ProfondeurActuelle : nombre de recursions
+ * \param ProfondeurMaximum : nombre de recursions maximum
+ * \param alpha : valeur du Alpha
+ * \param beta : valeur du beta
+ * \param tourActuelle : numero du tour actuel (= nombre de pièces posées depuis le début de la partie
  * \return score de la situation
- */
+  */
 int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
            int ProfondeurMaximum, int alpha, int beta, int tourActuelle) {
     //si P est une feuille alors
-    //cad : plus de pièce à jouer ou profondeur atteinte.
+    //cad : plus de pièces à jouer ou profondeur atteinte.
     int val;
     //tableau simplifiant le parcours des rotations possibles
     orientation or[4] = {HD, HG, BD, BG};
@@ -92,7 +92,7 @@ int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
     if (ProfondeurActuelle == ProfondeurMaximum || tourActuelle == 40) {
         return calculScore(joueurIA) - calculScore((joueurIA + 1) % 2);
     } else {
-        //on reduit le champ des possibilté
+        //on reduit le champ des possibiltés
         trouveMeilleurZoom(&l, &h, &zoom);
         //le numero de la pièce pour ce coup
         cp.numeroPiece =
@@ -119,7 +119,7 @@ int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
                                 //retourner Val
                                 return val;
                             }
-                            // finsi
+                            //finsi
                             //beta = Min(beta, Val)
                             beta = min(beta, val);
                             dejoueCoup(cp);
@@ -160,16 +160,17 @@ int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
             }    //finpour
         }        //finsi
         return val;
-    }            // finsi
+    }            //finsi
 }                //fin
 
 /*!
-* \brief fonction à lancer dans un thread parrallèle pour trouver le coup de l'ia
-* \param args pointeur vers une structure de type (infoIa)
+* \brief fonction à lancer dans un thread parallèle pour trouver le coup de l'ia
+* \param args : pointeur vers une structure de type (infoIa)
 * \return
 *
-* la fonction modifie l'etat de l'entire estFinie de la structure pointe en entrée, elle prend la statut 1 si tout est OK et 2 sinon, l'etat de base est le 0
-* elle modifie la variable coupIA de la structure pas le meilleur coup trouvé
+* la fonction modifie l'etat de l'entier estFinie de la structure pointée en entrée, elle prend le statut 1 si tout est OK et 2 sinon,
+* l'état de base est le 0
+* elle modifie la variable coupIA de la structure par le meilleur coup trouvé
 */
 void *threadIa(void *args)
 {
