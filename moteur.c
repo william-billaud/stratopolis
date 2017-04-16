@@ -317,8 +317,6 @@ int calculScore(int joueur)
 							     getHauteurCase
 							     (getCase(i, j)));
 					match = 1;
-				} else {
-					puts("erreur dans la calcul du score A");
 				}
 
 			}
@@ -347,8 +345,6 @@ int calculScore(int joueur)
 						     getHauteurCase(getCase
 								    (i, j)));
 						match = 1;
-					} else {
-						puts("erreur dans la calcul du score B");
 					}
 				} else {
 					//si la case à droite et celle du dessous sont de la bonne couleur
@@ -378,8 +374,6 @@ int calculScore(int joueur)
 							    (liste,
 							     tmp->debutBlock,
 							     tmpB->debutBlock);
-						} else {
-							puts("erreur dans calcul score C");
 						}
 					}
 				}

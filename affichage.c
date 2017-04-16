@@ -790,7 +790,6 @@ void changeZoom(unsigned int *x_z, unsigned int *y_z, unsigned int *zoom,
 
             }
             *zoom += b;
-            printf("%d, %d\n", x_c, y_c);
             *x_z = (unsigned int) x_c;
             *y_z = (unsigned int) y_c;
         }
