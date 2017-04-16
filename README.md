@@ -23,8 +23,8 @@ l'adversaire: jusqu'au dernier coup la victoire peut basculer
 ####les règles
 lien vers [les règles](https://cloud-toulon.isen.fr/d/0d68030fad/files/?p=/Stratopolis/GIGAMIC_STRATOPOLIS_RULES-FR.pdf&dl=1) du jeu ( en français)
 ####revue de presse
-une [review](https://cloud-toulon.isen.fr/d/0d68030fad/files/?p=/Stratopolis/Stratopolis_Review_-_with_Tom_and_Melody_Vasel.mp4&dl=1) avec Tom et Melody Vasel (en anglais)\
-un [tutoriel](https://cloud-toulon.isen.fr/d/0d68030fad/files/?p=/Stratopolis/Tutorial_-_Stratopolis.mp4&dl=1) (en espagnol)\
+une [review](https://cloud-toulon.isen.fr/d/0d68030fad/files/?p=/Stratopolis/Stratopolis_Review_-_with_Tom_and_Melody_Vasel.mp4&dl=1) avec Tom et Melody Vasel (en anglais) \n
+un [tutoriel](https://cloud-toulon.isen.fr/d/0d68030fad/files/?p=/Stratopolis/Tutorial_-_Stratopolis.mp4&dl=1) (en espagnol) \n
 Quelques [avis](https://www.trictrac.net/jeu-de-societe/stratopolis) 
 ####acheter
 Quelques liens pour acheter le jeu
@@ -36,10 +36,10 @@ Quelques liens pour acheter le jeu
 
 ## Utilisation
 #####pré-requis
--un ordinateur avec un système linux\
--bibliothèque LX11\
--[OpenGL](https://www.opengl.org/)/[GLUT](https://www.opengl.org/resources/libraries/glut/)\
--[GCC](https://gcc.gnu.org/) (une version recente est conseillé >5.0)\
+-un ordinateur avec un système linux \n
+-bibliothèque LX11 \n 
+-[OpenGL](https://www.opengl.org/)/[GLUT](https://www.opengl.org/resources/libraries/glut/) \n
+-[GCC](https://gcc.gnu.org/) (une version recente est conseillé >5.0) \n
 -[make](https://www.gnu.org/software/make/)
 #####compilation
 la compilation s'effectue à l'aide de la commande 
@@ -64,17 +64,18 @@ make clean && make
 ```
 permet la regeneration de l'ensemble des binaires 
 ##### commandes
--la souris peut êtres utilisée pour cliquer sur n'importe quelle bouton\
--pour changer les noms de joueurs il faut cliquer sur le bouton changer les noms dans le menu des option, la touche retour permet de supprimer un caractère, et la touche entrée permet de valider et de passer au nom suivants, une fois le deuxième nom rentrée, la touche entrée permet de retourner au menu des options.\
--pour jouer une pièce il faut la selectionner, les flèches ainsi que la molette de la souris permettent de la faire tourner.\
--l'utilisation de la molette de la souris en étant appuyé sur la touche ctrl permet de zoomer ou dezoomer la grille.\
--la touche Z permet de trouver le zoom optimal pour la grille.\
--la touche F permet de rentrer/sortir du mode pleine écran.\
--la touche Q permet de quitter le jeu.\
+-la souris peut êtres utilisée pour cliquer sur n'importe quelle bouton \n
+-pour changer les noms de joueurs il faut cliquer sur le bouton changer les noms dans le menu des option, la touche retour permet de supprimer un caractère, et la touche entrée permet de valider et de passer au nom suivants, une fois le deuxième nom rentrée, la touche entrée permet de retourner au menu des options. \n
+-pour jouer une pièce il faut la selectionner, les flèches ainsi que la molette de la souris permettent de la faire tourner. \n
+-l'utilisation de la molette de la souris en étant appuyé sur la touche ctrl permet de zoomer ou dezoomer la grille. \n
+-la touche Z permet de trouver le zoom optimal pour la grille. \n
+-la touche F permet de rentrer/sortir du mode pleine écran. \n
+-la touche Q permet de quitter le jeu. \n
 #####divers
--L'ia joue dans un temp court (<30secondes) uniquement pour les niveaux de difficulté facile et moyen, la recherche de coup pour les difficultées superieurs peut se réveler extrement longue (>10 minutes)\
--L'utilisation de valgrind peut provoquer des lenteurs au niveau du thread parrallèle lancé pour l'ia, ce qui nuit à la fluidité du jeu\
--Deux fuites mémoires ont été reperées, mais elle semblent êtres causée par la librairie libisentlib. Mais la memoire perdu reste la même quelques soit la durée du programme (la fuite n'a donc pas lieu sur la durée)
+-L'ia joue dans un temp court (<30secondes) uniquement pour les niveaux de difficulté facile et moyen, la recherche de coup pour les difficultées superieurs peut se réveler extrement longue (>10 minutes) \n
+-L'utilisation de valgrind peut provoquer des lenteurs au niveau du thread parrallèle lancé pour l'ia, ce qui nuit à la fluidité du jeu \n
+-Deux fuites mémoires ont été reperées, mais elle semblent êtres 
+causée par la librairie libisentlib. Mais la memoire perdu reste la même quelques soit la durée du programme (la fuite n'a donc pas lieu sur la durée)
 ## Auteurs
 - [*HIPAULT Theo (chef de projet)*](https://github.com/Parazar)
 - [BILLAUD William](https://github.com/william-billaud)
