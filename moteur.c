@@ -477,7 +477,7 @@ int scoreListe(caseCalcul *tete) {
 
 /*!
  * \brief concatène deux listes de caseCalcul dans listeBlock et libère la case ainsi libérée
- * \param[in/out] block : listeBlock dans laquelle il faut concatener les liste de caseCalcul
+ * \param[in,out] block : listeBlock dans laquelle il faut concatener les liste de caseCalcul
  * \param[in] listeA
  * \param[in] listeB : liste à ajouter a la fin de listeA
  */

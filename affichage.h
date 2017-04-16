@@ -233,8 +233,8 @@ void afficheChangemntNom(char nomJ1[15], char nomJ2[15],int joueurActuel);
 
 /*!
  * \brief change le nom du joueur actuel en fonction du dernier caractère clavier
- * \param[in/out] nomJ1 : nom du joueur 1
- * \param[in/out] nomJ2 : nom du joueur 2
+ * \param[in,out] nomJ1 : nom du joueur 1
+ * \param[in,out] nomJ2 : nom du joueur 2
  * \param[in] joueurActuel : joueur dont le nom est en train d'etre modifié
  * \return joueurActuel
  */

@@ -181,7 +181,7 @@ int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
 
 /*!
 * \brief fonction à lancer dans un thread parallèle pour trouver le coup de l'ia
-* \param[in/out] args : pointeur vers une structure de type (infoIa)
+* \param[in,out] args : pointeur vers une structure de type (infoIa)
 * \return
 *
 * la fonction modifie l'etat de l'entier estFinie de la structure pointée en entrée, elle prend le statut 1 si tout est OK et 2 sinon,
