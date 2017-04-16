@@ -33,22 +33,22 @@ coup coupIA(int joueur, int niveauDifficulte,int *etat);
 
 /*!
  * \brief algorithme min max
- * \param joueurActuel : joueur qui doit jouer
- * \param joueurIA : joueur remplacé par l'IA
- * \param ProfondeurActuelle : nombre de recursions
- * \param ProfondeurMaximum : nombre de recursions maximum
- * \param alpha : valeur du Alpha
- * \param beta : valeur du beta
- * \param tourActuelle : numero du tour actuel (= nombre de pièces posées depuis le début de la partie
+ * \param[in] joueurActuel : joueur qui doit jouer
+ * \param[in] joueurIA : joueur remplacé par l'IA
+ * \param[in] ProfondeurActuelle : nombre de recursions
+ * \param[in] ProfondeurMaximum : nombre de recursions maximum
+ * \param[in] alpha : valeur du Alpha
+ * \param[in] beta : valeur du beta
+ * \param[in] tourActuelle : numero du tour actuel (= nombre de pièces posées depuis le début de la partie
  * \param[in] etat entier permettant d'arreter la recherche de l'IA si necessaire
  * \return score de la situation
-  */
+ */
 int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
            int ProfondeurMaximum, int alpha, int beta, int tourActuelle,int *etat);
 
 /*!
 * \brief fonction à lancer dans un thread parallèle pour trouver le coup de l'ia
-* \param args : pointeur vers une structure de type (infoIa)
+* \param[in/out] args : pointeur vers une structure de type (infoIa)
 * \return
 *
 * la fonction modifie l'etat de l'entier estFinie de la structure pointée en entrée, elle prend le statut 1 si tout est OK et 2 sinon,

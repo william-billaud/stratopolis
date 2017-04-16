@@ -10,7 +10,7 @@
 /*!
  * \brief Affiche le menu principal (Jouer, Aide, Options, Quitter), et la sélection
  * \return rien
-	*/
+ */
 void afficheMenu() {
 
     float tailleBoutonX = largeurFenetre() / 10;
@@ -70,8 +70,12 @@ void afficheMenu() {
 
 /*!
  * \brief Affiche le menu de sélection des options, et la sélection
+ * \param[in] limiteTemp indique si la limite de temp est activée
+ * \param[in] dureeLimite indique la durée maximum d'un tour
+ * \param[in] niveauDifficulte indique le niveau de difficulté (entre 0 et 4)
+ * \param[in] modeSuivant indique le mode de jeu actuel
  * \return rien
-	*/
+ */
 void afficheOption(bool limiteTemp, unsigned int dureeLimite, int niveauDifficulte, int modeSuivant) {
     float tailleBoutonX = largeurFenetre() / 6;
     float tailleBoutonY = hauteurFenetre() / 20;
@@ -170,7 +174,7 @@ void afficheOption(bool limiteTemp, unsigned int dureeLimite, int niveauDifficul
 /*!
  * \brief Affiche les règles du jeu et le mode d’emploi du programme, et la sélection
  * \return rien
-	*/
+ */
 void afficheAide(void) {
     float centreX = largeurFenetre() / 2;
     float centreY = hauteurFenetre() / 2;
@@ -207,8 +211,11 @@ void afficheAide(void) {
 
 /*!
  * \brief affiche le joueur gagnant et son score
+ * \param[in] scoreGagnant score du gagnant
+ * \param[in] scorePerdant score du perdant
+ * \param[in] joueurGagnant nom du joueur gagnant
  * \return rien
-	*/
+ */
 void afficheVictoire(int scoreGagnant, int scorePerdant, char joueurGagnant[15]) {
     static bool chgmtCouleur = true;
     static unsigned int timerChgmtCouleur = 0;
@@ -268,10 +275,10 @@ void afficheVictoire(int scoreGagnant, int scorePerdant, char joueurGagnant[15])
 
 /*!
  * \brief Affiche le plateau de jeu, la couleur et la hauteur de chaque case
- * \param [in] zoom : nombre de case affiché par ligne/colonne
- * \param basX : abscisse de la case du bas
- * \param basY : abscisse de la case du bas
-	*/
+ * \param[in] zoom : nombre de case affiché par ligne/colonne
+ * \param[in] basX : abscisse de la case du bas
+ * \param[in] basY : abscisse de la case du bas
+ */
 void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY) {
     //Bloque le nombre maximum de cases à afficher
     if (zoom < 1) {
@@ -340,7 +347,7 @@ void afficheGrille(unsigned int zoom, unsigned int basX, unsigned int basY) {
   * \param [in] minY : coordonnee minimum en ordonnée
   * \param [in] maxX : coordonnee maximum en abscisse
   * \param [in] maxY : coordonnee maximum en ordonée
-	* \param [in] estGrisee : determine si la case doit être grisée (true) ou non (false)
+  * \param [in] estGrisee : determine si la case doit être grisée (true) ou non (false)
    */
 void affichePiece(int numeroPiece, orientation orientationPiece, int minX,
                   int minY, int maxX, int maxY, bool estGrisee) {
@@ -402,7 +409,7 @@ void affichePiece(int numeroPiece, orientation orientationPiece, int minX,
  * \param [in] maxX : coordonnee maximum en abscisse
  * \param [in] maxY : coordonnee maximum en ordonée
  * \param [in] estGrisee : determine si la case doit être grisée (true) ou non (false)
-	*/
+ */
 void afficheCase(couleur couleurCase, int hauteurCase, float minX,
                  float minY, float maxX, float maxY, bool estGrisee) {
     char hauteur[20];
@@ -436,7 +443,7 @@ void afficheCase(couleur couleurCase, int hauteurCase, float minX,
  * \param [in] couleurCase : couleur de la case à déterminer
  * \param [in] estGrisee : determine si la couleur doit être grisée (true) ou non (false)
  * \return rien
-	*/
+ */
 void determineCouleur(couleur couleurCase, bool estGrisee) {
     switch (couleurCase) {
         case neutre:
@@ -540,7 +547,7 @@ void afficheBordureEntreCases(int numero1, int numero2, float centreX1,
  * \param[in] nomJ2 : nom du deuxième joueur
  * \param[in] joueurActuelle : joueur dont c'est le tour
  * \return rien
-	*/
+ */
 void afficheInterface(char nomJ1[15], char nomJ2[15], int joueurActuelle) {
     pieces pieceJ1;
     pieces pieceJ2;
@@ -636,7 +643,7 @@ void afficheInterface(char nomJ1[15], char nomJ2[15], int joueurActuelle) {
  * \param[in] coupJoueur : coup à afficher
  * \param[in] zoom de la grille
  * \return rien
-	*/
+ */
 void affichePredictif(coup coupJoueur, int zoom) {
     dessinePredictif(coupJoueur, estValideCoup(coupJoueur), zoom);
 }
@@ -816,15 +823,15 @@ void afficheDuree(int taille) {
 
 /*!
  * \brief fonction permettant de savoir si le clic est dans un rectangle
- * \param xClic : abscisse du clic
- * \param yClic : ordonnée du clic
- * \param xMin : abscisse minimum du rectangle
- * \param yMin : ordonnée minimum du rectangle
- * \param xMax : abscisse maximum du rectangle
- * \param yMax : ordonnee maximum du rectangle
+ * \param[in] xClic : abscisse du clic
+ * \param[in] yClic : ordonnée du clic
+ * \param[in] xMin : abscisse minimum du rectangle
+ * \param[in] yMin : ordonnée minimum du rectangle
+ * \param[in] xMax : abscisse maximum du rectangle
+ * \param[in] yMax : ordonnee maximum du rectangle
  * \return true si le clic est dans le rectangle
  * \return false si le clic n'est pas dans le rectangle
-	*/
+ */
 bool estDansRectangle(int xClic, int yClic, int xMin, int yMin, int xMax, int yMax) {
     int tmp;
     if (xMin > xMax) {
@@ -933,8 +940,8 @@ void afficheScore(int scoreJ1, int scoreJ2) {
 
 /*!
  * \brief affiche le menu en jeu
- * \param pause : true si le jeu est pause, false sinon
-	*/
+ * \param[in] pause : true si le jeu est pause, false sinon
+ */
 void afficheMenuEnjeu(bool pause) {
 
     float taille =
@@ -992,12 +999,12 @@ void afficheMenuEnjeu(bool pause) {
 
 /*!
  * \brief trace un rectangle vide
- * \param xCoin1 : abscisse du premier coin
- * \param yCoin1 : ordonnée du premier coin
- * \param xCoin2 : abscisse du second coin
- * \param yCoin2 : ordonnée du second coin
- * \param taille : epaisseur du trait
-	*/
+ * \param[in] xCoin1 : abscisse du premier coin
+ * \param[in] yCoin1 : ordonnée du premier coin
+ * \param[in] xCoin2 : abscisse du second coin
+ * \param[in] yCoin2 : ordonnée du second coin
+ * \param[in] taille : epaisseur du trait
+ */
 void rectangleVide(float xCoin1, float yCoin1, float xCoin2, float yCoin2, float taille) {
     epaisseurDeTrait(taille);
     ligne(xCoin1, yCoin1, xCoin1, yCoin2);
@@ -1009,11 +1016,11 @@ void rectangleVide(float xCoin1, float yCoin1, float xCoin2, float yCoin2, float
 
 /*!
  * \brief trace l'indice
- * \param coupJoueur : structure contenant les informations concernant l'indice
- * \param zoom : taille du zoom
- * \param x : abcisse du zoom
- * \param y : ordonnée du zoom
-	*/
+ * \param[in] coupJoueur : structure contenant les informations concernant l'indice
+ * \param[in] zoom : taille du zoom
+ * \param[in] x : abcisse du zoom
+ * \param[in] y : ordonnée du zoom
+ */
 void afficheIndice(coup coupJoueur, int zoom, int x, int y) {
     if (time(NULL) % 2 == 0) {
         return;
@@ -1060,10 +1067,10 @@ void afficheIndice(coup coupJoueur, int zoom, int x, int y) {
 
 /*!
  * \brief affiche l'écran pour changer le nom des joueur
- * \param nomJ1 : nom du joueur 1
- * \param nomJ2 : nom du joueur 2
- * \param joueurActuel : joueur dont le nom est en train d'être modifié
-	*/
+ * \param[in] nomJ1 : nom du joueur 1
+ * \param[in] nomJ2 : nom du joueur 2
+ * \param[in] joueurActuel : joueur dont le nom est en train d'être modifié
+ */
 void afficheChangemntNom(char nomJ1[15], char nomJ2[15], int joueurActuel) {
     effaceFenetre(0, 0, 0);
     epaisseurDeTrait(1);
@@ -1097,11 +1104,11 @@ void afficheChangemntNom(char nomJ1[15], char nomJ2[15], int joueurActuel) {
 
 /*!
  * \brief change le nom du joueur actuel en fonction du dernier caractère clavier
- * \param nomJ1 : nom du joueur 1
- * \param nomJ2 : nom du joueur 2
- * \param joueurActuel : joueur dont le nom est en train d'etre modifié
+ * \param[in/out] nomJ1 : nom du joueur 1
+ * \param[in/out] nomJ2 : nom du joueur 2
+ * \param[in] joueurActuel : joueur dont le nom est en train d'etre modifié
  * \return joueurActuel
-	*/
+ */
 int changeNom(char nomJ1[15], char nomJ2[15], int joueurActuel) {
 
     char caractere = caractereClavier();
@@ -1128,7 +1135,7 @@ int changeNom(char nomJ1[15], char nomJ2[15], int joueurActuel) {
 
 /*!
  * \brief affiche les temps restants des joueurs
- * \param joueurActuel
+ * \param[in] joueurActuel
  * le joueur dont ce n'est pas le tour voit son temps restant mis à zero
  */
 void afficheTempRestant(int joueurActuel) {

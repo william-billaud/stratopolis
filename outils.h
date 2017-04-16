@@ -126,14 +126,14 @@ historiqueCase *getCase(int x, int y);
 
 /*!
  * \brief initialise tout les paramètres d'une case a 0
- * \param c : pointeur vers une case
+ * \param[in] c : pointeur vers une case
  * \return 0
  */
 int setCaseAZero(historiqueCase * c);
 
 /*!
  * \brief fonction permettant de récuperer le numero de la pièce en haut d'une case
- * \param c : case dont nous voulons récuperer le numero de la pièce
+ * \param[in] c : case dont nous voulons récuperer le numero de la pièce
  * \return -2 : si la hauteur de la case est incorrecte
  * \return -1 : si le numero de la case est incorrecte
  * \return 42 si la case ne possède pas de pièce
@@ -142,8 +142,8 @@ int getNumeroPiece(historiqueCase * c);
 
 /*!
  * \brief retourne la couleur d'une pièce
- * \param numeroPiece : numero de la pièce
- * \param numeroTuile : numero de la tuile sur la pièce ( 1, 2 ou 3)
+ * \param[in] numeroPiece : numero de la pièce
+ * \param[in] numeroTuile : numero de la tuile sur la pièce ( 1, 2 ou 3)
  * \return la couleur correspondant au numero de la pièce
  * \return neutre en cas d'erreur
  */
@@ -157,7 +157,7 @@ int initPiece(void);
 
 /*!
  * \brief retourne une case d'un coup
- * \param coupJoueur : coup du joueur
+ * \param[in] coupJoueur : coup du joueur
  * \param [out] tab : tableau contenant les cases
  * \return -1 si une case contient un pointeur null
  * \return 0 si tout s'est bien passé
@@ -166,16 +166,16 @@ int getCasesFromCoup(coup coupJoueur, historiqueCase * tab[3]);
 
 /*!
  * \brief calcule le minimum entre deux valeurs
- * \param a
- * \param b
+ * \param[in] a une des deux valeurs à comparer
+ * \param[in] b une des deux valeurs à comparer
  * \return le minimum entre a et b
  */
 int min(int a, int b);
 
 /*!
  * \brief retourne le maximum entre a et b
- * \param a
- * \param b
+ * \param[in] a une des deux valeurs à comparer
+ * \param[in] b une des deux valeurs à comparer
  * \return le maximum entre a et b
  */
 int max(int a, int b);
@@ -193,14 +193,14 @@ int trouveMeilleurZoom(unsigned int *x, unsigned int *y, unsigned int *zoom);
 
 /*!
  * \brief fonction permettant de gèrer le temp
- * \param ordre : 0 pour reinitialiser le temp stocké n°1
- * \param ordre : 1 pour renvoie le temp stocké n°1
- * \param ordre : 2 pour reinitialiser le temp stocké n°2
- * \param ordre : 3 pour renvoie le temp stocké n°2
- * \param ordre : 4 pour reinitialiser le temp stocké n°3
- * \param ordre : 5 pour renvoie le temp stocké n°3
- * \param ordre : 6 pour activer la pause
- * \param ordre : 7 pour desactiver la pause
+ * \param[in] ordre : 0 pour reinitialiser le temp stocké n°1
+ * \param[in] ordre : 1 pour renvoie le temp stocké n°1
+ * \param[in] ordre : 2 pour reinitialiser le temp stocké n°2
+ * \param[in] ordre : 3 pour renvoie le temp stocké n°2
+ * \param[in] ordre : 4 pour reinitialiser le temp stocké n°3
+ * \param[in] ordre : 5 pour renvoie le temp stocké n°3
+ * \param[in] ordre : 6 pour activer la pause
+ * \param[in] ordre : 7 pour desactiver la pause
  * \return le temp stocké
  * \return 0 si il a été reinitialisé
  */

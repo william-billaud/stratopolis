@@ -27,13 +27,13 @@ typedef struct
 
 
 /*!
- * \brief Fonction s'occupant de la liberation complete d'une structure DonneesImageRGB
+ * \brief[in] Fonction s'occupant de la liberation complete d'une structure DonneesImageRGB
  * \param structure
  */
 void libereDonneesImageRGB(DonneesImageRGB **structure);
 
 /*!
- * \brief  Fonction essayant de lire le fichier passe en parametre
+ * \brief  Fonction essayant de lire le fichier passé en parametre
  * \param nom
  * \return une structure
 	contenant les informations de l'image en cas de succes, NULL sino
