@@ -78,6 +78,7 @@ void gestionEvenement(EvenementGfx evenement) {
             mode = menu;
             suivant = classique;
             activeGestionDeplacementPassifSouris();
+            infoThread.estFini=1;
             demandeTemporisation(30);
             break;
         case Affichage:
@@ -302,6 +303,11 @@ void gestionEvenement(EvenementGfx evenement) {
                                 {
                                     suivant=classique;
                                 }
+                                if(infoThread.estFini==0)
+                                {
+                                    //on demande a l'IA de s'arreter
+                                    infoThread.estFini=3;
+                                }
                                 gestionDuree(7);
                                 pause=false;
                                 mode = menu;
@@ -355,7 +361,8 @@ void gestionEvenement(EvenementGfx evenement) {
                 case menu:
                     switch (detecteMenuPrincipal()) {
                         case 1:
-                            if(infoThread.estFini!=0)
+                            //on verifie que l'IA à bien put etre stoppée
+                            if(infoThread.estFini==1 || infoThread.estFini==2)
                             {
                                 initPartie(&joueurActuel);
                                 trouveMeilleurZoom(&x_d, &y_d, &zoom_d);
