@@ -9,7 +9,7 @@ CLIBS =lib/libisentlib.a -lm -lGL -lGLU -lglut -lX11 -lpthread
 
 all: main.o  moteur.o  affichage.o outils.o ia.o lib/libisentlib.a
 	gcc -o main main.o  moteur.o  affichage.o outils.o ia.o $(CLIBS)
-	rm -f *~
+	rm -f *~ *.o
 
 main.o:	main.c moteur.h affichage.h
 	gcc $(CFLAGS) -c main.c
