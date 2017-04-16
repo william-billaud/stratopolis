@@ -12,9 +12,9 @@
  * \brief cherche un coup pour l'ia
  * \param[in] joueur : joueur joué par l'ia
  * \param[in] niveauDifficulte : niveau de difficulté de l'ia
- * \param[in]etat entier permettant d'arreter la recherche de l'IA si necessaire
+ * \param[in] etat entier permettant d'arreter la recherche de l'IA si necessaire
  * \return un coup proposé par l'ia
-  */
+ */
 coup coupIA(int joueur, int niveauDifficulte,int *etat) {
     coup cp;
     //variable pour stocker le meilleur coup
@@ -82,7 +82,7 @@ coup coupIA(int joueur, int niveauDifficulte,int *etat) {
  * \param alpha : valeur du Alpha
  * \param beta : valeur du beta
  * \param tourActuelle : numero du tour actuel (= nombre de pièces posées depuis le début de la partie
- * \param[in]etat entier permettant d'arreter la recherche de l'IA si necessaire
+ * \param[in] etat entier permettant d'arreter la recherche de l'IA si necessaire
  * \return score de la situation
   */
 int minMax(int joueurActuel, int joueurIA, int ProfondeurActuelle,
