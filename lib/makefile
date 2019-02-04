@@ -1,3 +1,11 @@
+MACHINE= $(shell uname -s)
+
+ifeq ($(MACHINE),Darwin)
+	GFXLIB_LINE = gcc -Wall -O2 -c GfxLib.c -Wno-deprecated-declarations
+else
+	GFXLIB_LINE = gcc -Wall -O2 -c GfxLib.c -I/usr/include/GL
+endif
+
 all: BmpLib.o ErreurLib.o ESLib.o GfxLib.o OutilsLib.o ThreadLib.o
 	ar r libisentlib.a BmpLib.o ErreurLib.o ESLib.o GfxLib.o OutilsLib.o ThreadLib.o
 	ranlib libisentlib.a
@@ -13,10 +21,9 @@ ErreurLib.o: ErreurLib.c ErreurLib.h
 	gcc -Wall -O2 -c ErreurLib.c
 
 GfxLib.o: GfxLib.c GfxLib.h ESLib.h
-	gcc -Wall -O2 -c GfxLib.c -I/usr/include/GL
+	$(GFXLIB_LINE)
 # Sous MacOSX, commenter la ligne de commande ci-dessus (en mettant un # au debut)
 # et de-commenter la ligne de commande ci-apres :
-#	gcc -Wall -O2 -c GfxLib.c -Wno-deprecated-declarations
 
 OutilsLib.o: OutilsLib.c OutilsLib.h
 	gcc -Wall -O2 -c OutilsLib.c

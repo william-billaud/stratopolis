@@ -7,6 +7,12 @@ CFLAGS = -std=c99 -m64 -O3 $(WARNING_FLAGS)
 
 CLIBS =lib/libisentlib.a -lm -lGL -lGLU -lglut -lX11 -lpthread
 
+MACHINE = $(shell uname -s)
+
+ifeq ($(MACHINE),Darwin)
+	CLIBS =lib/libisentlib.a -lm -framework OpenGl -framework GLUT -lpthread
+endif
+
 all: main.o  moteur.o  affichage.o outils.o ia.o lib/libisentlib.a
 	gcc -o main main.o  moteur.o  affichage.o outils.o ia.o $(CLIBS)
 	rm -f *~ *.o
